@@ -1,4 +1,4 @@
-package ru.agrointellect
+package ru.agrointellect.screen.base
 
 import android.content.Context
 import android.view.MenuItem
@@ -13,11 +13,12 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when (item.itemId) {
             android.R.id.home -> {
                 finish()
+                true
             }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 }
