@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="#F7F7F8">
+    android:layout_marginBottom="20dp"
+    app:cardBackgroundColor="#F7F7F8"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="6dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="20dp">
+        android:layout_height="wrap_content">
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -23,15 +24,20 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_avatar"
             android:layout_width="58dp"
             android:layout_height="58dp"
             android:layout_marginStart="22dp"
             android:layout_marginTop="20dp"
+            android:adjustViewBounds="true"
             android:background="?android:attr/selectableItemBackground"
-            android:src="@mipmap/ic_launcher"
+            android:scaleType="centerCrop"
+            app:backgroundTint="@android:color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:maxImageSize="58dp" />
+            app:maxImageSize="58dp"
+            app:tint="@null"
+            tools:src="@mipmap/ic_launcher" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

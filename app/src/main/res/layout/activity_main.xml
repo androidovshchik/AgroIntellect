@@ -14,12 +14,14 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.MaterialComponents">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -37,17 +39,23 @@
         app:headerLayout="@layout/layout_header"
         app:itemIconPadding="16dp"
         app:itemIconTint="#C3C6CD"
+        app:itemTextAppearance="@style/NavigationDrawerStyle"
         app:itemTextColor="#506482"
         app:menu="@menu/main_menu">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_exit"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="28dp"
+            android:layout_marginBottom="18dp"
+            android:background="?android:attr/selectableItemBackground"
             android:drawableStart="@drawable/ic_exit"
-            android:drawablePadding="20dp"
+            android:drawablePadding="16dp"
+            android:paddingStart="20dp"
+            android:paddingTop="14dp"
+            android:paddingEnd="0dp"
+            android:paddingBottom="14dp"
             android:text="Выйти"
             android:textColor="#2EC0D1"
             android:textSize="16sp"
