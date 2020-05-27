@@ -16,10 +16,18 @@ import coil.transform.CircleCropTransformation
 import io.github.inflationx.calligraphy3.CalligraphyUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_header.view.*
+import org.jetbrains.anko.clearTask
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.newTask
+import org.kodein.di.generic.instance
 import ru.agrointellect.R
+import ru.agrointellect.local.Preferences
+import ru.agrointellect.screen.LoginActivity
 import ru.agrointellect.screen.base.BaseActivity
 
 class MainActivity : BaseActivity() {
+
+    private val preferences by instance<Preferences>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +35,7 @@ class MainActivity : BaseActivity() {
         setupToolbar()
         setupNavigation()
         tv_exit.setOnClickListener {
-
+            logout()
         }
     }
 
@@ -38,11 +46,10 @@ class MainActivity : BaseActivity() {
         val exitItem = nv_main.menu.findItem(R.id.action_exit)
         exitItem.isVisible = landscape
         if (landscape) {
-            val spannable = SpannableString(exitItem.title).apply {
+            exitItem.title = SpannableString(exitItem.title).apply {
                 val foreground = ForegroundColorSpan(Color.parseColor("#2EC0D1"))
                 setSpan(foreground, 0, exitItem.title.length, SPAN_EXCLUSIVE_EXCLUSIVE)
             }
-            exitItem.title = spannable
         }
     }
 
@@ -68,14 +75,20 @@ class MainActivity : BaseActivity() {
         header.ib_close.setOnClickListener {
             dl_main.closeDrawers()
         }
-        header.fab_avatar.load(R.mipmap.ic_launcher_round) {
+        header.fab_avatar.load(R.drawable.avatar) {
             transformations(CircleCropTransformation())
         }
+        header.tv_email.text = preferences.login
         val font = Typeface.createFromAsset(assets, "font/Ubuntu-Light.ttf")
         nv_main.menu.forEach {
             it.title = CalligraphyUtils.applyTypefaceSpan(it.title, font)
         }
         nv_main.itemIconTintList = null
+    }
+
+    private fun logout() {
+        preferences.clear()
+        startActivity(intentFor<LoginActivity>().newTask().clearTask())
     }
 
     override fun onBackPressed() {

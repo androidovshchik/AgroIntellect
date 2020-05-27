@@ -7,6 +7,7 @@ import coil.ImageLoader
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
+import okhttp3.OkHttpClient
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.bind
@@ -49,6 +50,12 @@ class MainApp : Application(), KodeinAware {
             ImageLoader.Builder(applicationContext)
                 .availableMemoryPercentage(0.5)
                 .bitmapPoolPercentage(0.5)
+                .okHttpClient(
+                    OkHttpClient.Builder()
+                        //.cache(CoilUtils.createDefaultCache(applicationContext))
+                        .cache(null)
+                        .build()
+                )
                 .build()
         )
     }
