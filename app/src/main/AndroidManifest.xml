@@ -17,12 +17,7 @@
         tools:replace="android:allowBackup">
         <activity
             android:name=".screen.LoginActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleTask"
-            android:windowSoftInputMode="stateHidden"></activity>
-        <activity
-            android:name=".screen.main.MainActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout"
             android:launchMode="singleTask"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
@@ -30,6 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".screen.main.MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>
