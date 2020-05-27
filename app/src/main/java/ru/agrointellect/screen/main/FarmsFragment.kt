@@ -22,6 +22,7 @@ import io.ktor.http.Parameters
 import kotlinx.android.synthetic.main.fragment_farms.*
 import kotlinx.android.synthetic.main.item_farm.view.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.jetbrains.anko.dip
@@ -31,6 +32,7 @@ import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.local.Preferences
 import ru.agrointellect.remote.dto.Farm
+import ru.agrointellect.remote.dto.Farms
 import ru.agrointellect.screen.base.BaseFragment
 
 class FarmHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -59,6 +61,9 @@ class FarmsFragment : BaseFragment() {
         val assets = context.assets
         val lightFont = Typeface.createFromAsset(assets, "font/Ubuntu-Light.ttf")
         val regularFont = Typeface.createFromAsset(assets, "font/Ubuntu-Regular.ttf")
+        sl_farms.setOnRefreshListener {
+            loadFarms()
+        }
         rv_farms.apply {
             setHasFixedSize(true)
             addItemDecoration(LayoutMarginDecoration(2, space).also {
@@ -95,14 +100,22 @@ class FarmsFragment : BaseFragment() {
                 }
             }
         }
+        loadFarms()
+    }
+
+    private fun loadFarms() {
+        job.cancelChildren()
         launch {
             val data = withContext(Dispatchers.IO) {
-                client.post<String>(BuildConfig.API_URL) {
+                client.post<Farms>(BuildConfig.API_URL) {
                     body = FormDataContent(Parameters.build {
                         append("uid", preferences.hash.toString())
                     })
                 }
             }
+            dataSource.clear()
+            dataSource.addAll(data.farms)
+            dataSource.invalidateAll()
         }
     }
 }
