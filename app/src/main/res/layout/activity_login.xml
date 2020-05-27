@@ -51,29 +51,38 @@
     <View
         android:id="@+id/v_line"
         android:layout_width="2dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="39dp"
-        android:layout_marginTop="40dp"
         android:background="#C3C6CD"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_glad"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cv_top" />
+        app:layout_constraintTop_toTopOf="@+id/tv_auth" />
 
     <TextView
+        android:id="@+id/tv_auth"
         fontPath="font/Ubuntu-Regular.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="40dp"
         android:text="Авторизация"
         android:textAllCaps="true"
         android:textColor="#506482"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/v_line" />
+        app:layout_constraintStart_toEndOf="@+id/v_line"
+        app:layout_constraintTop_toBottomOf="@+id/cv_top" />
 
     <TextView
+        android:id="@+id/tv_glad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="8dp"
         android:text="Рады видеть вас!"
         android:textColor="#506482"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/v_line"
+        app:layout_constraintTop_toBottomOf="@+id/tv_auth" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
