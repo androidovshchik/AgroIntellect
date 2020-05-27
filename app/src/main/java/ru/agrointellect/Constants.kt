@@ -1,3 +1,3 @@
 package ru.agrointellect
 
-const val BASE_URL = "https://agrointellect.ru/"
+const val BASE_URL = "https://api.agrointellect.ru/"
