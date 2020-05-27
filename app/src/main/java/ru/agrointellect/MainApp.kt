@@ -18,7 +18,6 @@ class MainApp : Application() {
                     CalligraphyInterceptor(
                         CalligraphyConfig.Builder()
                             .setDefaultFontPath("font/Ubuntu-Light.ttf")
-                            .setFontAttrId(R.attr.fontPath)
                             .build()
                     )
                 )
