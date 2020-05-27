@@ -1,5 +1,6 @@
 package ru.agrointellect.screen
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.afollestad.recyclical.withItem
 import kotlinx.android.synthetic.main.fragment_farms.*
 import kotlinx.android.synthetic.main.item_farm.view.*
 import ru.agrointellect.R
+import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.screen.base.BaseFragment
 
 class FarmHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -25,6 +27,9 @@ class FarmsFragment : BaseFragment() {
     private val dataSource = dataSourceOf("")
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
+        context?.activityCallback<Activity> {
+            title = "Выберите ферму"
+        }
         return inflater.inflate(R.layout.fragment_farms, root, false)
     }
 
