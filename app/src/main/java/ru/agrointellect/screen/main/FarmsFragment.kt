@@ -100,12 +100,12 @@ class FarmsFragment : BaseFragment() {
                 }
             }
         }
+        waitDialog.show()
         loadFarms()
     }
 
     private fun loadFarms() {
         job.cancelChildren()
-        waitDialog.show()
         launch {
             val data = withContext(Dispatchers.IO) {
                 client.post<Farms>(BuildConfig.API_URL) {

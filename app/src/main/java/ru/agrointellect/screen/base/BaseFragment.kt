@@ -16,7 +16,9 @@ abstract class BaseFragment : Fragment(), KodeinAware, CoroutineScope {
     protected val job = SupervisorJob()
 
     private val waitDialogDelegate = lazy {
-        requireContext().indeterminateProgressDialog(title = "Пожалуйста, подождите...")
+        requireContext().indeterminateProgressDialog(title = "Пожалуйста, подождите...", init = {
+            window?.setDimAmount(0.2f)
+        })
     }
     protected val waitDialog by waitDialogDelegate
 

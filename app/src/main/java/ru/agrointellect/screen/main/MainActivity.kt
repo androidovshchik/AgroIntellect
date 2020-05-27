@@ -84,6 +84,14 @@ class MainActivity : BaseActivity() {
             it.title = CalligraphyUtils.applyTypefaceSpan(it.title, font)
         }
         nv_main.itemIconTintList = null
+        nv_main.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.action_exit -> {
+                    finish()
+                }
+            }
+            return@setNavigationItemSelectedListener true
+        }
     }
 
     private fun logout() {

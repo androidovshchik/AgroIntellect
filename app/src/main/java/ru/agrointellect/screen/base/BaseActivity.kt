@@ -18,7 +18,9 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
     protected val job = SupervisorJob()
 
     private val waitDialogDelegate = lazy {
-        indeterminateProgressDialog(title = "Пожалуйста, подождите...")
+        indeterminateProgressDialog(title = "Пожалуйста, подождите...", init = {
+            window?.setDimAmount(0.2f)
+        })
     }
     protected val waitDialog by waitDialogDelegate
 
