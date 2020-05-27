@@ -34,7 +34,7 @@ class LoginActivity : BaseActivity() {
                 contentView?.snackbar("Невалидный логин (e-mail)")
                 return@setOnClickListener
             }
-            val pwd = et_login.text.toString().ifBlank {
+            val pwd = et_password.text.toString().ifBlank {
                 contentView?.snackbar("Заполните пароль")
                 return@setOnClickListener
             }

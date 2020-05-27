@@ -19,7 +19,7 @@
             android:name=".screen.LoginActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|screenLayout"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="stateHidden|adjustPan">
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -29,7 +29,7 @@
             android:name=".screen.main.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|screenLayout"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
 
 </manifest>

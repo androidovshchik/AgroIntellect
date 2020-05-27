@@ -99,6 +99,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_welcome">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Логин (e-mail)"
@@ -123,6 +124,7 @@
             app:passwordToggleTint="#C3C6CD">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Пароль"
