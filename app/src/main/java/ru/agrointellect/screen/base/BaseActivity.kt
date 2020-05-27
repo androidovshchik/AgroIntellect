@@ -5,16 +5,22 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import kotlinx.coroutines.*
+import org.jetbrains.anko.indeterminateProgressDialog
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
 import timber.log.Timber
 
-@Suppress("MemberVisibilityCanBePrivate")
+@Suppress("MemberVisibilityCanBePrivate", "DEPRECATION")
 abstract class BaseActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
 
     override val kodein by closestKodein()
 
     protected val job = SupervisorJob()
+
+    private val waitDialogDelegate = lazy {
+        indeterminateProgressDialog(title = "Пожалуйста, подождите...")
+    }
+    protected val waitDialog by waitDialogDelegate
 
     override fun attachBaseContext(context: Context) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(context))
@@ -31,6 +37,9 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
     }
 
     override fun onDestroy() {
+        if (waitDialogDelegate.isInitialized()) {
+            waitDialog.dismiss()
+        }
         job.cancelChildren()
         super.onDestroy()
     }

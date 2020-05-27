@@ -105,6 +105,7 @@ class FarmsFragment : BaseFragment() {
 
     private fun loadFarms() {
         job.cancelChildren()
+        waitDialog.show()
         launch {
             val data = withContext(Dispatchers.IO) {
                 client.post<Farms>(BuildConfig.API_URL) {
@@ -116,6 +117,8 @@ class FarmsFragment : BaseFragment() {
             dataSource.clear()
             dataSource.addAll(data.farms)
             dataSource.invalidateAll()
+            waitDialog.hide()
+            sl_farms.isRefreshing = false
         }
     }
 }
