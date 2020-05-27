@@ -15,12 +15,22 @@ import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.thekhaeng.recyclerviewmargin.LayoutMarginDecoration
 import io.github.inflationx.calligraphy3.CalligraphyUtils
+import io.ktor.client.HttpClient
+import io.ktor.client.request.forms.FormDataContent
+import io.ktor.client.request.post
+import io.ktor.http.Parameters
 import kotlinx.android.synthetic.main.fragment_farms.*
 import kotlinx.android.synthetic.main.item_farm.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.jetbrains.anko.dip
+import org.kodein.di.generic.instance
+import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
-import ru.agrointellect.model.Farm
+import ru.agrointellect.local.Preferences
+import ru.agrointellect.remote.dto.Farm
 import ru.agrointellect.screen.base.BaseFragment
 
 class FarmHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -30,17 +40,11 @@ class FarmHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 class FarmsFragment : BaseFragment() {
 
-    private val dataSource = dataSourceTypedOf<Farm>(
-        Farm("Авангард\nКомплекс-1"),
-        Farm("Авангард\nКомплекс-2"),
-        Farm("Авангард\nКомплекс-3"),
-        Farm("Авангард\nКомплекс-4"),
-        Farm("Авангард\nКомплекс-5"),
-        Farm("Авангард\nКомплекс-6"),
-        Farm("Авангард\nКомплекс-7"),
-        Farm("Авангард\nКомплекс-8"),
-        Farm("Авангард\nКомплекс-9")
-    )
+    private val client by instance<HttpClient>()
+
+    private val preferences by instance<Preferences>()
+
+    private val dataSource = dataSourceTypedOf<Farm>()
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
         context?.activityCallback<Activity> {
@@ -88,6 +92,15 @@ class FarmsFragment : BaseFragment() {
                         item.checked = true
                         dataSource.invalidateAll()
                     }
+                }
+            }
+        }
+        launch {
+            val data = withContext(Dispatchers.IO) {
+                client.post<String>(BuildConfig.API_URL) {
+                    body = FormDataContent(Parameters.build {
+                        append("uid", preferences.hash.toString())
+                    })
                 }
             }
         }

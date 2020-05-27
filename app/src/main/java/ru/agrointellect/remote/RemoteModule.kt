@@ -30,7 +30,10 @@ val remoteModule = Kodein.Module("remote") {
                 }
             }
             install(JsonFeature) {
-                serializer = GsonSerializer()
+                serializer = GsonSerializer {
+                    excludeFieldsWithoutExposeAnnotation()
+                    setLenient()
+                }
             }
         }
     }
