@@ -30,9 +30,9 @@ class MainActivity : BaseActivity() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        val isLandscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
-        nv_main.menu.findItem(R.id.action_exit).isVisible = isLandscape
-        tv_exit.isVisible = !isLandscape
+        val landscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
+        nv_main.menu.findItem(R.id.action_exit).isVisible = landscape
+        tv_exit.isVisible = !landscape
     }
 
     override fun setTitle(title: CharSequence?) {
