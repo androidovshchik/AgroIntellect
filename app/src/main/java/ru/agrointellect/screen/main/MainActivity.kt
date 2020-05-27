@@ -4,6 +4,9 @@ import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+import android.text.style.ForegroundColorSpan
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.core.view.forEach
@@ -31,8 +34,16 @@ class MainActivity : BaseActivity() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         val landscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
-        nv_main.menu.findItem(R.id.action_exit).isVisible = landscape
         tv_exit.isVisible = !landscape
+        val exitItem = nv_main.menu.findItem(R.id.action_exit)
+        exitItem.isVisible = landscape
+        if (landscape) {
+            val spannable = SpannableString(exitItem.title).apply {
+                val foreground = ForegroundColorSpan(Color.parseColor("#2EC0D1"))
+                setSpan(foreground, 0, exitItem.title.length, SPAN_EXCLUSIVE_EXCLUSIVE)
+            }
+            exitItem.title = spannable
+        }
     }
 
     override fun setTitle(title: CharSequence?) {
