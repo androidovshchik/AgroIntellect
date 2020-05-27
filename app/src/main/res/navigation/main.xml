@@ -5,6 +5,6 @@
     app:startDestination="@id/farmsFragment">
     <fragment
         android:id="@+id/farmsFragment"
-        android:name="ru.agrointellect.screen.FarmsFragment"
+        android:name="ru.agrointellect.screen.main.FarmsFragment"
         android:label="FarmsFragment" />
 </navigation>

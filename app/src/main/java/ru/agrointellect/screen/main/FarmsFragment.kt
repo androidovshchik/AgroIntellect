@@ -61,11 +61,11 @@ class FarmsFragment : BaseFragment() {
                         val circleSize = if (item.checked) {
                             circle.setBackgroundResource(R.drawable.ring_farm)
                             circle.setImageResource(R.drawable.ic_daw)
-                            resources.getDimensionPixelSize(R.dimen.farm_max)
+                            resources.getDimensionPixelSize(R.dimen.image_farm_max)
                         } else {
                             circle.setBackgroundResource(R.drawable.circle_farm)
                             circle.setImageResource(0)
-                            resources.getDimensionPixelSize(R.dimen.farm_min)
+                            resources.getDimensionPixelSize(R.dimen.image_farm_min)
                         }
                         circle.updateLayoutParams<ViewGroup.LayoutParams> {
                             width = circleSize

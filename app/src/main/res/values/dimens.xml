@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="PrivateResource">
     <dimen name="design_navigation_separator_vertical_padding">0dp</dimen>
-    <dimen name="farm_min">52dp</dimen>
-    <dimen name="farm_max">62dp</dimen>
+    <dimen name="image_farm_min">52dp</dimen>
+    <dimen name="image_farm_max">62dp</dimen>
 </resources>
