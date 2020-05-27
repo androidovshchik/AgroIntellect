@@ -1,6 +1,7 @@
 package ru.agrointellect.screen.main
 
 import android.app.Activity
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.afollestad.recyclical.datasource.dataSourceTypedOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.thekhaeng.recyclerviewmargin.LayoutMarginDecoration
+import io.github.inflationx.calligraphy3.CalligraphyUtils
 import kotlinx.android.synthetic.main.fragment_farms.*
 import kotlinx.android.synthetic.main.item_farm.view.*
 import org.jetbrains.anko.dip
@@ -48,7 +50,11 @@ class FarmsFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val space = requireContext().dip(20)
+        val context = requireContext()
+        val space = context.dip(20)
+        val assets = context.assets
+        val lightFont = Typeface.createFromAsset(assets, "font/Ubuntu-Light.ttf")
+        val regularFont = Typeface.createFromAsset(assets, "font/Ubuntu-Regular.ttf")
         rv_farms.apply {
             setHasFixedSize(true)
             addItemDecoration(LayoutMarginDecoration(2, space).also {
@@ -59,10 +65,12 @@ class FarmsFragment : BaseFragment() {
                 withItem<Farm, FarmHolder>(R.layout.item_farm) {
                     onBind(::FarmHolder) { _, item ->
                         val circleSize = if (item.checked) {
+                            CalligraphyUtils.applyFontToTextView(name, regularFont)
                             circle.setBackgroundResource(R.drawable.ring_farm)
                             circle.setImageResource(R.drawable.ic_daw)
                             resources.getDimensionPixelSize(R.dimen.image_farm_max)
                         } else {
+                            CalligraphyUtils.applyFontToTextView(name, lightFont)
                             circle.setBackgroundResource(R.drawable.circle_farm)
                             circle.setImageResource(0)
                             resources.getDimensionPixelSize(R.dimen.image_farm_min)
