@@ -37,12 +37,12 @@
             android:gravity="center"
             android:lineSpacingExtra="4dp"
             android:maxLines="2"
+            android:textColor="#506482"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="TextTextText\nTextTextText"
-            tools:textColor="#506482" />
+            tools:text="TextTextText\nTextTextText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

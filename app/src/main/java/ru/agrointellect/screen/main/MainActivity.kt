@@ -1,4 +1,4 @@
-package ru.agrointellect.screen
+package ru.agrointellect.screen.main
 
 import android.content.res.Configuration
 import android.graphics.Typeface
