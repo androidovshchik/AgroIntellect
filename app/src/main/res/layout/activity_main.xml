@@ -40,6 +40,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/layout_header"
+        app:itemHorizontalPadding="20dp"
         app:itemIconPadding="16dp"
         app:itemIconSize="18dp"
         app:itemIconTint="#C3C6CD"
