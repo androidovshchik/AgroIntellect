@@ -3,6 +3,7 @@ package ru.agrointellect.screen.base
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import kotlinx.coroutines.*
+import org.jetbrains.anko.design.longSnackbar
 import org.jetbrains.anko.indeterminateProgressDialog
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
@@ -25,6 +26,11 @@ abstract class BaseFragment : Fragment(), KodeinAware, CoroutineScope {
     protected val args: Bundle
         get() = arguments ?: Bundle()
 
+    protected open fun showError(e: Throwable) {
+        waitDialog.hide()
+        view?.longSnackbar(e.message.toString())
+    }
+
     override fun onDestroyView() {
         if (waitDialogDelegate.isInitialized()) {
             waitDialog.dismiss()
@@ -35,5 +41,10 @@ abstract class BaseFragment : Fragment(), KodeinAware, CoroutineScope {
 
     override val coroutineContext = Dispatchers.Main + job + CoroutineExceptionHandler { _, e ->
         Timber.e(e)
+        if (e !is CancellationException && view != null) {
+            activity?.runOnUiThread {
+                showError(e)
+            }
+        }
     }
 }

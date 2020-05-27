@@ -104,6 +104,11 @@ class FarmsFragment : BaseFragment() {
         loadFarms()
     }
 
+    override fun showError(e: Throwable) {
+        super.showError(e)
+        sl_farms.isRefreshing = false
+    }
+
     private fun loadFarms() {
         job.cancelChildren()
         launch {

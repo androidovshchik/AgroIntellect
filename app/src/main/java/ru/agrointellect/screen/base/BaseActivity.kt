@@ -5,6 +5,8 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import kotlinx.coroutines.*
+import org.jetbrains.anko.contentView
+import org.jetbrains.anko.design.longSnackbar
 import org.jetbrains.anko.indeterminateProgressDialog
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
@@ -38,6 +40,11 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
         return super.onOptionsItemSelected(item)
     }
 
+    protected open fun showError(e: Throwable) {
+        waitDialog.hide()
+        contentView?.longSnackbar(e.message.toString())
+    }
+
     override fun onDestroy() {
         if (waitDialogDelegate.isInitialized()) {
             waitDialog.dismiss()
@@ -48,5 +55,10 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
 
     override val coroutineContext = Dispatchers.Main + job + CoroutineExceptionHandler { _, e ->
         Timber.e(e)
+        if (e !is CancellationException && !isFinishing) {
+            runOnUiThread {
+                showError(e)
+            }
+        }
     }
 }
