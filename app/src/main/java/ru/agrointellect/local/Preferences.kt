@@ -1,9 +1,9 @@
 package ru.agrointellect.local
 
 import android.content.Context
-import android.util.Base64
 import com.chibatching.kotpref.KotprefModel
-import java.security.MessageDigest
+import org.apache.commons.codec.binary.Hex
+import org.apache.commons.codec.digest.DigestUtils
 
 class Preferences(context: Context) : KotprefModel(context) {
 
@@ -13,9 +13,10 @@ class Preferences(context: Context) : KotprefModel(context) {
 
     var password by nullableStringPref(null, "password")
 
-    fun getHash(): String {
-        val messageDigest = MessageDigest.getInstance("SHA-256")
-        messageDigest.update("$login@p$password".toByteArray(Charsets.UTF_8))
-        return Base64.encodeToString(messageDigest.digest(), Base64.NO_WRAP)
-    }
+    val hash: String?
+        get() {
+            val login = login ?: return null
+            val password = password ?: return null
+            return String(Hex.encodeHex(DigestUtils.sha512("$login+@p+$password")))
+        }
 }

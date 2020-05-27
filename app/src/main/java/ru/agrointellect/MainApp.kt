@@ -12,6 +12,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.provider
 import ru.agrointellect.local.localModule
+import timber.log.Timber
 
 @Suppress("unused")
 class MainApp : Application(), KodeinAware {
@@ -27,6 +28,9 @@ class MainApp : Application(), KodeinAware {
 
     override fun onCreate() {
         super.onCreate()
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
         ViewPump.init(
             ViewPump.builder()
                 .addInterceptor(
