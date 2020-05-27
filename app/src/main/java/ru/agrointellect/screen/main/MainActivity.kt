@@ -1,12 +1,11 @@
 package ru.agrointellect.screen.main
 
 import android.content.res.Configuration
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
-import androidx.core.view.children
 import androidx.core.view.forEach
 import androidx.core.view.isVisible
 import coil.api.load
@@ -24,22 +23,36 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         setupToolbar()
         setupNavigation()
+        tv_exit.setOnClickListener {
+
+        }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        val isLandscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
+        nv_main.menu.findItem(R.id.action_exit).isVisible = isLandscape
+        tv_exit.isVisible = !isLandscape
+    }
+
+    override fun setTitle(title: CharSequence?) {
+        val font = Typeface.createFromAsset(assets, "font/Ubuntu-Medium.ttf")
+        super.setTitle(CalligraphyUtils.applyTypefaceSpan(title, font))
     }
 
     private fun setupToolbar() {
         setSupportActionBar(toolbar)
         val toggle = ActionBarDrawerToggle(this, dl_main, toolbar, 0, 0)
         dl_main.addDrawerListener(toggle)
-        toggle.syncState()
-        val font = Typeface.createFromAsset(assets, "font/Ubuntu-Medium.ttf")
-        toolbar.children.forEach {
-            if (it is TextView) {
-                CalligraphyUtils.applyFontToTextView(it, font)
-            }
+        toggle.isDrawerIndicatorEnabled = false
+        toggle.setHomeAsUpIndicator(R.drawable.ic_hamburger)
+        toggle.setToolbarNavigationClickListener {
+            dl_main.openDrawer(GravityCompat.START)
         }
     }
 
     private fun setupNavigation() {
+        dl_main.setScrimColor(Color.parseColor("#33000000"))
         val header = nv_main.getHeaderView(0)
         header.ib_close.setOnClickListener {
             dl_main.closeDrawers()
@@ -50,14 +63,6 @@ class MainActivity : BaseActivity() {
         val font = Typeface.createFromAsset(assets, "font/Ubuntu-Light.ttf")
         nv_main.menu.forEach {
             it.title = CalligraphyUtils.applyTypefaceSpan(it.title, font)
-        }
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            nv_main.menu.findItem(R.id.action_exit).isVisible = true
-            tv_exit.isVisible = false
-        } else {
-            tv_exit.setOnClickListener {
-
-            }
         }
     }
 
