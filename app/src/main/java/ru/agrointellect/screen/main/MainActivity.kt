@@ -64,6 +64,7 @@ class MainActivity : BaseActivity() {
         nv_main.menu.forEach {
             it.title = CalligraphyUtils.applyTypefaceSpan(it.title, font)
         }
+        nv_main.itemIconTintList = null
     }
 
     override fun onBackPressed() {
