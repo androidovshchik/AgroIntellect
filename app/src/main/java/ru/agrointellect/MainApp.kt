@@ -1,6 +1,8 @@
 package ru.agrointellect
 
 import android.app.Application
+import coil.Coil
+import coil.ImageLoader
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
@@ -20,6 +22,12 @@ class MainApp : Application() {
                             .build()
                     )
                 )
+                .build()
+        )
+        Coil.setImageLoader(
+            ImageLoader.Builder(applicationContext)
+                .availableMemoryPercentage(0.5)
+                .bitmapPoolPercentage(0.5)
                 .build()
         )
     }
