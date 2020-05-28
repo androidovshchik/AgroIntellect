@@ -41,7 +41,7 @@ class ReportHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val button: RadioButton = itemView.rb_report
 }
 
-class ReportsFragment : BaseFragment() {
+open class ReportsFragment : BaseFragment() {
 
     private val client by instance<HttpClient>()
 
@@ -116,12 +116,16 @@ class ReportsFragment : BaseFragment() {
                 val reports = jsonObject.getJSONObject(farmId)
                 gson.fromJson(reports.toString(), Reports::class.java)
             }
-            val reports = data.reports
+            val reports = data.filteredReports()
             mainModel.reports.setAll(reports)
             dataSource.setAll(reports)
             dataSource.invalidateAll()
             waitDialog.hide()
             sl_reports.isRefreshing = false
         }
+    }
+
+    protected open fun Reports.filteredReports(): List<Report> {
+        return reports.filter { it.hasTable }
     }
 }

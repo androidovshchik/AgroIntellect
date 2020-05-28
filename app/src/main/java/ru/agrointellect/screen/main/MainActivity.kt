@@ -8,7 +8,6 @@ import android.text.SpannableString
 import android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
 import android.text.style.ForegroundColorSpan
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.core.view.forEach
 import androidx.core.view.isVisible
@@ -116,9 +115,7 @@ class MainActivity : BaseActivity() {
                 }
                 R.id.action_charts -> {
                     if (mainModel.farm != null) {
-                        navController.navigateExclusive(
-                            R.id.reportsFragment, bundleOf("charts" to true)
-                        )
+                        navController.navigateExclusive(R.id.chartsFragment)
                     } else {
                         return@setNavigationItemSelectedListener false
                     }

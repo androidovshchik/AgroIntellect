@@ -33,4 +33,10 @@ class Report {
     lateinit var dateNeed: String
 
     var selected = false
+
+    val hasChart: Boolean
+        get() = type == "1" || type == "2"
+
+    val hasTable: Boolean
+        get() = type == "0" || type == "2"
 }
