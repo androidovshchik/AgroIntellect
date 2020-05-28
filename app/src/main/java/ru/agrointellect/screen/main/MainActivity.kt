@@ -11,6 +11,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.core.view.forEach
 import androidx.core.view.isVisible
+import androidx.navigation.NavHostController
+import androidx.navigation.Navigation
 import coil.api.load
 import coil.transform.CircleCropTransformation
 import io.github.inflationx.calligraphy3.CalligraphyUtils
@@ -29,9 +31,12 @@ class MainActivity : BaseActivity() {
 
     private val preferences by instance<Preferences>()
 
+    private lateinit var navController: NavHostController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        navController = Navigation.findNavController(this, R.id.f_host) as NavHostController
         setupToolbar()
         setupNavigation()
         tv_exit.setOnClickListener {
@@ -86,6 +91,12 @@ class MainActivity : BaseActivity() {
         nv_main.itemIconTintList = null
         nv_main.setNavigationItemSelectedListener {
             when (it.itemId) {
+                R.id.action_farms -> {
+                    navController.navigate(R.id.farmsFragment)
+                }
+                R.id.action_reports -> {
+                    navController.navigate(R.id.reportsFragment)
+                }
                 R.id.action_exit -> {
                     finish()
                 }

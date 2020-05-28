@@ -20,7 +20,7 @@ import org.jetbrains.anko.startActivity
 import org.kodein.di.generic.instance
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
-import ru.agrointellect.extension.readAny
+import ru.agrointellect.extension.readJson
 import ru.agrointellect.local.Preferences
 import ru.agrointellect.remote.dto.Farms
 import ru.agrointellect.screen.base.BaseActivity
@@ -64,18 +64,14 @@ class LoginActivity : BaseActivity() {
                             append("uid", preferences.getHash(email, pwd).toString())
                         })
                     }
-                    response.readAny<Farms>(gson)
+                    response.readJson<Farms>(gson)
                 }
-                if (data is Farms) {
-                    preferences.bulk {
-                        login = email
-                        password = pwd
-                    }
-                    startActivity<MainActivity>()
-                    finish()
-                } else {
-                    throw Throwable("Ошибка: $data")
+                preferences.bulk {
+                    login = email
+                    password = pwd
                 }
+                startActivity<MainActivity>("farms" to data.farms)
+                finish()
             }
         }
     }
