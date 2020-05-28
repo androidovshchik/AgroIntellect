@@ -29,6 +29,7 @@ import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.extension.readJson
+import ru.agrointellect.extension.setAll
 import ru.agrointellect.local.Preferences
 import ru.agrointellect.remote.dto.Report
 import ru.agrointellect.remote.dto.Reports
@@ -81,8 +82,7 @@ class ReportsFragment : BaseFragment() {
         }
         mainModel.reports.let {
             if (it.isNotEmpty()) {
-                dataSource.clear()
-                dataSource.addAll(it)
+                dataSource.setAll(it)
                 dataSource.invalidateAll()
             } else {
                 waitDialog.show()
@@ -97,13 +97,13 @@ class ReportsFragment : BaseFragment() {
     }
 
     private fun loadReports() {
-        val farmId = mainModel.farm?.id.orEmpty()
+        val farmId = mainModel.farm?.id.toString()
         job.cancelChildren()
         launch {
             val data = withContext(Dispatchers.IO) {
                 val response = client.post<HttpResponse>(BuildConfig.API_URL) {
                     body = FormDataContent(Parameters.build {
-                        append("uid", preferences.getHash().orEmpty())
+                        append("uid", preferences.getHash().toString())
                         append("farm_id", farmId)
                     })
                 }
@@ -111,8 +111,9 @@ class ReportsFragment : BaseFragment() {
                 val reports = jsonObject.getJSONObject(farmId)
                 gson.fromJson(reports.toString(), Reports::class.java)
             }
-            dataSource.clear()
-            dataSource.addAll(data.reports)
+            val reports = data.reports
+            mainModel.reports.setAll(reports)
+            dataSource.setAll(reports)
             dataSource.invalidateAll()
             waitDialog.hide()
             sl_reports.isRefreshing = false

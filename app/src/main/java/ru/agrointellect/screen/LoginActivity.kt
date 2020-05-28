@@ -61,7 +61,7 @@ class LoginActivity : BaseActivity() {
                 val data = withContext(Dispatchers.IO) {
                     val response = client.post<HttpResponse>(BuildConfig.API_URL) {
                         body = FormDataContent(Parameters.build {
-                            append("uid", preferences.getHash(email, pwd).orEmpty())
+                            append("uid", preferences.getHash(email, pwd).toString())
                         })
                     }
                     response.readJson<Farms>(gson)

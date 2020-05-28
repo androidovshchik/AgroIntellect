@@ -34,6 +34,7 @@ import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.extension.readJson
+import ru.agrointellect.extension.setAll
 import ru.agrointellect.local.Preferences
 import ru.agrointellect.remote.dto.Farm
 import ru.agrointellect.remote.dto.Farms
@@ -104,6 +105,7 @@ class FarmsFragment : BaseFragment() {
                         name.text = item.name
                     }
                     onClick {
+                        mainModel.reports.clear()
                         dataSource.forEach {
                             it.selected = false
                         }
@@ -115,8 +117,7 @@ class FarmsFragment : BaseFragment() {
         }
         mainModel.farms.let {
             if (it.isNotEmpty()) {
-                dataSource.clear()
-                dataSource.addAll(it)
+                dataSource.setAll(it)
                 dataSource.invalidateAll()
             } else {
                 waitDialog.show()
@@ -141,8 +142,9 @@ class FarmsFragment : BaseFragment() {
                 }
                 response.readJson<Farms>(gson)
             }
-            dataSource.clear()
-            dataSource.addAll(data.farms.toList())
+            val farms = data.farms.toList()
+            mainModel.farms.setAll(farms)
+            dataSource.setAll(farms)
             dataSource.invalidateAll()
             waitDialog.hide()
             sl_farms.isRefreshing = false

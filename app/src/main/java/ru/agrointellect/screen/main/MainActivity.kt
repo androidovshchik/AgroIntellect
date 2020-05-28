@@ -24,6 +24,7 @@ import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
 import org.kodein.di.generic.instance
 import ru.agrointellect.R
+import ru.agrointellect.extension.setAll
 import ru.agrointellect.local.Preferences
 import ru.agrointellect.remote.dto.Farm
 import ru.agrointellect.screen.LoginActivity
@@ -42,8 +43,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         mainModel = ViewModelProvider(this).get(MainModel::class.java)
         if (intent.hasExtra("farms")) {
-            mainModel.farms.clear()
-            mainModel.farms.addAll(intent.getSerializableExtra("farms") as List<Farm>)
+            mainModel.farms.setAll(intent.getSerializableExtra("farms") as List<Farm>)
         }
         setContentView(R.layout.activity_main)
         navController = Navigation.findNavController(this, R.id.f_host) as NavHostController
@@ -106,7 +106,9 @@ class MainActivity : BaseActivity() {
                     navController.navigate(R.id.farmsFragment)
                 }
                 R.id.action_reports -> {
-                    navController.navigate(R.id.reportsFragment)
+                    if (mainModel.farm != null) {
+                        navController.navigate(R.id.reportsFragment)
+                    }
                 }
                 R.id.action_exit -> {
                     finish()

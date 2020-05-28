@@ -6,7 +6,7 @@ import io.ktor.client.statement.readText
 import org.json.JSONArray
 import org.json.JSONObject
 
-suspend inline fun <reified T : Any> HttpResponse.readJson(gson: Gson?): T {
+suspend inline fun <reified T> HttpResponse.readJson(gson: Gson?): T {
     val text = readText()
     return try {
         when (T::class.java) {
