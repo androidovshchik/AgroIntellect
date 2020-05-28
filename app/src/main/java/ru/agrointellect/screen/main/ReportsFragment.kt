@@ -85,14 +85,12 @@ open class ReportsFragment : BaseFragment() {
                 }
             }
         }
-        mainModel.reports.let {
-            if (it.isNotEmpty()) {
-                dataSource.setAll(it)
-                dataSource.invalidateAll()
-            } else {
-                waitDialog.show()
-                loadReports()
-            }
+        if (mainModel.reports.isNotEmpty()) {
+            dataSource.setAll(mainModel.reports.filtered())
+            dataSource.invalidateAll()
+        } else {
+            waitDialog.show()
+            loadReports()
         }
     }
 
@@ -116,16 +114,15 @@ open class ReportsFragment : BaseFragment() {
                 val reports = jsonObject.getJSONObject(farmId)
                 gson.fromJson(reports.toString(), Reports::class.java)
             }
-            val reports = data.filteredReports()
-            mainModel.reports.setAll(reports)
-            dataSource.setAll(reports)
+            mainModel.reports.setAll(data.reports)
+            dataSource.setAll(data.reports.filtered())
             dataSource.invalidateAll()
             waitDialog.hide()
             sl_reports.isRefreshing = false
         }
     }
 
-    protected open fun Reports.filteredReports(): List<Report> {
-        return reports.filter { it.hasTable }
+    protected open fun List<Report>.filtered(): List<Report> {
+        return filter { it.hasTable }
     }
 }

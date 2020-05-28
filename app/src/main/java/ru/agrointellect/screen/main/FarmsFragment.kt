@@ -115,14 +115,12 @@ class FarmsFragment : BaseFragment() {
                 }
             }
         }
-        mainModel.farms.let {
-            if (it.isNotEmpty()) {
-                dataSource.setAll(it)
-                dataSource.invalidateAll()
-            } else {
-                waitDialog.show()
-                loadFarms()
-            }
+        if (mainModel.farms.isNotEmpty()) {
+            dataSource.setAll(mainModel.farms)
+            dataSource.invalidateAll()
+        } else {
+            waitDialog.show()
+            loadFarms()
         }
     }
 
