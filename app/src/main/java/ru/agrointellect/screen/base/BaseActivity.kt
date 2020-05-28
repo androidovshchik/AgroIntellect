@@ -22,6 +22,7 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
     private val waitDialogDelegate = lazy {
         indeterminateProgressDialog(title = "Пожалуйста, подождите...", init = {
             window?.setDimAmount(0.2f)
+            setCancelable(false)
         })
     }
     protected val waitDialog by waitDialogDelegate
@@ -42,7 +43,7 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
 
     protected open fun showError(e: Throwable) {
         waitDialog.hide()
-        contentView?.longSnackbar(e.message.toString())
+        contentView?.longSnackbar(e.message ?: e.toString())
     }
 
     override fun onDestroy() {

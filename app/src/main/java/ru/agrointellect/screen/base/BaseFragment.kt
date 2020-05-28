@@ -19,6 +19,7 @@ abstract class BaseFragment : Fragment(), KodeinAware, CoroutineScope {
     private val waitDialogDelegate = lazy {
         requireContext().indeterminateProgressDialog(title = "Пожалуйста, подождите...", init = {
             window?.setDimAmount(0.2f)
+            setCancelable(false)
         })
     }
     protected val waitDialog by waitDialogDelegate
@@ -28,7 +29,7 @@ abstract class BaseFragment : Fragment(), KodeinAware, CoroutineScope {
 
     protected open fun showError(e: Throwable) {
         waitDialog.hide()
-        view?.longSnackbar(e.message.toString())
+        view?.longSnackbar(e.message ?: e.toString())
     }
 
     override fun onDestroyView() {
