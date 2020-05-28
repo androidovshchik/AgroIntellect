@@ -63,8 +63,6 @@ class ReportsFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        dataSource.clear()
-        dataSource.addAll(mainModel.reports)
         sl_reports.setOnRefreshListener {
             loadReports()
         }
@@ -81,8 +79,16 @@ class ReportsFragment : BaseFragment() {
                 }
             }
         }
-        waitDialog.show()
-        loadReports()
+        mainModel.reports.let {
+            if (it.isNotEmpty()) {
+                dataSource.clear()
+                dataSource.addAll(it)
+                dataSource.invalidateAll()
+            } else {
+                waitDialog.show()
+                loadReports()
+            }
+        }
     }
 
     override fun showError(e: Throwable) {

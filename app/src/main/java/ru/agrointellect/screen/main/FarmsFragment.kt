@@ -9,15 +9,18 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.updateLayoutParams
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceTypedOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
+import com.google.gson.Gson
 import com.thekhaeng.recyclerviewmargin.LayoutMarginDecoration
 import io.github.inflationx.calligraphy3.CalligraphyUtils
 import io.ktor.client.HttpClient
 import io.ktor.client.request.forms.FormDataContent
 import io.ktor.client.request.post
+import io.ktor.client.statement.HttpResponse
 import io.ktor.http.Parameters
 import kotlinx.android.synthetic.main.fragment_farms.*
 import kotlinx.android.synthetic.main.item_farm.view.*
@@ -30,6 +33,7 @@ import org.kodein.di.generic.instance
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
+import ru.agrointellect.extension.readJson
 import ru.agrointellect.local.Preferences
 import ru.agrointellect.remote.dto.Farm
 import ru.agrointellect.remote.dto.Farms
@@ -46,7 +50,16 @@ class FarmsFragment : BaseFragment() {
 
     private val preferences by instance<Preferences>()
 
+    private val gson by instance<Gson>()
+
     private val dataSource = dataSourceTypedOf<Farm>()
+
+    private lateinit var mainModel: MainModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mainModel = ViewModelProvider(requireActivity()).get(MainModel::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
         context?.activityCallback<Activity> {
@@ -73,7 +86,7 @@ class FarmsFragment : BaseFragment() {
                 withDataSource(dataSource)
                 withItem<Farm, FarmHolder>(R.layout.item_farm) {
                     onBind(::FarmHolder) { _, item ->
-                        val circleSize = if (item.checked) {
+                        val circleSize = if (item.selected) {
                             CalligraphyUtils.applyFontToTextView(name, regularFont)
                             circle.setBackgroundResource(R.drawable.ring_farm)
                             circle.setImageResource(R.drawable.ic_daw)
@@ -92,16 +105,24 @@ class FarmsFragment : BaseFragment() {
                     }
                     onClick {
                         dataSource.forEach {
-                            it.checked = false
+                            it.selected = false
                         }
-                        item.checked = true
+                        item.selected = true
                         dataSource.invalidateAll()
                     }
                 }
             }
         }
-        waitDialog.show()
-        loadFarms()
+        mainModel.farms.let {
+            if (it.isNotEmpty()) {
+                dataSource.clear()
+                dataSource.addAll(it)
+                dataSource.invalidateAll()
+            } else {
+                waitDialog.show()
+                loadFarms()
+            }
+        }
     }
 
     override fun showError(e: Throwable) {
@@ -113,14 +134,15 @@ class FarmsFragment : BaseFragment() {
         job.cancelChildren()
         launch {
             val data = withContext(Dispatchers.IO) {
-                client.post<Farms>(BuildConfig.API_URL) {
+                val response = client.post<HttpResponse>(BuildConfig.API_URL) {
                     body = FormDataContent(Parameters.build {
-                        append("uid", preferences.hash.toString())
+                        append("uid", preferences.getHash().toString())
                     })
                 }
+                response.readJson<Farms>(gson)
             }
             dataSource.clear()
-            dataSource.addAll(data.farms)
+            dataSource.addAll(data.farms.toList())
             dataSource.invalidateAll()
             waitDialog.hide()
             sl_farms.isRefreshing = false
