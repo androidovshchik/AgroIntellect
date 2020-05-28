@@ -35,8 +35,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/main"
-            tools:ignore="FragmentTagUsage" />
+            tools:ignore="FragmentTagUsage"
+            tools:navGraph="@navigation/main" />
 
     </LinearLayout>
 

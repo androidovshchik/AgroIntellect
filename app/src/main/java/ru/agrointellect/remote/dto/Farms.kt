@@ -8,5 +8,5 @@ class Farms : Serializable {
 
     @SerializedName("farms")
     @Expose
-    lateinit var farms: List<Farm>
+    lateinit var farms: Array<Farm>
 }

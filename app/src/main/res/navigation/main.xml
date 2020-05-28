@@ -8,7 +8,12 @@
     <fragment
         android:id="@+id/farmsFragment"
         android:name="ru.agrointellect.screen.main.FarmsFragment"
-        tools:layout="@layout/fragment_farms" />
+        tools:layout="@layout/fragment_farms">
+        <argument
+            android:name="farms"
+            app:argType="ru.agrointellect.remote.dto.Farms[]"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/reportsFragment"
         android:name="ru.agrointellect.screen.main.ReportsFragment"
