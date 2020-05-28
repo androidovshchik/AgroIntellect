@@ -5,18 +5,18 @@
     tools:showIn="navigation_view">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/action_farms"
+            android:id="@+id/farmsFragment"
             android:checked="true"
             android:icon="@drawable/ic_home"
             android:title="Фермы"
             app:showAsAction="always" />
         <item
-            android:id="@+id/action_reports"
+            android:id="@+id/reportsFragment"
             android:icon="@drawable/ic_report"
             android:title="Отчёты"
             app:showAsAction="always" />
         <item
-            android:id="@+id/action_charts"
+            android:id="@+id/chartsFragment"
             android:icon="@drawable/ic_chart"
             android:title="Графики"
             app:showAsAction="always" />

@@ -103,25 +103,18 @@ class MainActivity : BaseActivity() {
         nv_main.setNavigationItemSelectedListener {
             dl_main.closeDrawers()
             when (it.itemId) {
-                R.id.action_farms -> {
-                    navController.navigateExclusive(R.id.farmsFragment)
-                }
-                R.id.action_reports -> {
-                    if (mainModel.farm != null) {
-                        navController.navigateExclusive(R.id.reportsFragment)
-                    } else {
-                        return@setNavigationItemSelectedListener false
-                    }
-                }
-                R.id.action_charts -> {
-                    if (mainModel.farm != null) {
-                        navController.navigateExclusive(R.id.chartsFragment)
-                    } else {
-                        return@setNavigationItemSelectedListener false
-                    }
+                R.id.farmsFragment -> {
+                    navController.navigateExclusive(it.itemId)
                 }
                 R.id.action_exit -> {
                     finish()
+                }
+                else -> {
+                    if (mainModel.farm != null) {
+                        navController.navigateExclusive(it.itemId)
+                    } else {
+                        return@setNavigationItemSelectedListener false
+                    }
                 }
             }
             true
@@ -137,7 +130,12 @@ class MainActivity : BaseActivity() {
         if (dl_main.isDrawerOpen(GravityCompat.START)) {
             dl_main.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed();
+            super.onBackPressed()
+            if (!isFinishing) {
+                navController.currentDestination?.id?.let {
+                    nv_main.setCheckedItem(it)
+                }
+            }
         }
     }
 }
