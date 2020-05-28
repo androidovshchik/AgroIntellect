@@ -1,11 +1,13 @@
 package ru.agrointellect.screen.main
 
 import android.app.Activity
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceTypedOf
@@ -64,6 +66,8 @@ class ReportsFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val grayColor = ContextCompat.getColor(requireContext(), R.color.colorRowGray)
+        tv_farm.text = mainModel.farm?.name.toString()
         sl_reports.setOnRefreshListener {
             loadReports()
         }
@@ -71,7 +75,8 @@ class ReportsFragment : BaseFragment() {
             setup {
                 withDataSource(dataSource)
                 withItem<Report, ReportHolder>(R.layout.item_report) {
-                    onBind(::ReportHolder) { _, item ->
+                    onBind(::ReportHolder) { i, item ->
+                        itemView.setBackgroundColor(if (i % 2 != 0) grayColor else Color.TRANSPARENT)
                         button.text = item.name
                     }
                     onClick {

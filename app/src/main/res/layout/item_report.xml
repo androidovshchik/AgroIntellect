@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.radiobutton.MaterialRadioButton xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rb_report"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="17dp"
-    android:layout_marginEnd="20dp"
+    android:button="@drawable/radio_button"
     android:lineSpacingExtra="8dp"
     android:paddingHorizontal="20dp"
     android:paddingTop="15dp"
     android:paddingBottom="15dp"
     android:textColor="#506482"
     android:textSize="16sp"
+    app:buttonTint="#2EC0D1"
     tools:text="История распределения\nпоголовья по группам" />
