@@ -14,5 +14,5 @@ class Farm : Serializable {
     @Expose
     lateinit var name: String
 
-    var checked = false
+    var selected = false
 }

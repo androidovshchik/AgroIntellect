@@ -31,4 +31,6 @@ class Report {
     @SerializedName("report_date_need")
     @Expose
     lateinit var dateNeed: String
+
+    var selected = false
 }
