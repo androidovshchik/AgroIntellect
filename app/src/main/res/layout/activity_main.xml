@@ -35,7 +35,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/main"
+            app:navGraph="@navigation/main_nav"
             tools:ignore="FragmentTagUsage" />
 
     </LinearLayout>
@@ -46,6 +46,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/layout_header"
+        app:itemBackground="@drawable/nav_menu"
         app:itemHorizontalPadding="20dp"
         app:itemIconPadding="16dp"
         app:itemIconSize="18dp"
