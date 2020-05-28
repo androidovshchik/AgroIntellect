@@ -12,11 +12,13 @@
             app:showAsAction="always" />
         <item
             android:id="@+id/action_reports"
+            android:enabled="false"
             android:icon="@drawable/ic_report"
             android:title="Отчёты"
             app:showAsAction="always" />
         <item
             android:id="@+id/action_charts"
+            android:enabled="false"
             android:icon="@drawable/ic_chart"
             android:title="Графики"
             app:showAsAction="always" />

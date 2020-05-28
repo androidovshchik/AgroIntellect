@@ -8,9 +8,11 @@ import android.text.SpannableString
 import android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
 import android.text.style.ForegroundColorSpan
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.core.view.forEach
 import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.Navigation
@@ -110,14 +112,26 @@ class MainActivity : BaseActivity() {
                     dl_main.closeDrawers()
                     navController.navigateExclusive(R.id.reportsFragment)
                 }
+                R.id.action_charts -> {
+                    dl_main.closeDrawers()
+                    navController.navigateExclusive(
+                        R.id.reportsFragment, bundleOf(
+                            "charts" to true
+                        )
+                    )
+                }
                 R.id.action_exit -> {
                     finish()
                 }
             }
             return@setNavigationItemSelectedListener true
         }
-        // todo
-        // nv_main.setCheckedItem(R.id.action_farms)
+        mainModel.selectedFarm.observe(this, Observer {
+            nv_main.menu.apply {
+                findItem(R.id.action_reports).isEnabled = true
+                findItem(R.id.action_charts).isEnabled = true
+            }
+        })
     }
 
     private fun logout() {

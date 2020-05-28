@@ -12,5 +12,10 @@
     <fragment
         android:id="@+id/reportsFragment"
         android:name="ru.agrointellect.screen.main.ReportsFragment"
-        tools:layout="@layout/fragment_reports" />
+        tools:layout="@layout/fragment_reports">
+        <argument
+            android:name="charts"
+            android:defaultValue="false"
+            app:argType="boolean" />
+    </fragment>
 </navigation>
