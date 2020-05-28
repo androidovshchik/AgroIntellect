@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceTypedOf
 import com.afollestad.recyclical.setup
@@ -14,6 +15,7 @@ import com.google.gson.Gson
 import io.ktor.client.HttpClient
 import io.ktor.client.request.forms.FormDataContent
 import io.ktor.client.request.post
+import io.ktor.client.statement.HttpResponse
 import io.ktor.http.Parameters
 import kotlinx.android.synthetic.main.fragment_reports.*
 import kotlinx.android.synthetic.main.item_report.view.*
@@ -26,6 +28,7 @@ import org.kodein.di.generic.instance
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
+import ru.agrointellect.extension.readJson
 import ru.agrointellect.local.Preferences
 import ru.agrointellect.remote.dto.Report
 import ru.agrointellect.remote.dto.Reports
@@ -45,6 +48,13 @@ class ReportsFragment : BaseFragment() {
 
     private val dataSource = dataSourceTypedOf<Report>()
 
+    private lateinit var mainModel: MainModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mainModel = ViewModelProvider(requireActivity()).get(MainModel::class.java)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
         context?.activityCallback<Activity> {
             title = "Выберите отчёт"
@@ -53,6 +63,8 @@ class ReportsFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        dataSource.clear()
+        dataSource.addAll(mainModel.reports)
         sl_reports.setOnRefreshListener {
             loadReports()
         }
@@ -61,7 +73,7 @@ class ReportsFragment : BaseFragment() {
                 withDataSource(dataSource)
                 withItem<Report, ReportHolder>(R.layout.item_report) {
                     onBind(::ReportHolder) { _, item ->
-
+                        button.text = item.name
                     }
                     onClick {
 
@@ -79,17 +91,18 @@ class ReportsFragment : BaseFragment() {
     }
 
     private fun loadReports() {
+        val farmId = mainModel.farm?.id.orEmpty()
         job.cancelChildren()
         launch {
             val data = withContext(Dispatchers.IO) {
-                val json = client.post<String>(BuildConfig.API_URL) {
+                val response = client.post<HttpResponse>(BuildConfig.API_URL) {
                     body = FormDataContent(Parameters.build {
-                        append("uid", preferences.hash.toString())
-                        append("farm_id", "")
+                        append("uid", preferences.getHash().orEmpty())
+                        append("farm_id", farmId)
                     })
                 }
-                val jsonObject = JSONObject(json)
-                val reports = jsonObject.getJSONObject("")
+                val jsonObject = response.readJson<JSONObject>(null)
+                val reports = jsonObject.getJSONObject(farmId)
                 gson.fromJson(reports.toString(), Reports::class.java)
             }
             dataSource.clear()

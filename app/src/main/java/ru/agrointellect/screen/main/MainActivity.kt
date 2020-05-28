@@ -42,6 +42,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         mainModel = ViewModelProvider(this).get(MainModel::class.java)
         if (intent.hasExtra("farms")) {
+            mainModel.farms.clear()
             mainModel.farms.addAll(intent.getSerializableExtra("farms") as List<Farm>)
         }
         setContentView(R.layout.activity_main)
