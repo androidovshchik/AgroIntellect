@@ -24,6 +24,7 @@ import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
 import org.kodein.di.generic.instance
 import ru.agrointellect.R
+import ru.agrointellect.extension.navigateExclusive
 import ru.agrointellect.extension.setAll
 import ru.agrointellect.local.Preferences
 import ru.agrointellect.remote.dto.Farm
@@ -100,15 +101,14 @@ class MainActivity : BaseActivity() {
             it.title = CalligraphyUtils.applyTypefaceSpan(it.title, font)
         }
         nv_main.setNavigationItemSelectedListener {
-            dl_main.closeDrawers()
             when (it.itemId) {
                 R.id.action_farms -> {
-                    navController.navigate(R.id.farmsFragment)
+                    dl_main.closeDrawers()
+                    navController.navigateExclusive(R.id.farmsFragment)
                 }
                 R.id.action_reports -> {
-                    if (mainModel.farm != null) {
-                        navController.navigate(R.id.reportsFragment)
-                    }
+                    dl_main.closeDrawers()
+                    navController.navigateExclusive(R.id.reportsFragment)
                 }
                 R.id.action_exit -> {
                     finish()
