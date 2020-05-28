@@ -2,24 +2,40 @@ package ru.agrointellect.screen
 
 import android.os.Bundle
 import android.util.Patterns
-import com.chibatching.kotpref.bulk
+import com.google.gson.Gson
+import io.ktor.client.HttpClient
+import io.ktor.client.request.forms.FormDataContent
+import io.ktor.client.request.post
+import io.ktor.client.statement.HttpResponse
+import io.ktor.http.Parameters
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.jetbrains.anko.contentView
 import org.jetbrains.anko.design.longSnackbar
 import org.jetbrains.anko.startActivity
 import org.kodein.di.generic.instance
+import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
+import ru.agrointellect.extension.readAny
 import ru.agrointellect.local.Preferences
+import ru.agrointellect.remote.dto.Farms
 import ru.agrointellect.screen.base.BaseActivity
 import ru.agrointellect.screen.main.MainActivity
 
 class LoginActivity : BaseActivity() {
 
+    private val client by instance<HttpClient>()
+
     private val preferences by instance<Preferences>()
+
+    private val gson by instance<Gson>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (preferences.hash != null) {
+        if (preferences.getHash() != null) {
             startActivity<MainActivity>()
             finish()
             return
@@ -38,12 +54,30 @@ class LoginActivity : BaseActivity() {
                 contentView?.longSnackbar("Заполните пароль")
                 return@setOnClickListener
             }
-            preferences.bulk {
-                login = email
-                password = pwd
+            waitDialog.show()
+            job.cancelChildren()
+            launch {
+                val data = withContext(Dispatchers.IO) {
+                    val response = client.post<HttpResponse>(BuildConfig.API_URL) {
+                        body = FormDataContent(Parameters.build {
+                            append("uid", preferences.getHash(email, pwd).toString())
+                        })
+                    }
+                    response.readAny<Farms>(gson)
+                }
+                if (data is Farms) {
+
+                } else {
+
+                }
+                /*preferences.bulk {
+                    login = email
+                    password = pwd
+                }
+                startActivity<MainActivity>()
+                finish()*/
+                waitDialog.hide()
             }
-            startActivity<MainActivity>()
-            finish()
         }
     }
 }

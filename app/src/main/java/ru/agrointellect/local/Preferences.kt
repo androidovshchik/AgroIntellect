@@ -14,12 +14,11 @@ class Preferences(context: Context) : KotprefModel(context) {
 
     var password by nullableStringPref(null, "password")
 
-    val hash: String?
-        get() {
-            val login = login ?: return null
-            val password = password ?: return null
-            return String(Hex.encodeHex(DigestUtils.sha512("$login$secret$password")))
-        }
+    fun getHash(email: String? = null, pwd: String? = null): String? {
+        val login = email ?: login ?: return null
+        val password = pwd ?: password ?: return null
+        return String(Hex.encodeHex(DigestUtils.sha512("$login$p$password")))
+    }
 
     @Suppress("SpellCheckingInspection")
     companion object {
@@ -27,6 +26,6 @@ class Preferences(context: Context) : KotprefModel(context) {
         /**
          * Encoded: +@p+
          */
-        private val secret = Base32().decode("FNAHAKY=").toString(Charsets.UTF_8)
+        private val p = Base32().decode("FNAHAKY=")?.toString(Charsets.UTF_8)
     }
 }
