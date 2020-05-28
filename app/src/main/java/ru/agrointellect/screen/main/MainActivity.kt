@@ -20,6 +20,8 @@ import io.github.inflationx.calligraphy3.CalligraphyUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_header.view.*
 import org.jetbrains.anko.clearTask
+import org.jetbrains.anko.contentView
+import org.jetbrains.anko.design.longSnackbar
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
 import org.kodein.di.generic.instance
@@ -113,6 +115,7 @@ class MainActivity : BaseActivity() {
                     if (mainModel.farm != null) {
                         navController.navigateExclusive(it.itemId)
                     } else {
+                        contentView?.longSnackbar("Выберите ферму")
                         return@setNavigationItemSelectedListener false
                     }
                 }
