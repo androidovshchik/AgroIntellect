@@ -11,6 +11,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.core.view.forEach
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.Navigation
 import coil.api.load
@@ -24,6 +25,7 @@ import org.jetbrains.anko.newTask
 import org.kodein.di.generic.instance
 import ru.agrointellect.R
 import ru.agrointellect.local.Preferences
+import ru.agrointellect.remote.dto.Farm
 import ru.agrointellect.screen.LoginActivity
 import ru.agrointellect.screen.base.BaseActivity
 
@@ -31,10 +33,17 @@ class MainActivity : BaseActivity() {
 
     private val preferences by instance<Preferences>()
 
+    private lateinit var mainModel: MainModel
+
     private lateinit var navController: NavHostController
 
+    @Suppress("UNCHECKED_CAST")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mainModel = ViewModelProvider(this).get(MainModel::class.java)
+        if (intent.hasExtra("farms")) {
+            mainModel.farms.addAll(intent.getSerializableExtra("farms") as List<Farm>)
+        }
         setContentView(R.layout.activity_main)
         navController = Navigation.findNavController(this, R.id.f_host) as NavHostController
         setupToolbar()
@@ -84,12 +93,13 @@ class MainActivity : BaseActivity() {
             transformations(CircleCropTransformation())
         }
         header.tv_email.text = preferences.login
+        nv_main.itemIconTintList = null
         val font = Typeface.createFromAsset(assets, "font/Ubuntu-Light.ttf")
         nv_main.menu.forEach {
             it.title = CalligraphyUtils.applyTypefaceSpan(it.title, font)
         }
-        nv_main.itemIconTintList = null
         nv_main.setNavigationItemSelectedListener {
+            dl_main.closeDrawers()
             when (it.itemId) {
                 R.id.action_farms -> {
                     navController.navigate(R.id.farmsFragment)
@@ -103,6 +113,8 @@ class MainActivity : BaseActivity() {
             }
             return@setNavigationItemSelectedListener true
         }
+        // todo
+        // nv_main.setCheckedItem(R.id.action_farms)
     }
 
     private fun logout() {
