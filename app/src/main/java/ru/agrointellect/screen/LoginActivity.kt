@@ -2,6 +2,7 @@ package ru.agrointellect.screen
 
 import android.os.Bundle
 import android.util.Patterns
+import com.chibatching.kotpref.bulk
 import com.google.gson.Gson
 import io.ktor.client.HttpClient
 import io.ktor.client.request.forms.FormDataContent
@@ -66,17 +67,15 @@ class LoginActivity : BaseActivity() {
                     response.readAny<Farms>(gson)
                 }
                 if (data is Farms) {
-
+                    preferences.bulk {
+                        login = email
+                        password = pwd
+                    }
+                    startActivity<MainActivity>()
+                    finish()
                 } else {
-
+                    throw Throwable("Ошибка: $data")
                 }
-                /*preferences.bulk {
-                    login = email
-                    password = pwd
-                }
-                startActivity<MainActivity>()
-                finish()*/
-                waitDialog.hide()
             }
         }
     }
