@@ -12,7 +12,6 @@ import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.core.view.forEach
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.Navigation
@@ -103,35 +102,33 @@ class MainActivity : BaseActivity() {
             it.title = CalligraphyUtils.applyTypefaceSpan(it.title, font)
         }
         nv_main.setNavigationItemSelectedListener {
+            dl_main.closeDrawers()
             when (it.itemId) {
                 R.id.action_farms -> {
-                    dl_main.closeDrawers()
                     navController.navigateExclusive(R.id.farmsFragment)
                 }
                 R.id.action_reports -> {
-                    dl_main.closeDrawers()
-                    navController.navigateExclusive(R.id.reportsFragment)
+                    if (mainModel.farm != null) {
+                        navController.navigateExclusive(R.id.reportsFragment)
+                    } else {
+                        return@setNavigationItemSelectedListener false
+                    }
                 }
                 R.id.action_charts -> {
-                    dl_main.closeDrawers()
-                    navController.navigateExclusive(
-                        R.id.reportsFragment, bundleOf(
-                            "charts" to true
+                    if (mainModel.farm != null) {
+                        navController.navigateExclusive(
+                            R.id.reportsFragment, bundleOf("charts" to true)
                         )
-                    )
+                    } else {
+                        return@setNavigationItemSelectedListener false
+                    }
                 }
                 R.id.action_exit -> {
                     finish()
                 }
             }
-            return@setNavigationItemSelectedListener true
+            true
         }
-        mainModel.selectedFarm.observe(this, Observer {
-            nv_main.menu.apply {
-                findItem(R.id.action_reports).isEnabled = true
-                findItem(R.id.action_charts).isEnabled = true
-            }
-        })
     }
 
     private fun logout() {

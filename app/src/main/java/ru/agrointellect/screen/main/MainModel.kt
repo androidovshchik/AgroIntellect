@@ -1,6 +1,5 @@
 package ru.agrointellect.screen.main
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.agrointellect.remote.dto.Farm
 import ru.agrointellect.remote.dto.Report
@@ -16,6 +15,4 @@ class MainModel : ViewModel() {
         get() = reports.firstOrNull { it.selected }
 
     val reports = mutableListOf<Report>()
-
-    val selectedFarm = MutableLiveData<Farm>()
 }

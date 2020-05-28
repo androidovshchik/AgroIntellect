@@ -111,7 +111,6 @@ class FarmsFragment : BaseFragment() {
                         }
                         item.selected = true
                         dataSource.invalidateAll()
-                        mainModel.selectedFarm.value = item
                     }
                 }
             }
