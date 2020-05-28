@@ -3,9 +3,9 @@ package ru.agrointellect.remote.dto
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class Farms {
+class Reports {
 
-    @SerializedName("farms")
+    @SerializedName("reports")
     @Expose
-    lateinit var farms: List<Farm>
+    lateinit var reports: List<Report>
 }

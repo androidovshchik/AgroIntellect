@@ -5,12 +5,12 @@ import com.google.gson.annotations.SerializedName
 
 class Farm {
 
-    @Expose
     @SerializedName("farm_id")
+    @Expose
     lateinit var id: String
 
-    @Expose
     @SerializedName("farm_name")
+    @Expose
     lateinit var name: String
 
     var checked = false
