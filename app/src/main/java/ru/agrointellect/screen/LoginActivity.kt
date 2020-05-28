@@ -26,7 +26,7 @@ class LoginActivity : BaseActivity() {
         }
         setContentView(R.layout.activity_login)
         mb_login.setOnClickListener {
-            val email = et_login.text.toString().ifBlank {
+            val email = et_login.text.toString().trim().ifEmpty {
                 contentView?.longSnackbar("Заполните логин (e-mail)")
                 return@setOnClickListener
             }
@@ -34,7 +34,7 @@ class LoginActivity : BaseActivity() {
                 contentView?.longSnackbar("Невалидный логин (e-mail)")
                 return@setOnClickListener
             }
-            val pwd = et_password.text.toString().ifBlank {
+            val pwd = et_password.text.toString().trim().ifEmpty {
                 contentView?.longSnackbar("Заполните пароль")
                 return@setOnClickListener
             }
