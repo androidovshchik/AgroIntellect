@@ -16,11 +16,11 @@ class RptMilkEventsKpi {
 
     @SerializedName("mlk_milk_per_cow")
     @Expose
-    var mlkMilkPerCow: String? = null
+    lateinit var mlkMilkPerCow: String
 
     @SerializedName("mlk_milk_per_lact_cow")
     @Expose
-    var mlkMilkPerLactCow: String? = null
+    lateinit var mlkMilkPerLactCow: String
 
     @SerializedName("evt_insem_cows")
     @Expose

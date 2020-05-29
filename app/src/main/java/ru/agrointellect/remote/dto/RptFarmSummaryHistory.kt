@@ -112,7 +112,7 @@ class RptFarmSummaryHistory {
 
     @SerializedName("hrd_cows_lact_all_pcnt")
     @Expose
-    var hrdCowsLactAllPcnt: String? = null
+    lateinit var hrdCowsLactAllPcnt: String
 
     @SerializedName("hrd_cows_lact_1_all")
     @Expose
@@ -120,7 +120,7 @@ class RptFarmSummaryHistory {
 
     @SerializedName("hrd_cows_lact_1_pcnt")
     @Expose
-    var hrdCowsLact1Pcnt: String? = null
+    lateinit var hrdCowsLact1Pcnt: String
 
     @SerializedName("hrd_cows_lact_1_0_30")
     @Expose
@@ -144,7 +144,7 @@ class RptFarmSummaryHistory {
 
     @SerializedName("hrd_cows_lact_2_pcnt")
     @Expose
-    var hrdCowsLact2Pcnt: String? = null
+    lateinit var hrdCowsLact2Pcnt: String
 
     @SerializedName("hrd_cows_lact_2_0_30")
     @Expose
@@ -168,7 +168,7 @@ class RptFarmSummaryHistory {
 
     @SerializedName("hrd_cows_lact_o2_pcnt")
     @Expose
-    var hrdCowsLactO2Pcnt: String? = null
+    lateinit var hrdCowsLactO2Pcnt: String
 
     @SerializedName("hrd_cows_lact_o2_0_30")
     @Expose
@@ -192,7 +192,7 @@ class RptFarmSummaryHistory {
 
     @SerializedName("hrd_cows_preg_pcnt")
     @Expose
-    var hrdCowsPregPcnt: String? = null
+    lateinit var hrdCowsPregPcnt: String
 
     @SerializedName("hrd_cows_dry_all")
     @Expose
@@ -200,7 +200,7 @@ class RptFarmSummaryHistory {
 
     @SerializedName("hrd_cows_dry_pcnt")
     @Expose
-    var hrdCowsDryPcnt: String? = null
+    lateinit var hrdCowsDryPcnt: String
 
     @SerializedName("hrd_cows_dry_f1")
     @Expose
@@ -284,11 +284,11 @@ class RptFarmSummaryHistory {
 
     @SerializedName("evt_calv_dead_all_pcnt")
     @Expose
-    var evtCalvDeadAllPcnt: String? = null
+    lateinit var evtCalvDeadAllPcnt: String
 
     @SerializedName("evt_calv_alive_heifers_all_pcnt")
     @Expose
-    var evtCalvAliveHeifersAllPcnt: String? = null
+    lateinit var evtCalvAliveHeifersAllPcnt: String
 
     @SerializedName("evt_calv_total_pheifers")
     @Expose
@@ -312,11 +312,11 @@ class RptFarmSummaryHistory {
 
     @SerializedName("evt_calv_dead_pheifers_pcnt")
     @Expose
-    var evtCalvDeadPheifersPcnt: String? = null
+    lateinit var evtCalvDeadPheifersPcnt: String
 
     @SerializedName("evt_calv_alive_heifers_pheifers_pcnt")
     @Expose
-    var evtCalvAliveHeifersPheifersPcnt: String? = null
+    lateinit var evtCalvAliveHeifersPheifersPcnt: String
 
     @SerializedName("evt_calv_total_cows")
     @Expose
@@ -340,11 +340,11 @@ class RptFarmSummaryHistory {
 
     @SerializedName("evt_calv_dead_cows_pcnt")
     @Expose
-    var evtCalvDeadCowsPcnt: String? = null
+    lateinit var evtCalvDeadCowsPcnt: String
 
     @SerializedName("evt_calv_alive_heifers_cows_pcnt")
     @Expose
-    var evtCalvAliveHeifersCowsPcnt: String? = null
+    lateinit var evtCalvAliveHeifersCowsPcnt: String
 
     @SerializedName("evt_abort_cows")
     @Expose
@@ -372,7 +372,7 @@ class RptFarmSummaryHistory {
 
     @SerializedName("evt_ret_plac_lact_1_pcnt")
     @Expose
-    var evtRetPlacLact1Pcnt: String? = null
+    lateinit var evtRetPlacLact1Pcnt: String
 
     @SerializedName("evt_ret_plac_lact_o1")
     @Expose
@@ -380,7 +380,7 @@ class RptFarmSummaryHistory {
 
     @SerializedName("evt_ret_plac_lact_o1_pcnt")
     @Expose
-    var evtRetPlacLactO1Pcnt: String? = null
+    lateinit var evtRetPlacLactO1Pcnt: String
 
     @SerializedName("evt_ret_plac_total")
     @Expose
@@ -388,7 +388,7 @@ class RptFarmSummaryHistory {
 
     @SerializedName("evt_ret_plac_total_pcnt")
     @Expose
-    var evtRetPlacTotalPcnt: String? = null
+    lateinit var evtRetPlacTotalPcnt: String
 
     @SerializedName("evt_pares_lact_1")
     @Expose
@@ -396,7 +396,7 @@ class RptFarmSummaryHistory {
 
     @SerializedName("evt_pares_lact_1_pcnt")
     @Expose
-    var evtParesLact1Pcnt: String? = null
+    lateinit var evtParesLact1Pcnt: String
 
     @SerializedName("evt_pares_lact_o1")
     @Expose
@@ -404,7 +404,7 @@ class RptFarmSummaryHistory {
 
     @SerializedName("evt_pares_lact_o1_pcnt")
     @Expose
-    var evtParesLactO1Pcnt: String? = null
+    lateinit var evtParesLactO1Pcnt: String
 
     @SerializedName("evt_pares_total")
     @Expose
@@ -412,7 +412,7 @@ class RptFarmSummaryHistory {
 
     @SerializedName("evt_pares_total_pcnt")
     @Expose
-    var evtParesTotalPcnt: String? = null
+    lateinit var evtParesTotalPcnt: String
 
     @SerializedName("evt_ketos_lact_1")
     @Expose
@@ -420,7 +420,7 @@ class RptFarmSummaryHistory {
 
     @SerializedName("evt_ketos_lact_1_pcnt")
     @Expose
-    var evtKetosLact1Pcnt: String? = null
+    lateinit var evtKetosLact1Pcnt: String
 
     @SerializedName("evt_ketos_lact_o1")
     @Expose
@@ -428,7 +428,7 @@ class RptFarmSummaryHistory {
 
     @SerializedName("evt_ketos_lact_o1_pcnt")
     @Expose
-    var evtKetosLactO1Pcnt: String? = null
+    lateinit var evtKetosLactO1Pcnt: String
 
     @SerializedName("evt_ketos_total")
     @Expose
@@ -436,7 +436,7 @@ class RptFarmSummaryHistory {
 
     @SerializedName("evt_ketos_total_pcnt")
     @Expose
-    var evtKetosTotalPcnt: String? = null
+    lateinit var evtKetosTotalPcnt: String
 
     @SerializedName("evt_metrit")
     @Expose
@@ -444,7 +444,7 @@ class RptFarmSummaryHistory {
 
     @SerializedName("evt_metrit_pcnt")
     @Expose
-    var evtMetritPcnt: String? = null
+    lateinit var evtMetritPcnt: String
 
     @SerializedName("evt_move_cows")
     @Expose
@@ -716,11 +716,11 @@ class RptFarmSummaryHistory {
 
     @SerializedName("mlk_milk_per_cow")
     @Expose
-    var mlkMilkPerCow: String? = null
+    lateinit var mlkMilkPerCow: String
 
     @SerializedName("mlk_milk_per_lact_cow")
     @Expose
-    var mlkMilkPerLactCow: String? = null
+    lateinit var mlkMilkPerLactCow: String
 
     @SerializedName("feed_kpi")
     @Expose

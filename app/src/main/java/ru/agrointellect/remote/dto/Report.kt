@@ -39,4 +39,7 @@ class Report {
 
     val hasTable: Boolean
         get() = type == "0" || type == "2"
+
+    val isDateNeeded: Boolean
+        get() = dateNeed == "1"
 }
