@@ -35,6 +35,11 @@
             android:configChanges="orientation|screenSize|keyboardHidden|screenLayout"
             android:launchMode="singleTask"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".screen.chart.ChartActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
 
 </manifest>
