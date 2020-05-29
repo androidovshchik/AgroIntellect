@@ -20,7 +20,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/sl_reports"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Распределения поголовья\nпо группам на текущий момент" />
 
     <TextView
@@ -54,7 +54,7 @@
         android:id="@+id/sl_data"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/mb_login"
+        app:layout_constraintBottom_toTopOf="@+id/mb_export"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/v_top">
@@ -69,33 +69,36 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/mb_login"
+        android:id="@+id/mb_export"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        fontPath="font/Ubuntu-Regular.ttf"
+        fontPath="font/Ubuntu-Medium.ttf"
         android:layout_width="wrap_content"
-        android:layout_height="52dp"
-        android:foreground="?android:attr/selectableItemBackground"
+        android:layout_height="46dp"
+        android:layout_marginBottom="20dp"
         android:text="Экспорт Excel"
-        android:textSize="18sp"
+        android:textColor="#1CB3C4"
+        android:textSize="15sp"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/mb_asdasd"
+        app:layout_constraintEnd_toStartOf="@+id/mb_send"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/mb_asdasd"
-        fontPath="font/Ubuntu-Regular.ttf"
+        android:id="@+id/mb_send"
+        fontPath="font/Ubuntu-Medium.ttf"
         android:layout_width="wrap_content"
-        android:layout_height="52dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/button"
         android:foreground="?android:attr/selectableItemBackground"
         android:text="Отправить"
-        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/mb_login" />
+        app:layout_constraintStart_toEndOf="@+id/mb_export" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
