@@ -109,7 +109,7 @@ class MainActivity : BaseActivity() {
                     navController.navigateExclusive(it.itemId)
                 }
                 R.id.action_exit -> {
-                    finish()
+                    logout()
                 }
                 else -> {
                     if (mainModel.farm != null) {
