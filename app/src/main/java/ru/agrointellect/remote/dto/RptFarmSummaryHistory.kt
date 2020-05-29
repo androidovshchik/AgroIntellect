@@ -724,5 +724,5 @@ class RptFarmSummaryHistory {
 
     @SerializedName("feed_kpi")
     @Expose
-    var feedKpi: Any? = null
+    var feedKpi: String? = null
 }
