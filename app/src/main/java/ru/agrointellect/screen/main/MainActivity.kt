@@ -71,11 +71,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    override fun setTitle(title: CharSequence?) {
-        val font = Typeface.createFromAsset(assets, "font/Ubuntu-Medium.ttf")
-        super.setTitle(CalligraphyUtils.applyTypefaceSpan(title, font))
-    }
-
     private fun setupToolbar() {
         setSupportActionBar(toolbar)
         val toggle = ActionBarDrawerToggle(this, dl_main, toolbar, 0, 0)

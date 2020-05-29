@@ -1,8 +1,10 @@
 package ru.agrointellect.screen.base
 
 import android.content.Context
+import android.graphics.Typeface
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import io.github.inflationx.calligraphy3.CalligraphyUtils
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import kotlinx.coroutines.*
 import org.jetbrains.anko.contentView
@@ -26,6 +28,11 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
         })
     }
     protected val waitDialog by waitDialogDelegate
+
+    override fun setTitle(title: CharSequence?) {
+        val font = Typeface.createFromAsset(assets, "font/Ubuntu-Medium.ttf")
+        super.setTitle(CalligraphyUtils.applyTypefaceSpan(title, font))
+    }
 
     override fun attachBaseContext(context: Context) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(context))

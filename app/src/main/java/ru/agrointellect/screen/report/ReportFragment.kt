@@ -1,4 +1,4 @@
-package ru.agrointellect.screen.main
+package ru.agrointellect.screen.report
 
 import android.os.Bundle
 import android.view.LayoutInflater
