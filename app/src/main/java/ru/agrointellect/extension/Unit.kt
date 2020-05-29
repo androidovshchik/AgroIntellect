@@ -4,16 +4,6 @@ package ru.agrointellect.extension
 
 import android.os.Build
 import android.os.Looper
-import java.util.*
-
-val offsetTime
-    get() = TimeZone.getDefault().getOffset(localTime)
-
-val utcTime
-    get() = localTime - offsetTime
-
-val localTime
-    get() = System.currentTimeMillis()
 
 val isUiThread: Boolean
     get() = Looper.myLooper() == Looper.getMainLooper()

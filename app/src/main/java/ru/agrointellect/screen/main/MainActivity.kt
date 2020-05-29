@@ -18,6 +18,7 @@ import coil.api.load
 import coil.transform.CircleCropTransformation
 import io.github.inflationx.calligraphy3.CalligraphyUtils
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_header.view.*
 import org.jetbrains.anko.clearTask
 import org.jetbrains.anko.contentView
