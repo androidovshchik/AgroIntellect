@@ -18,7 +18,8 @@
             android:layout_height="wrap_content"
             app:contentInsetStartWithNavigation="0dp"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:titleTextAppearance="@style/ToolbarStyle" />
+            app:titleTextAppearance="@style/ToolbarStyle"
+            app:titleTextColor="#506482" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
