@@ -66,8 +66,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-rc01"
     implementation 'com.afollestad:recyclical:1.1.1'
+    implementation 'com.thoughtbot:expandablerecyclerview:1.3'
     implementation 'com.github.thekhaeng:recycler-margin:1.2.1'
-    implementation "com.github.skydoves:expandablelayout:1.0.5"
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.chibatching.kotpref:kotpref:2.10.0'
     implementation "io.ktor:ktor-client-core:1.3.2"
