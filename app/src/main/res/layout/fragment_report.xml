@@ -50,14 +50,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_farm" />
 
+    <ImageView
+        android:layout_width="132dp"
+        android:layout_height="132dp"
+        android:layout_marginTop="85dp"
+        android:background="@drawable/circle_excel"
+        android:scaleType="center"
+        android:src="@drawable/excel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_top" />
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/sl_data"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
+        android:background="?android:colorBackground"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/mb_export"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/v_top">
+        app:layout_constraintTop_toBottomOf="@+id/v_top"
+        tools:background="@android:color/transparent"
+        tools:visibility="visible">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_data"
@@ -78,7 +94,6 @@
         android:text="Экспорт Excel"
         android:textColor="#1CB3C4"
         android:textSize="15sp"
-        app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/mb_send"
         app:layout_constraintHorizontal_bias="0.5"
