@@ -33,7 +33,7 @@ import org.kodein.di.generic.instance
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
-import ru.agrointellect.extension.readJson
+import ru.agrointellect.extension.readObject
 import ru.agrointellect.extension.setAll
 import ru.agrointellect.local.Preferences
 import ru.agrointellect.remote.dto.Farm
@@ -138,7 +138,7 @@ class FarmsFragment : BaseFragment() {
                         append("uid", preferences.getHash().toString())
                     })
                 }
-                response.readJson<Farms>(gson)
+                response.readObject<Farms>(gson)
             }
             val farms = data.farms.toList()
             mainModel.farms.setAll(farms)

@@ -76,11 +76,6 @@ class MainActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         val toggle = ActionBarDrawerToggle(this, dl_main, toolbar, 0, 0)
         dl_main.addDrawerListener(toggle)
-        toggle.isDrawerIndicatorEnabled = false
-        toggle.setHomeAsUpIndicator(R.drawable.ic_hamburger)
-        toggle.setToolbarNavigationClickListener {
-            dl_main.openDrawer(GravityCompat.START)
-        }
     }
 
     private fun setupNavigation() {
