@@ -9,12 +9,12 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import kotlinx.coroutines.*
 import org.jetbrains.anko.contentView
 import org.jetbrains.anko.design.longSnackbar
-import org.jetbrains.anko.indeterminateProgressDialog
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
+import ru.agrointellect.screen.WaitDialog
 import timber.log.Timber
 
-@Suppress("MemberVisibilityCanBePrivate", "DEPRECATION")
+@Suppress("MemberVisibilityCanBePrivate")
 abstract class BaseActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
 
     override val kodein by closestKodein()
@@ -22,10 +22,7 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
     protected val job = SupervisorJob()
 
     private val waitDialogDelegate = lazy {
-        indeterminateProgressDialog(title = "Пожалуйста, подождите...", init = {
-            window?.setDimAmount(0.2f)
-            setCancelable(false)
-        })
+        WaitDialog(this)
     }
     protected val waitDialog by waitDialogDelegate
 

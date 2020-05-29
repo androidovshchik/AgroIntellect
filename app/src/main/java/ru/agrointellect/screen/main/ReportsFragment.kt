@@ -86,7 +86,7 @@ open class ReportsFragment : BaseFragment() {
             }
         }
         if (mainModel.reports.isNotEmpty()) {
-            dataSource.setAll(mainModel.reports.filtered())
+            dataSource.setAll(mainModel.reports.getFiltered())
             dataSource.invalidateAll()
         } else {
             waitDialog.show()
@@ -115,14 +115,14 @@ open class ReportsFragment : BaseFragment() {
                 gson.fromJson(reports.toString(), Reports::class.java)
             }
             mainModel.reports.setAll(data.reports)
-            dataSource.setAll(data.reports.filtered())
+            dataSource.setAll(data.reports.getFiltered())
             dataSource.invalidateAll()
             waitDialog.hide()
             sl_reports.isRefreshing = false
         }
     }
 
-    protected open fun List<Report>.filtered(): List<Report> {
+    protected open fun List<Report>.getFiltered(): List<Report> {
         return filter { it.hasTable }
     }
 }

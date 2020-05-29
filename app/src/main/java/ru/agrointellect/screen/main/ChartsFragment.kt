@@ -4,7 +4,7 @@ import ru.agrointellect.remote.dto.Report
 
 class ChartsFragment : ReportsFragment() {
 
-    override fun List<Report>.filtered(): List<Report> {
+    override fun List<Report>.getFiltered(): List<Report> {
         return filter { it.hasChart }
     }
 }
