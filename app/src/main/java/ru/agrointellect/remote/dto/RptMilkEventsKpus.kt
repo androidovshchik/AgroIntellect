@@ -8,7 +8,7 @@ class RptMilkEventsKpus {
 
     @SerializedName("date")
     @Expose
-    var date: String? = null
+    lateinit var date: String
 
     @SerializedName("mlk_milk_sum_yield")
     @Expose

@@ -1,0 +1,28 @@
+package ru.agrointellect.remote.dto
+
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+
+@Suppress("SpellCheckingInspection")
+class RptSoldAnimal {
+
+    @SerializedName("date")
+    @Expose
+    lateinit var date: String
+
+    @SerializedName("evt_sold_cows_total")
+    @Expose
+    var evtSoldCowsTotal: String? = null
+
+    @SerializedName("evt_sold_pheifers")
+    @Expose
+    var evtSoldPheifers: String? = null
+
+    @SerializedName("evt_sold_heifers_total")
+    @Expose
+    var evtSoldHeifersTotal: String? = null
+
+    @SerializedName("evt_sold_bulls")
+    @Expose
+    var evtSoldBulls: String? = null
+}
