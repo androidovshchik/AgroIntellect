@@ -18,9 +18,9 @@ suspend inline fun <reified T> HttpResponse.readArray(gson: Gson, vararg keys: S
     val text = readText()
     return try {
         require(keys.isNotEmpty())
-        var jsonObject: Any = JSONObject(keys[0])
+        var jsonObject = JSONObject(keys[0])
         (1 until keys.size).forEach {
-            jsonObject = (jsonObject as JSONObject).get(keys[it])
+            jsonObject = jsonObject.getJSONObject(keys[it])
         }
         gson.fromJson(jsonObject.toString(), typeOfList<T>())
     } catch (ignored: Throwable) {
