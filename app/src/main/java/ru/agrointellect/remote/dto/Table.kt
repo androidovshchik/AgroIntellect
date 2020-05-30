@@ -6,6 +6,8 @@ import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
 
 interface Table {
 
+    val datesCount: Int
+
     val columns: List<Column>
 }
 

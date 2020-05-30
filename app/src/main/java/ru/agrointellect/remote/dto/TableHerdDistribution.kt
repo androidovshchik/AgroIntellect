@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName
 
 class TableHerdDistribution : Table {
 
+    override val datesCount = 2
+
     override val columns: List<Column>
         get() = listOf(
             Column("Фуражных коров", items.map { Row(it.date, it.hrdCowsAll ?: "0") }),

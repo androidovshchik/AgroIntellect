@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName
 
 class TableHerdAlignmentNow : Table {
 
+    override val datesCount = 0
+
     override val columns: List<Column>
         get() = items.map {
             Column(
