@@ -2,10 +2,11 @@ package ru.agrointellect.remote.dto
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import ru.agrointellect.screen.report.Column
+import ru.agrointellect.screen.report.Row
+import ru.agrointellect.screen.report.Table
 
 class TableHerdDistribution : Table {
-
-    override val datesCount = 2
 
     override val columns: List<Column>
         get() = listOf(

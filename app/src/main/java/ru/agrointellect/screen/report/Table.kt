@@ -1,12 +1,10 @@
-package ru.agrointellect.remote.dto
+package ru.agrointellect.screen.report
 
 import android.os.Parcel
 import android.os.Parcelable
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
 
 interface Table {
-
-    val datesCount: Int
 
     val columns: List<Column>
 }

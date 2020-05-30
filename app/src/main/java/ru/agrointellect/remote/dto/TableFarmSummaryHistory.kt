@@ -2,11 +2,12 @@ package ru.agrointellect.remote.dto
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import ru.agrointellect.screen.report.Column
+import ru.agrointellect.screen.report.Row
+import ru.agrointellect.screen.report.Table
 
 @Suppress("SpellCheckingInspection")
 class TableFarmSummaryHistory : Table {
-
-    override val datesCount = 2
 
     override val columns: List<Column>
         get() = listOf(
@@ -191,8 +192,9 @@ class TableFarmSummaryHistory : Table {
             Column("KPI кормления", mapByDate(""))
         )
 
-    private fun mapByDate(field: String?): List<Row> {
-        return items.map { Row(it.date, it.) }
+    private fun mapByDate(name: String): List<Row> {
+        val field = RptFarmSummaryHistory::class.java.getField(name)
+        return items.map { Row(it.date, field.get(it)?.toString() ?: "0") }
     }
 
     @SerializedName("rpt_farm_summary_history")
