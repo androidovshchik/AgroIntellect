@@ -12,7 +12,7 @@ class TableHerdAlignmentNow : Table {
         get() = items.map {
             Column(
                 "${it.groupNumber}. ${it.groupDescription}", listOf(
-                    Row("К-во животных", it.countOfAnimalsInGroup),
+                    Row("Кол-во животных", it.countOfAnimalsInGroup),
                     Row("Надой сегодня", it.averageMilkToday),
                     Row("Надой вчера", it.averageMilkYesterday),
                     Row("День доения", it.averageDaysInMilk),
