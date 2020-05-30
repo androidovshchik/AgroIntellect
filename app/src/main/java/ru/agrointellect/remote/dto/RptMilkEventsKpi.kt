@@ -1,8 +1,10 @@
 package ru.agrointellect.remote.dto
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
+@Keep
 @Suppress("SpellCheckingInspection")
 class RptMilkEventsKpi {
 
@@ -12,41 +14,51 @@ class RptMilkEventsKpi {
 
     @SerializedName("mlk_milk_sum_yield")
     @Expose
+    @JvmField
     var mlkMilkSumYield: String? = null
 
     @SerializedName("mlk_milk_per_cow")
     @Expose
-    lateinit var mlkMilkPerCow: String
+    @JvmField
+    var mlkMilkPerCow = ""
 
     @SerializedName("mlk_milk_per_lact_cow")
     @Expose
-    lateinit var mlkMilkPerLactCow: String
+    @JvmField
+    var mlkMilkPerLactCow = ""
 
     @SerializedName("evt_insem_cows")
     @Expose
+    @JvmField
     var evtInsemCows: String? = null
 
     @SerializedName("evt_got_preg_cows")
     @Expose
+    @JvmField
     var evtGotPregCows: String? = null
 
     @SerializedName("evt_dry_cows")
     @Expose
+    @JvmField
     var evtDryCows: String? = null
 
     @SerializedName("evt_move_cows")
     @Expose
+    @JvmField
     var evtMoveCows: String? = null
 
     @SerializedName("evt_vacc_cows")
     @Expose
+    @JvmField
     var evtVaccCows: String? = null
 
     @SerializedName("evt_footrim_cows")
     @Expose
+    @JvmField
     var evtFootrimCows: String? = null
 
     @SerializedName("feed_kpi")
     @Expose
+    @JvmField
     var feedKpi: String? = null
 }

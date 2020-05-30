@@ -1,4 +1,4 @@
-package ru.agrointellect.screen.report
+package ru.agrointellect.remote.dto
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -13,14 +13,11 @@ class Column(title: String, items: List<Row>) : ExpandableGroup<Row>(title, item
 
 class Row(key: String, val value: String) : Parcelable {
 
-    val key = key
-        get() {
-            return when (field) {
-                "average" -> "Средние показатели"
-                "summary" -> "Суммарные показатели"
-                else -> field
-            }
-        }
+    val key = when (key) {
+        "average" -> "Средние показатели"
+        "summary" -> "Суммарные показатели"
+        else -> key
+    }
 
     override fun writeToParcel(dest: Parcel, flags: Int) {}
 

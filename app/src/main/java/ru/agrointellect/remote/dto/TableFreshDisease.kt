@@ -2,10 +2,10 @@ package ru.agrointellect.remote.dto
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ru.agrointellect.screen.report.Column
-import ru.agrointellect.screen.report.Row
-import ru.agrointellect.screen.report.Table
 
+/**
+ * Послеотельные заболевания
+ */
 class TableFreshDisease : Table {
 
     override val columns: List<Column>
