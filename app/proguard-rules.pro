@@ -6,4 +6,3 @@
 }
 
 -keepnames class * extends androidx.fragment.app.Fragment
--keepnames class ru.agrointellect.remote.dto.*
