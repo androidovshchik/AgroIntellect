@@ -14,7 +14,8 @@ class TableSoldAnimal : Table {
             Column("Продажа нетелей", items.map { Row(it.date, it.evtSoldPheifers ?: "0") }),
             Column(
                 "Продажа телок всего",
-                items.map { Row(it.date, it.evtSoldHeifersTotal ?: "0") }),
+                items.map { Row(it.date, it.evtSoldHeifersTotal ?: "0") }
+            ),
             Column("Продажа быков", items.map { Row(it.date, it.evtSoldBulls ?: "0") })
         )
 
