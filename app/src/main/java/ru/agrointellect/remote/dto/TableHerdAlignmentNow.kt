@@ -6,6 +6,9 @@ import ru.agrointellect.screen.report.Column
 import ru.agrointellect.screen.report.Row
 import ru.agrointellect.screen.report.Table
 
+/**
+ * Распределение поголовья по группам на текущий момент
+ */
 class TableHerdAlignmentNow : Table {
 
     override val columns: List<Column>

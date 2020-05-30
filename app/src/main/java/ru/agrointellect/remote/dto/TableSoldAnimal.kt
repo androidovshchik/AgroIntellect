@@ -6,6 +6,9 @@ import ru.agrointellect.screen.report.Column
 import ru.agrointellect.screen.report.Row
 import ru.agrointellect.screen.report.Table
 
+/**
+ * Продажа
+ */
 class TableSoldAnimal : Table {
 
     override val columns: List<Column>
