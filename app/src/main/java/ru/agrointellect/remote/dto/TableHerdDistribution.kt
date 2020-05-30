@@ -7,9 +7,9 @@ class TableHerdDistribution : Table {
 
     override val columns: List<Column>
         get() = listOf(
-            Column("Фуражных коров", items.map { Row(it.date, it.hrdCowsAll) }),
-            Column("Дойных коров всего", items.map { Row(it.date, it.hrdCowsLactAll) }),
-            Column("Стельных коров", items.map { Row(it.date, it.hrdCowsPregAll) })
+            Column("Фуражных коров", items.map { Row(it.date, it.hrdCowsAll ?: "0") }),
+            Column("Дойных коров всего", items.map { Row(it.date, it.hrdCowsLactAll ?: "0") }),
+            Column("Стельных коров", items.map { Row(it.date, it.hrdCowsPregAll ?: "0") })
         )
 
     @SerializedName("rpt_herd_distribution")
