@@ -11,7 +11,7 @@ interface Table {
 
 class Column(title: String, items: List<Row>) : ExpandableGroup<Row>(title, items)
 
-class Row(val key: String, val value: String) : Parcelable {
+class Row(val key: String, val value: String?) : Parcelable {
 
     override fun writeToParcel(dest: Parcel, flags: Int) {}
 
@@ -23,8 +23,8 @@ class Row(val key: String, val value: String) : Parcelable {
             return null
         }
 
-        override fun newArray(size: Int): Array<Row?> {
-            return arrayOfNulls(size)
+        override fun newArray(size: Int): Array<Row>? {
+            return null
         }
     }
 }
