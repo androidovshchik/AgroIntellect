@@ -2,10 +2,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@+id/reportFragment"
+    app:startDestination="@+id/chartFragment"
     tools:ignore="UnusedNavigation">
     <fragment
-        android:id="@+id/reportFragment"
-        android:name="ru.agrointellect.screen.report.ReportFragment"
-        tools:layout="@layout/fragment_report" />
+        android:id="@+id/chartFragment"
+        android:name="ru.agrointellect.screen.chart.ChartFragment"
+        tools:layout="@layout/fragment_chart" />
 </navigation>

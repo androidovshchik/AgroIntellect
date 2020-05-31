@@ -26,6 +26,6 @@ class Preferences(context: Context) : KotprefModel(context) {
         /**
          * Encoded: +@p+
          */
-        private val p = Base32().decode("FNAHAKY=")?.toString(Charsets.UTF_8)
+        private val p = Base32().decode("FNAHAKY=").toString(Charsets.UTF_8)
     }
 }

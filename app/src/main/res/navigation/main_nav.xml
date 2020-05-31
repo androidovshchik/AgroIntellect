@@ -2,8 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_main"
-    app:startDestination="@id/farmsFragment"
+    app:startDestination="@+id/farmsFragment"
     tools:ignore="UnusedNavigation">
     <fragment
         android:id="@+id/farmsFragment"
@@ -17,4 +16,12 @@
         android:id="@+id/chartsFragment"
         android:name="ru.agrointellect.screen.main.ChartsFragment"
         tools:layout="@layout/fragment_reports" />
+    <activity
+        android:id="@+id/reportActivity"
+        android:name="ru.agrointellect.screen.report.ReportActivity"
+        android:label="ReportActivity" />
+    <activity
+        android:id="@+id/chartActivity"
+        android:name="ru.agrointellect.screen.chart.ChartActivity"
+        android:label="ChartActivity" />
 </navigation>
