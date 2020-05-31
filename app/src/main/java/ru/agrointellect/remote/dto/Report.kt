@@ -1,7 +1,9 @@
 package ru.agrointellect.remote.dto
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 class Report {
 
@@ -42,4 +44,7 @@ class Report {
 
     val isDateNeeded: Boolean
         get() = dateNeed == "1"
+
+    @Keep
+    class Item(val id: String, val title: String) : Serializable
 }

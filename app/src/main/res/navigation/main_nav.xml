@@ -19,9 +19,17 @@
     <activity
         android:id="@+id/reportActivity"
         android:name="ru.agrointellect.screen.report.ReportActivity"
-        android:label="ReportActivity" />
+        android:label="ReportActivity">
+        <argument
+            android:name="report"
+            app:argType="ru.agrointellect.remote.dto.Report$Item" />
+    </activity>
     <activity
         android:id="@+id/chartActivity"
         android:name="ru.agrointellect.screen.chart.ChartActivity"
-        android:label="ChartActivity" />
+        android:label="ChartActivity">
+        <argument
+            android:name="report"
+            app:argType="ru.agrointellect.remote.dto.Report$Item" />
+    </activity>
 </navigation>
