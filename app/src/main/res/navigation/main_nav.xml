@@ -22,7 +22,7 @@
         android:label="ReportActivity">
         <argument
             android:name="report"
-            app:argType="ru.agrointellect.remote.dto.Report$Item" />
+            app:argType="ru.agrointellect.remote.dto.Report$Default" />
     </activity>
     <activity
         android:id="@+id/chartActivity"
@@ -30,6 +30,6 @@
         android:label="ChartActivity">
         <argument
             android:name="report"
-            app:argType="ru.agrointellect.remote.dto.Report$Item" />
+            app:argType="ru.agrointellect.remote.dto.Report$Default" />
     </activity>
 </navigation>

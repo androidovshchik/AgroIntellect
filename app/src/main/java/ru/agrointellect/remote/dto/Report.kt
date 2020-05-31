@@ -46,5 +46,5 @@ class Report {
         get() = dateNeed == "1"
 
     @Keep
-    class Item(val id: String, val title: String) : Serializable
+    class Default(val id: String, val title: String, val dates: Int) : Serializable
 }
