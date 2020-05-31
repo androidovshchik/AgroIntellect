@@ -11,14 +11,11 @@ class RptsFreshDisease : Table {
 
     override val columns: List<Column>
         get() = listOf(
-            Column("Отелов всего", items.map { Row(it.date, it.evtCalvTotal ?: "0") }),
-            Column(
-                "Задержаний последа всего",
-                items.map { Row(it.date, it.evtRetPlacTotal ?: "0") }
-            ),
-            Column("Парезов всего", items.map { Row(it.date, it.evtParesTotal ?: "0") }),
-            Column("Кетозов всего", items.map { Row(it.date, it.evtKetosTotal ?: "0") }),
-            Column("Метритов", items.map { Row(it.date, it.evtMetrit ?: "0") })
+            Column("Отелов всего", items.map { Row(it.date, it.evtCalvTotal) }),
+            Column("Задержаний последа всего", items.map { Row(it.date, it.evtRetPlacTotal) }),
+            Column("Парезов всего", items.map { Row(it.date, it.evtParesTotal) }),
+            Column("Кетозов всего", items.map { Row(it.date, it.evtKetosTotal) }),
+            Column("Метритов", items.map { Row(it.date, it.evtMetrit) })
         )
 
     @SerializedName("rpt_fresh_disease")

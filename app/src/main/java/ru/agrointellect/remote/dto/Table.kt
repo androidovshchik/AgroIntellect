@@ -11,13 +11,15 @@ interface Table {
 
 class Column(title: String, items: List<Row>) : ExpandableGroup<Row>(title, items)
 
-class Row(key: String, val value: String) : Parcelable {
+class Row(key: String, value: String?) : Parcelable {
 
     val key = when (key) {
         "average" -> "Средние показатели"
         "summary" -> "Суммарные показатели"
         else -> key
     }
+
+    val value = value ?: "0"
 
     override fun writeToParcel(dest: Parcel, flags: Int) {}
 

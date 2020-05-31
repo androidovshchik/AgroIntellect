@@ -53,9 +53,9 @@ class FarmsFragment : BaseFragment() {
 
     private val gson by instance<Gson>()
 
-    private val dataSource = dataSourceTypedOf<Farm>()
-
     private lateinit var mainModel: MainModel
+
+    private val dataSource = dataSourceTypedOf<Farm>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -140,9 +140,8 @@ class FarmsFragment : BaseFragment() {
                 }
                 response.readObject<Farms>(gson)
             }
-            val farms = data.farms.toList()
-            mainModel.farms.setAll(farms)
-            dataSource.setAll(farms)
+            mainModel.farms.setAll(data.farms)
+            dataSource.setAll(data.farms)
             dataSource.invalidateAll()
             waitDialog.hide()
             sl_farms.isRefreshing = false

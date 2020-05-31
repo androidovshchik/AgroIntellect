@@ -25,7 +25,7 @@ class RptsMilkEventsKpi : Table {
 
     private fun mapByField(name: String): List<Row> {
         val field = RptMilkEventsKpi::class.java.getField(name)
-        return items.map { Row(it.date, field.get(it)?.toString() ?: "0") }
+        return items.map { Row(it.date, field.get(it)?.toString()) }
     }
 
     @SerializedName("rpt_milk_events_kpi")

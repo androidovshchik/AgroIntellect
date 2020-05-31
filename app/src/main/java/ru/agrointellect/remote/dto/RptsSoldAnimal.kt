@@ -11,13 +11,10 @@ class RptsSoldAnimal : Table {
 
     override val columns: List<Column>
         get() = listOf(
-            Column("Продажа коров всего", items.map { Row(it.date, it.evtSoldCowsTotal ?: "0") }),
-            Column("Продажа нетелей", items.map { Row(it.date, it.evtSoldPheifers ?: "0") }),
-            Column(
-                "Продажа телок всего",
-                items.map { Row(it.date, it.evtSoldHeifersTotal ?: "0") }
-            ),
-            Column("Продажа быков", items.map { Row(it.date, it.evtSoldBulls ?: "0") })
+            Column("Продажа коров всего", items.map { Row(it.date, it.evtSoldCowsTotal) }),
+            Column("Продажа нетелей", items.map { Row(it.date, it.evtSoldPheifers) }),
+            Column("Продажа телок всего", items.map { Row(it.date, it.evtSoldHeifersTotal) }),
+            Column("Продажа быков", items.map { Row(it.date, it.evtSoldBulls) })
         )
 
     @SerializedName("rpt_sold_animals")
