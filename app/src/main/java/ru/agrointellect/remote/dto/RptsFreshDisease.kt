@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Послеотельные заболевания
  */
-class TableFreshDisease : Table {
+class RptsFreshDisease : Table {
 
     override val columns: List<Column>
         get() = listOf(

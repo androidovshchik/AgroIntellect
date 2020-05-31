@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Поголовье: фуражное, дойное, стельное
  */
-class TableHerdDistribution : Table {
+class RptsHerdDistribution : Table {
 
     override val columns: List<Column>
         get() = listOf(

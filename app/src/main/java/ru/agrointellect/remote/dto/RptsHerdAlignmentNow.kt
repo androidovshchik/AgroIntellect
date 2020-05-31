@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Распределение поголовья по группам на текущий момент
  */
-class TableHerdAlignmentNow : Table {
+class RptsHerdAlignmentNow : Table {
 
     override val columns: List<Column>
         get() = items.map {

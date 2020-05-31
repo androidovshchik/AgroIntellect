@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
  * Надой, события, кормление
  */
 @Suppress("SpellCheckingInspection")
-class TableMilkEventsKpi : Table {
+class RptMilkEventsKpis : Table {
 
     override val columns: List<Column>
         get() = listOf(

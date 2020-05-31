@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Падеж
  */
-class TableDiedAnimal : Table {
+class RptsDiedAnimal : Table {
 
     override val columns: List<Column>
         get() = listOf(

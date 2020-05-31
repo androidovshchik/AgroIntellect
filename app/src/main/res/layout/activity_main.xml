@@ -22,7 +22,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/main_nav"
+            app:navGraph="@navigation/nav_main"
             tools:ignore="FragmentTagUsage" />
 
     </LinearLayout>
@@ -40,7 +40,7 @@
         app:itemIconSize="18dp"
         app:itemTextAppearance="@style/NavigationTextStyle"
         app:itemTextColor="#506482"
-        app:menu="@menu/main_menu">
+        app:menu="@menu/menu_main">
 
         <TextView
             android:id="@+id/tv_exit"

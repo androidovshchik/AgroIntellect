@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Даты актуальности данных
  */
-class TableLastUpdate : Table {
+class RptsLastUpdate : Table {
 
     override val columns: List<Column>
         get() = listOf(

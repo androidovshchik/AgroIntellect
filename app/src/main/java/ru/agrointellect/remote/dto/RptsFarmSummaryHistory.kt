@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
  * Сводный отчет
  */
 @Suppress("SpellCheckingInspection")
-class TableFarmSummaryHistory : Table {
+class RptsFarmSummaryHistory : Table {
 
     override val columns: List<Column>
         get() = listOf(

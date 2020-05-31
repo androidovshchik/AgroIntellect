@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Продажа
  */
-class TableSoldAnimal : Table {
+class RptsSoldAnimal : Table {
 
     override val columns: List<Column>
         get() = listOf(
