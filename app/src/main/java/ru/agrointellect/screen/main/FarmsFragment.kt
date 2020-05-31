@@ -33,11 +33,10 @@ import org.kodein.di.generic.instance
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
-import ru.agrointellect.extension.readObject
+import ru.agrointellect.extension.readArray
 import ru.agrointellect.extension.setAll
 import ru.agrointellect.local.Preferences
 import ru.agrointellect.remote.dto.Farm
-import ru.agrointellect.remote.dto.Farms
 import ru.agrointellect.screen.base.BaseFragment
 
 class FarmHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -138,10 +137,10 @@ class FarmsFragment : BaseFragment() {
                         append("uid", preferences.getHash().toString())
                     })
                 }
-                response.readObject<Farms>(gson)
+                response.readArray<Farm>(gson, "farms")
             }
-            mainModel.farms.setAll(data.farms)
-            dataSource.setAll(data.farms)
+            mainModel.farms.setAll(data)
+            dataSource.setAll(data)
             dataSource.invalidateAll()
             waitDialog.hide()
             sl_farms.isRefreshing = false

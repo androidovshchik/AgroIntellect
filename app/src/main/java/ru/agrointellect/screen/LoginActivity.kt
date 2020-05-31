@@ -20,9 +20,9 @@ import org.jetbrains.anko.startActivity
 import org.kodein.di.generic.instance
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
-import ru.agrointellect.extension.readObject
+import ru.agrointellect.extension.readArray
 import ru.agrointellect.local.Preferences
-import ru.agrointellect.remote.dto.Farms
+import ru.agrointellect.remote.dto.Farm
 import ru.agrointellect.screen.base.BaseActivity
 import ru.agrointellect.screen.main.MainActivity
 
@@ -64,13 +64,13 @@ class LoginActivity : BaseActivity() {
                             append("uid", preferences.getHash(email, pwd).toString())
                         })
                     }
-                    response.readObject<Farms>(gson)
+                    response.readArray<Farm>(gson, "farms")
                 }
                 preferences.bulk {
                     login = email
                     password = pwd
                 }
-                startActivity<MainActivity>("farms" to data.farms)
+                startActivity<MainActivity>("farms" to data)
                 finish()
             }
         }
