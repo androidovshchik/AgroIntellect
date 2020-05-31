@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceTypedOf
 import com.afollestad.recyclical.setup
@@ -25,17 +27,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
+import org.jetbrains.anko.startActivity
 import org.kodein.di.generic.instance
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
-import ru.agrointellect.extension.readJson
+import ru.agrointellect.extension.readArray
 import ru.agrointellect.extension.setAll
 import ru.agrointellect.local.Preferences
 import ru.agrointellect.remote.dto.Report
-import ru.agrointellect.remote.dto.Reports
 import ru.agrointellect.screen.base.BaseFragment
+import ru.agrointellect.screen.report.ReportActivity
 
 class ReportHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val button: RadioButton = itemView.rb_report
@@ -49,9 +51,34 @@ open class ReportsFragment : BaseFragment() {
 
     private val gson by instance<Gson>()
 
-    private val dataSource = dataSourceTypedOf<Report>()
-
     private lateinit var mainModel: MainModel
+
+    private val dataSource = dataSourceTypedOf<Report.Default>()
+
+    protected open val defaultList = listOf(
+        Report.Default("rpt_herd_distribution", "Поголовье: фуражное, дойное, стельное", 2),
+        Report.Default(
+            "rpt_herd_alignment_now",
+            "Распределение поголовья по группам на текущий момент",
+            0
+        ),
+        Report.Default(
+            "rpt_herd_alignment_history",
+            "История распределения поголовья по группам",
+            1
+        ),
+        Report.Default("rpt_herd_lactation_graph", "График лактации поголовья", 0),
+        Report.Default("rpt_milk_events_kpi", "Надой, события, кормление", 2),
+        Report.Default("rpt_fresh_disease", "Послеотельные заболевания", 2),
+        Report.Default("rpt_farm_summary_history", "Сводный отчет", 2),
+        Report.Default("rpt_herd_forecast", "Прогноз поголовья", 0),
+        Report.Default("rpt_sold_animals", "Продажа", 2),
+        Report.Default("rpt_died_animals", "Падеж", 2),
+        Report.Default("rpt_last_updates", "Даты актуальности данных", 0)
+    )
+
+    private val thisClass
+        get() = javaClass
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,13 +101,19 @@ open class ReportsFragment : BaseFragment() {
         rv_reports.apply {
             setup {
                 withDataSource(dataSource)
-                withItem<Report, ReportHolder>(R.layout.item_report) {
+                withItem<Report.Default, ReportHolder>(R.layout.item_report) {
                     onBind(::ReportHolder) { i, item ->
                         itemView.setBackgroundColor(if (i % 2 != 0) grayColor else Color.TRANSPARENT)
-                        button.text = item.name
+                        button.text = item.title
                     }
                     onClick {
-
+                        findNavController().navigate(
+                            if (thisClass == ReportsFragment::class.java) {
+                                R.id.reportActivity
+                            } else {
+                                R.id.chartActivity
+                            }, bundleOf("report" to item)
+                        )
                     }
                 }
             }
@@ -92,6 +125,12 @@ open class ReportsFragment : BaseFragment() {
             waitDialog.show()
             loadReports()
         }
+    }
+
+    protected open fun openReport(item: Report) {
+        context?.startActivity<ReportActivity>(
+
+        )
     }
 
     override fun showError(e: Throwable) {
@@ -110,19 +149,13 @@ open class ReportsFragment : BaseFragment() {
                         append("farm_id", farmId)
                     })
                 }
-                val jsonObject = response.readJson<JSONObject>(null)
-                val reports = jsonObject.getJSONObject(farmId)
-                gson.fromJson(reports.toString(), Reports::class.java)
+                response.readArray<Report>(gson, farmId, "reports")
             }
-            mainModel.reports.setAll(data.reports)
-            dataSource.setAll(data.reports.getFiltered())
+            mainModel.reports.setAll(data)
+            dataSource.setAll(data.getFiltered())
             dataSource.invalidateAll()
             waitDialog.hide()
             sl_reports.isRefreshing = false
         }
-    }
-
-    protected open fun List<Report>.getFiltered(): List<Report> {
-        return filter { it.hasTable }
     }
 }
