@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Распределение поголовья по группам на текущий момент
  */
+@Suppress("SpellCheckingInspection")
 class RptsHerdAlignmentNow : Table {
 
     override val columns: List<Column>

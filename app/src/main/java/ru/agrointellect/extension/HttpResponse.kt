@@ -1,13 +1,21 @@
 package ru.agrointellect.extension
 
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.readText
 import org.json.JSONObject
 
-suspend inline fun <reified T> HttpResponse.readObject(gson: Gson): T {
-    val text = readText()
+suspend inline fun <reified T> HttpResponse.readObject(gson: Gson, vararg keys: String): T {
+    var text = readText()
     return try {
+        if (keys.isNotEmpty()) {
+            var json: Any = JSONObject(text)
+            keys.forEach {
+                json = (json as JSONObject).get(it)
+            }
+            text = json.toString()
+        }
         gson.fromJson(text, T::class.java)
     } catch (ignored: Throwable) {
         throw Throwable("Ошибка: $text")
@@ -15,14 +23,16 @@ suspend inline fun <reified T> HttpResponse.readObject(gson: Gson): T {
 }
 
 suspend inline fun <reified T> HttpResponse.readArray(gson: Gson, vararg keys: String): List<T> {
-    val text = readText()
+    var text = readText()
     return try {
-        require(keys.isNotEmpty())
-        var jsonObject = JSONObject(keys[0])
-        (1 until keys.size).forEach {
-            jsonObject = jsonObject.getJSONObject(keys[it])
+        if (keys.isNotEmpty()) {
+            var json: Any = JSONObject(text)
+            keys.forEach {
+                json = (json as JSONObject).get(it)
+            }
+            text = json.toString()
         }
-        gson.fromJson(jsonObject.toString(), typeOfList<T>())
+        gson.fromJson(text, object : TypeToken<List<T>>() {}.type)
     } catch (ignored: Throwable) {
         throw Throwable("Ошибка: $text")
     }

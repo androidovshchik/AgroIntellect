@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Даты актуальности данных
  */
+@Suppress("SpellCheckingInspection")
 class RptsLastUpdate : Table {
 
     override val columns: List<Column>

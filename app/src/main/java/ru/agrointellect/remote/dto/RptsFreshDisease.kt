@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Послеотельные заболевания
  */
+@Suppress("SpellCheckingInspection")
 class RptsFreshDisease : Table {
 
     override val columns: List<Column>

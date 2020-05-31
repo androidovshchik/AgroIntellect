@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Падеж
  */
+@Suppress("SpellCheckingInspection")
 class RptsDiedAnimal : Table {
 
     override val columns: List<Column>

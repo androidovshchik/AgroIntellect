@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Поголовье: фуражное, дойное, стельное
  */
+@Suppress("SpellCheckingInspection")
 class RptsHerdDistribution : Table {
 
     override val columns: List<Column>
