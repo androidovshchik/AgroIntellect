@@ -15,6 +15,12 @@ class RptsHerdLactationGraph : Table {
 
     override val columns: List<Column>
         get() {
+            val columns = arrayOf(
+                "Средняя лактация",
+                "Лактация 1",
+                "Лактация 2",
+                "Лактация > 2"
+            )
             val source = """
                 ${items[0].lactationDays}
                 ${items[0].averageLactationDailyMilk}
@@ -25,42 +31,11 @@ class RptsHerdLactationGraph : Table {
             """.trimIndent()
             val csv = csvReader.read(StringReader(source))
             val days = csv.getRow(0)
-            return listOf(
-                Column(
-                    "Средняя лактация",
-                    csv.getRow(1).fields.mapIndexed { i, value ->
-                        Row("${days.getField(i)} день доения", value)
-                    }
-                ),
-                Column(
-                    "Лактация 1",
-                    csv.getRow(2).fields.mapIndexed { i, value ->
-                        Row("${days.getField(i)} день доения", value)
-                    }
-                ),
-                Column(
-                    "Лактация 2",
-                    csv.getRow(3).fields.mapIndexed { i, value ->
-                        Row("${days.getField(i)} день доения", value)
-                    }
-                )
-                /*listOf(
-                    Column(
-                        "Средняя лактация",
-                        items.mapIndexed { i, rptHerdLactationGraph ->
-                            Row(
-                                "$i день доения",
-                                it.hrdCowsAll ?: "0"
-                            )
-                        }),
-                    Column("Лактация 1", items.map { Row(it.date, it.hrdCowsLactAll ?: "0") }),
-                    Column("Лактация 2", items.map { Row(it.date, it.hrdCowsLactAll ?: "0") }),
-                    Column("Лактация > 2", items.map { Row(it.date, it.hrdCowsPregAll ?: "0") }),
-                    Column(
-                        "Образец 7500 за 305 дней",
-                        items.map { Row(it.date, it.hrdCowsPregAll ?: "0") })
-                )*/
-            )
+            return columns.mapIndexed { i, column ->
+                Column(column, csv.getRow(i + 1).fields.mapIndexed { j, value ->
+                    Row("${days.getField(j)} день доения", value)
+                })
+            }
         }
 
     @SerializedName("rpt_herd_lactation_graph")
