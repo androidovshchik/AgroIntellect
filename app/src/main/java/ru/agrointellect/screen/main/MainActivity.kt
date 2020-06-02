@@ -12,8 +12,8 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.forEach
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavHostController
-import androidx.navigation.Navigation
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import coil.api.load
 import coil.transform.CircleCropTransformation
 import io.github.inflationx.calligraphy3.CalligraphyUtils
@@ -40,7 +40,7 @@ class MainActivity : BaseActivity() {
 
     private lateinit var mainModel: MainModel
 
-    private lateinit var navController: NavHostController
+    private lateinit var navController: NavController
 
     @Suppress("UNCHECKED_CAST")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,12 +50,9 @@ class MainActivity : BaseActivity() {
             mainModel.farms.setAll(intent.getSerializableExtra("farms") as List<Farm>)
         }
         setContentView(R.layout.activity_main)
-        navController = Navigation.findNavController(this, R.id.f_host) as NavHostController
+        navController = findNavController(R.id.f_host)
         setupToolbar()
         setupNavigation()
-        tv_exit.setOnClickListener {
-            logout()
-        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -112,6 +109,9 @@ class MainActivity : BaseActivity() {
                 }
             }
             true
+        }
+        tv_exit.setOnClickListener {
+            logout()
         }
     }
 
