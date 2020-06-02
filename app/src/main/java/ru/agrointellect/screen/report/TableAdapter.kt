@@ -1,13 +1,18 @@
 package ru.agrointellect.screen.report
 
+import android.content.Context
+import android.graphics.Color
+import android.graphics.Typeface
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.LayoutRes
+import androidx.core.content.ContextCompat
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder
 import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder
+import io.github.inflationx.calligraphy3.CalligraphyUtils
 import kotlinx.android.synthetic.main.item_column.view.*
 import kotlinx.android.synthetic.main.item_row.view.*
 import org.jetbrains.anko.layoutInflater
@@ -24,7 +29,12 @@ class RowHolder(itemView: View) : ChildViewHolder(itemView) {
     val value: TextView = itemView.tv_value
 }
 
-class TableAdapter : ExpandableRecyclerViewAdapter<ColumnHeader, RowHolder>(emptyList()) {
+class TableAdapter(context: Context) :
+    ExpandableRecyclerViewAdapter<ColumnHeader, RowHolder>(emptyList()) {
+
+    private val grayColor = ContextCompat.getColor(context, R.color.colorRowGray)
+
+    private val regularFont = Typeface.createFromAsset(context.assets, "font/Ubuntu-Regular.ttf")
 
     override fun onCreateGroupViewHolder(parent: ViewGroup, viewType: Int): ColumnHeader {
         return ColumnHeader(parent.inflate(R.layout.item_column))
@@ -49,8 +59,17 @@ class TableAdapter : ExpandableRecyclerViewAdapter<ColumnHeader, RowHolder>(empt
         childIndex: Int
     ) {
         val row = group.items[childIndex] as Row
-        holder.key.text = row.key
-        holder.value.text = row.value
+        holder.apply {
+            if (row.bold) {
+                itemView.setBackgroundColor(Color.TRANSPARENT)
+                key.text = CalligraphyUtils.applyTypefaceSpan(row.key, regularFont)
+                value.text = CalligraphyUtils.applyTypefaceSpan(row.value, regularFont)
+            } else {
+                itemView.setBackgroundColor(if (childIndex % 2 != 0) grayColor else Color.TRANSPARENT)
+                key.text = row.key
+                value.text = row.value
+            }
+        }
     }
 
     fun setAll(groups: List<Column>) {
