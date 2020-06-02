@@ -11,7 +11,7 @@ import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
  */
 public class ChildViewHolder extends RecyclerView.ViewHolder {
 
-    public ChildViewHolder(View itemView) {
-        super(itemView);
-    }
+  public ChildViewHolder(View itemView) {
+    super(itemView);
+  }
 }

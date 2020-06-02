@@ -30,14 +30,6 @@ public class ExpandableGroup<T extends Parcelable> implements Parcelable {
         return items == null ? 0 : items.size();
     }
 
-    @Override
-    public String toString() {
-        return "ExpandableGroup{" +
-                "title='" + title + '\'' +
-                ", items=" + items +
-                '}';
-    }
-
     protected ExpandableGroup(Parcel in) {
         title = in.readString();
         byte hasItems = in.readByte();
