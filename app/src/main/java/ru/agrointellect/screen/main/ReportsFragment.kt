@@ -106,7 +106,7 @@ open class ReportsFragment : BaseFragment() {
                     onBind(::ReportHolder) { i, item ->
                         itemView.setBackgroundColor(if (i % 2 != 0) grayColor else Color.TRANSPARENT)
                         button.setChecked(item.selected, false)
-                        button.text = item.title
+                        button.text = item.name
                     }
                     onClick { i ->
                         dataSource.toList().forEachIndexed { j, report ->

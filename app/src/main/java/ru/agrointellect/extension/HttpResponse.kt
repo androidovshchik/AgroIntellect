@@ -6,6 +6,7 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.readText
 import org.json.JSONObject
 import ru.agrointellect.remote.dto.*
+import timber.log.Timber
 import kotlin.math.min
 
 suspend inline fun <reified T> HttpResponse.readObject(
@@ -38,7 +39,8 @@ suspend inline fun <reified T> HttpResponse.readObject(
                 else -> T::class.java
             }
         ) as T
-    } catch (ignored: Throwable) {
+    } catch (e: Throwable) {
+        Timber.e(e)
         throw Throwable("Ошибка: $text")
     }
 }
@@ -54,7 +56,8 @@ suspend inline fun <reified T> HttpResponse.readArray(gson: Gson, vararg keys: S
             text = json.toString()
         }
         gson.fromJson(text, TypeToken.getParameterized(List::class.java, T::class.java).type)
-    } catch (ignored: Throwable) {
+    } catch (e: Throwable) {
+        Timber.e(e)
         throw Throwable("Ошибка: $text")
     }
 }
