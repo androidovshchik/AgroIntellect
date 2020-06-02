@@ -91,6 +91,9 @@ class ReportFragment : BaseFragment() {
             sl_data.isVisible = true
             adapter.setAll(data.columns)
             adapter.notifyDataSetChanged()
+            if (adapter.singleHeader) {
+                adapter.toggleGroup(0)
+            }
             waitDialog.hide()
             sl_data.isRefreshing = false
         }

@@ -24,16 +24,16 @@ import ru.agrointellect.remote.dto.Row
 
 class ColumnHeader(itemView: View) : GroupViewHolder(itemView) {
 
-    val top: View = itemView.v_top
-    val name: TextView = itemView.tv_name
-    val arrow: ImageView = itemView.iv_arrow
+    val top: View? = itemView.v_top
+    val name: TextView? = itemView.tv_name
+    val arrow: ImageView? = itemView.iv_arrow
 
     override fun expand() {
-        arrow.setImageResource(R.drawable.ic_arrow_up)
+        arrow?.setImageResource(R.drawable.ic_arrow_up)
     }
 
     override fun collapse() {
-        arrow.setImageResource(R.drawable.ic_arrow_down)
+        arrow?.setImageResource(R.drawable.ic_arrow_down)
     }
 }
 
@@ -49,8 +49,18 @@ class TableAdapter(context: Context) :
 
     private val regularFont = Typeface.createFromAsset(context.assets, "font/Ubuntu-Regular.ttf")
 
+    var singleHeader = false
+
     override fun onCreateGroupViewHolder(parent: ViewGroup, viewType: Int): ColumnHeader {
-        return ColumnHeader(parent.inflate(R.layout.item_column))
+        return ColumnHeader(
+            parent.inflate(
+                if (singleHeader) {
+                    R.layout.item_dummy
+                } else {
+                    R.layout.item_column
+                }
+            )
+        )
     }
 
     override fun onCreateChildViewHolder(parent: ViewGroup, viewType: Int): RowHolder {
@@ -64,9 +74,9 @@ class TableAdapter(context: Context) :
     ) {
         val isExpanded = isGroupExpanded(group)
         holder.apply {
-            top.isVisible = flatPosition > 0
-            name.text = group.title
-            arrow.setImageResource(
+            top?.isVisible = flatPosition > 0
+            name?.text = group.title
+            arrow?.setImageResource(
                 if (isExpanded) {
                     R.drawable.ic_arrow_up
                 } else {
@@ -99,6 +109,7 @@ class TableAdapter(context: Context) :
     fun setAll(groups: List<Column>) {
         expandableList.groups = groups
         expandableList.expandedGroupIndexes = BooleanArray(groups.size)
+        singleHeader = groups.size == 1
     }
 
     private fun ViewGroup.inflate(@LayoutRes layout: Int): View {
