@@ -51,12 +51,12 @@ class RptsHerdForecast : Table {
             Column("Осеменений телок", mapByMethod("evtInsemHeifers")),
             Column("Выявлено стельных коров", mapByMethod("evtGotPregCows")),
             Column("Выявлено стельных телок", mapByMethod("evtGotPregHeifers")),
-            Column("Запущено коров", mapByMethod("")),
-            Column("Отелов всего", mapByMethod("")),
-            Column("Отелов от нетелей", mapByMethod("")),
-            Column("Отелов от коров", mapByMethod("")),
-            Column("Родилось живых телок", mapByMethod("")),
-            Column("Родилось живых быков", mapByMethod("")),
+            Column("Запущено коров", mapByMethod("evtDryCows")),
+            Column("Отелов всего", mapByMethod("evtCalvTotal")),
+            Column("Отелов от нетелей", mapByMethod("evtCalvTotalPheifers")),
+            Column("Отелов от коров", mapByMethod("evtCalvTotalCows")),
+            Column("Родилось живых телок", mapByMethod("evtCalvAliveHeifers")),
+            Column("Родилось живых быков", mapByMethod("evtCalvAliveBulls")),
             Column("Выбытие коров всего", mapByMethod("evtOutCowsTotal")),
             Column("Выбытие коров лактация 1 всего", mapByMethod("evtOutCowsLact1Total")),
             Column("Выбытие коров лактация 1 0-30 ДД", mapByMethod("evtOutCowsLact1030")),
@@ -95,29 +95,3 @@ class RptsHerdForecast : Table {
     @Expose
     lateinit var items: List<RptHerdForecast>
 }
-
-lateinit var hrdCowsPregAll: String
-lateinit var hrdCowsPregPcnt: String
-lateinit var hrdCowsDryAll: String
-lateinit var hrdCowsDryPcnt: String
-lateinit var hrdCowsDryF1: String
-lateinit var hrdCowsDryF2: String
-lateinit var hrdHeifersAll: String
-lateinit var hrdHeifers02: String
-lateinit var hrdHeifers26: String
-lateinit var hrdHeifers612: String
-lateinit var hrdHeifersO12: String
-lateinit var hrdPheifersAll: String
-lateinit var hrdPheifersF2: String
-lateinit var hrdBulls: String
-lateinit var evtInsemCows: String
-lateinit var evtInsemHeifers: String
-lateinit var evtGotPregCows: String
-lateinit var evtGotPregHeifers: String
-lateinit var evtDryCows: String
-lateinit var evtCalvTotal: String
-lateinit var evtCalvTotalPheifers: String
-lateinit var evtCalvTotalCows: String
-lateinit var evtCalvAliveHeifers: String
-lateinit var evtCalvAliveBulls: String
-lateinit var evtOutCowsTotal: String
