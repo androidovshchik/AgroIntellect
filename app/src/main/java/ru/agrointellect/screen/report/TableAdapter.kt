@@ -9,7 +9,6 @@ import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder
 import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder
 import org.jetbrains.anko.layoutInflater
 import ru.agrointellect.R
-import ru.agrointellect.remote.dto.Column
 
 class ColumnHeader(itemView: View) : GroupViewHolder(itemView) {
 }
@@ -17,8 +16,7 @@ class ColumnHeader(itemView: View) : GroupViewHolder(itemView) {
 class RowHolder(itemView: View) : ChildViewHolder(itemView) {
 }
 
-class TableAdapter(columns: List<Column>) :
-    ExpandableRecyclerViewAdapter<ColumnHeader, RowHolder>(columns) {
+class TableAdapter : ExpandableRecyclerViewAdapter<ColumnHeader, RowHolder>(emptyList()) {
 
     override fun onCreateGroupViewHolder(parent: ViewGroup, viewType: Int): ColumnHeader {
         return ColumnHeader(parent.inflate(R.layout.item_column))
