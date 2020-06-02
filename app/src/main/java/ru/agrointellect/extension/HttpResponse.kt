@@ -53,7 +53,7 @@ suspend inline fun <reified T> HttpResponse.readArray(gson: Gson, vararg keys: S
             }
             text = json.toString()
         }
-        gson.fromJson(text, object : TypeToken<List<T>>() {}.type)
+        gson.fromJson(text, TypeToken.getParameterized(List::class.java, T::class.java).type)
     } catch (ignored: Throwable) {
         throw Throwable("Ошибка: $text")
     }

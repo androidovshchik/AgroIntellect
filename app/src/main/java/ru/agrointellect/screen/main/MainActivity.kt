@@ -73,6 +73,7 @@ class MainActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         val toggle = ActionBarDrawerToggle(this, dl_main, toolbar, 0, 0)
         dl_main.addDrawerListener(toggle)
+        toggle.syncState()
     }
 
     private fun setupNavigation() {
