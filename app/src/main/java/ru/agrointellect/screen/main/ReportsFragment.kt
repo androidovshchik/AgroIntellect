@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
@@ -106,9 +105,19 @@ open class ReportsFragment : BaseFragment() {
                 withItem<Report.Default, ReportHolder>(R.layout.item_report) {
                     onBind(::ReportHolder) { i, item ->
                         itemView.setBackgroundColor(if (i % 2 != 0) grayColor else Color.TRANSPARENT)
+                        button.setChecked(item.selected, false)
                         button.text = item.title
                     }
-                    onClick {
+                    onClick { i ->
+                        dataSource.toList().forEachIndexed { j, report ->
+                            if (i == j) {
+                                report.selected = true
+                                dataSource.invalidateAt(i)
+                            } else if (report.selected) {
+                                report.selected = false
+                                dataSource.invalidateAt(j)
+                            }
+                        }
                         navController.navigate(
                             if (thisClass == ReportsFragment::class.java) {
                                 R.id.reportActivity

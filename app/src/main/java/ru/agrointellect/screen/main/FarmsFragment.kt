@@ -103,13 +103,17 @@ class FarmsFragment : BaseFragment() {
                         }
                         name.text = item.name
                     }
-                    onClick {
+                    onClick { i ->
                         mainModel.reports.clear()
-                        dataSource.forEach {
-                            it.selected = false
+                        dataSource.toList().forEachIndexed { j, farm ->
+                            if (i == j) {
+                                farm.selected = true
+                                dataSource.invalidateAt(i)
+                            } else if (farm.selected) {
+                                farm.selected = false
+                                dataSource.invalidateAt(j)
+                            }
                         }
-                        item.selected = true
-                        dataSource.invalidateAll()
                     }
                 }
             }
