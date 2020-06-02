@@ -21,7 +21,6 @@ import org.jetbrains.anko.layoutInflater
 import ru.agrointellect.R
 import ru.agrointellect.remote.dto.Column
 import ru.agrointellect.remote.dto.Row
-import timber.log.Timber
 
 class ColumnHeader(itemView: View) : GroupViewHolder(itemView) {
 
@@ -63,7 +62,6 @@ class TableAdapter(context: Context) :
         flatPosition: Int,
         group: ExpandableGroup<*>
     ) {
-        Timber.e("flatPosition $flatPosition")
         val isExpanded = isGroupExpanded(group)
         holder.apply {
             top.isVisible = flatPosition > 0
