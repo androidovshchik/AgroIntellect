@@ -129,8 +129,9 @@ open class ReportsFragment : BaseFragment() {
                 }
             }
         }
-        if (mainModel.reports.isNotEmpty()) {
-            dataSource.setAll(defaultList.filter { item -> mainModel.reports.any { item.id == it.id } })
+        val reports = mainModel.reports
+        if (reports.isNotEmpty()) {
+            dataSource.setAll(defaultList.filter { item -> reports.any { item.id == it.id } })
             dataSource.invalidateAll()
         } else {
             waitDialog.show()

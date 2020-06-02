@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import io.ktor.client.HttpClient
@@ -36,11 +37,12 @@ class ReportFragment : BaseFragment() {
 
     private lateinit var reportModel: ReportModel
 
-    private val adapter = TableAdapter()
+    private lateinit var adapter: TableAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         reportModel = ViewModelProvider(requireActivity()).get(ReportModel::class.java)
+        adapter = TableAdapter(requireContext())
     }
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
@@ -51,12 +53,16 @@ class ReportFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        tv_report.text = reportModel.report.name
         tv_farm.text = reportModel.farm.name
         sl_data.setOnRefreshListener {
             loadReport()
         }
         rv_data.also {
             it.adapter = adapter
+        }
+        mb_export.setOnClickListener {
+
         }
         waitDialog.show()
         loadReport()
@@ -68,7 +74,8 @@ class ReportFragment : BaseFragment() {
     }
 
     private fun loadReport() {
-        val farmId = "mainModel.farm?.id.toString()"
+        val farmId = reportModel.farm.id
+        val reportId = reportModel.report.id
         job.cancelChildren()
         launch {
             val data = withContext(Dispatchers.IO) {
@@ -76,11 +83,14 @@ class ReportFragment : BaseFragment() {
                     body = FormDataContent(Parameters.build {
                         append("uid", preferences.getHash().toString())
                         append("farm_id", farmId)
+                        append("report_id", reportId)
                     })
                 }
-                response.readObject<Table>(gson, 0, "reports")
+                response.readObject<Table>(gson, 1, farmId, reportId)
             }
-            adapter.groups
+            sl_data.isVisible = true
+            adapter.setAll(data.columns)
+            adapter.notifyDataSetChanged()
             waitDialog.hide()
             sl_data.isRefreshing = false
         }
