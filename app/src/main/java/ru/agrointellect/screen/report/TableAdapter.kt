@@ -72,12 +72,11 @@ class TableAdapter(context: Context) :
         flatPosition: Int,
         group: ExpandableGroup<*>
     ) {
-        val isExpanded = isGroupExpanded(group)
         holder.apply {
             top?.isVisible = flatPosition > 0
             name?.text = group.title
             arrow?.setImageResource(
-                if (isExpanded) {
+                if (isGroupExpanded(group)) {
                     R.drawable.ic_arrow_up
                 } else {
                     R.drawable.ic_arrow_down
