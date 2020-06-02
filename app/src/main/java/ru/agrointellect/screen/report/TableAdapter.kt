@@ -5,12 +5,11 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation.RELATIVE_TO_SELF
-import android.view.animation.RotateAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder
@@ -22,25 +21,20 @@ import org.jetbrains.anko.layoutInflater
 import ru.agrointellect.R
 import ru.agrointellect.remote.dto.Column
 import ru.agrointellect.remote.dto.Row
+import timber.log.Timber
 
 class ColumnHeader(itemView: View) : GroupViewHolder(itemView) {
 
+    val top: View = itemView.v_top
     val name: TextView = itemView.tv_name
-
-    private val arrow: ImageView = itemView.iv_arrow
+    val arrow: ImageView = itemView.iv_arrow
 
     override fun expand() {
-        val rotate = RotateAnimation(360f, 180f, RELATIVE_TO_SELF, 0.5f, RELATIVE_TO_SELF, 0.5f)
-        rotate.duration = 300
-        rotate.fillAfter = true
-        arrow.animation = rotate
+        arrow.setImageResource(R.drawable.ic_arrow_up)
     }
 
     override fun collapse() {
-        val rotate = RotateAnimation(180f, 360f, RELATIVE_TO_SELF, 0.5f, RELATIVE_TO_SELF, 0.5f)
-        rotate.duration = 300
-        rotate.fillAfter = true
-        arrow.animation = rotate
+        arrow.setImageResource(R.drawable.ic_arrow_down)
     }
 }
 
@@ -48,23 +42,6 @@ class RowHolder(itemView: View) : ChildViewHolder(itemView) {
     val key: TextView = itemView.tv_key
     val value: TextView = itemView.tv_value
 }
-
-/*class Decor : DividerItemDecoration() {
-
-    override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        super.onDraw(c, parent, state)
-        state.
-    }
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-
-        super.getItemOffsets(outRect, view, parent, state)
-    }
-}*/
 
 class TableAdapter(context: Context) :
     ExpandableRecyclerViewAdapter<ColumnHeader, RowHolder>(emptyList()) {
@@ -86,7 +63,19 @@ class TableAdapter(context: Context) :
         flatPosition: Int,
         group: ExpandableGroup<*>
     ) {
-        holder.name.text = group.title
+        Timber.e("flatPosition $flatPosition")
+        val isExpanded = isGroupExpanded(group)
+        holder.apply {
+            top.isVisible = flatPosition > 0
+            name.text = group.title
+            arrow.setImageResource(
+                if (isExpanded) {
+                    R.drawable.ic_arrow_up
+                } else {
+                    R.drawable.ic_arrow_down
+                }
+            )
+        }
     }
 
     override fun onBindChildViewHolder(
