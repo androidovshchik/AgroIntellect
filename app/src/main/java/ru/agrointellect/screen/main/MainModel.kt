@@ -11,8 +11,5 @@ class MainModel : ViewModel() {
 
     val farms = mutableListOf<Farm>()
 
-    val report: Report?
-        get() = reports.firstOrNull { it.selected }
-
     val reports = mutableListOf<Report>()
 }
