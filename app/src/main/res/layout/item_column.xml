@@ -13,6 +13,7 @@
     tools:ignore="MissingPrefix">
 
     <TextView
+        android:id="@+id/tv_name"
         fontPath="font/Ubuntu-Medium.ttf"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

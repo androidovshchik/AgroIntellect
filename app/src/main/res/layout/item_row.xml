@@ -13,6 +13,7 @@
     tools:ignore="MissingPrefix">
 
     <TextView
+        android:id="@+id/tv_key"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#506482"
@@ -25,6 +26,7 @@
         android:layout_weight="1" />
 
     <TextView
+        android:id="@+id/tv_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="51dp"
