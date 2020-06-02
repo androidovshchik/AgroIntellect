@@ -27,7 +27,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.jetbrains.anko.startActivity
 import org.kodein.di.generic.instance
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
@@ -37,7 +36,6 @@ import ru.agrointellect.extension.setAll
 import ru.agrointellect.local.Preferences
 import ru.agrointellect.remote.dto.Report
 import ru.agrointellect.screen.base.BaseFragment
-import ru.agrointellect.screen.report.ReportActivity
 
 class ReportHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val button: RadioButton = itemView.rb_report
@@ -119,18 +117,12 @@ open class ReportsFragment : BaseFragment() {
             }
         }
         if (mainModel.reports.isNotEmpty()) {
-            dataSource.setAll(mainModel.reports.getFiltered())
+            dataSource.setAll(defaultList.filter { item -> mainModel.reports.any { item.id == it.id } })
             dataSource.invalidateAll()
         } else {
             waitDialog.show()
             loadReports()
         }
-    }
-
-    protected open fun openReport(item: Report) {
-        context?.startActivity<ReportActivity>(
-
-        )
     }
 
     override fun showError(e: Throwable) {
@@ -152,7 +144,7 @@ open class ReportsFragment : BaseFragment() {
                 response.readArray<Report>(gson, farmId, "reports")
             }
             mainModel.reports.setAll(data)
-            dataSource.setAll(data.getFiltered())
+            dataSource.setAll(defaultList.filter { item -> data.any { item.id == it.id } })
             dataSource.invalidateAll()
             waitDialog.hide()
             sl_reports.isRefreshing = false
