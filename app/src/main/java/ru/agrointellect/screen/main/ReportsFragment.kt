@@ -123,7 +123,7 @@ open class ReportsFragment : BaseFragment() {
                                 R.id.reportActivity
                             } else {
                                 R.id.chartActivity
-                            }, bundleOf("report" to item)
+                            }, bundleOf("farm" to mainModel.farm, "report" to item)
                         )
                     }
                 }

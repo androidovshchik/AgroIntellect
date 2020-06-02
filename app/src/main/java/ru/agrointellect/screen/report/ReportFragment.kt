@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import io.ktor.client.HttpClient
 import io.ktor.client.request.forms.FormDataContent
@@ -33,7 +34,14 @@ class ReportFragment : BaseFragment() {
 
     private val gson by instance<Gson>()
 
+    private lateinit var reportModel: ReportModel
+
     private val adapter = TableAdapter()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        reportModel = ViewModelProvider(requireActivity()).get(ReportModel::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
         context?.activityCallback<Activity> {
@@ -43,7 +51,7 @@ class ReportFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        tv_farm.text = mainModel.farm?.name.toString()
+        tv_farm.text = reportModel.farm.name
         sl_data.setOnRefreshListener {
             loadReport()
         }
@@ -54,8 +62,13 @@ class ReportFragment : BaseFragment() {
         loadReport()
     }
 
+    override fun showError(e: Throwable) {
+        super.showError(e)
+        sl_data.isRefreshing = false
+    }
+
     private fun loadReport() {
-        val farmId = mainModel.farm?.id.toString()
+        val farmId = "mainModel.farm?.id.toString()"
         job.cancelChildren()
         launch {
             val data = withContext(Dispatchers.IO) {
@@ -65,7 +78,7 @@ class ReportFragment : BaseFragment() {
                         append("farm_id", farmId)
                     })
                 }
-                response.readObject<Table>(gson, farmId, "reports")
+                response.readObject<Table>(gson, 0, "reports")
             }
             adapter.groups
             waitDialog.hide()
