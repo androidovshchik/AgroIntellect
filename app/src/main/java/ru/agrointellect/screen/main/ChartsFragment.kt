@@ -1,5 +1,12 @@
 package ru.agrointellect.screen.main
 
+import android.app.Activity
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import ru.agrointellect.R
+import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.remote.dto.Report
 
 class ChartsFragment : ReportsFragment() {
@@ -25,4 +32,11 @@ class ChartsFragment : ReportsFragment() {
         Report.Default("rpt_sold_animals", "Продажа", true),
         Report.Default("rpt_died_animals", "Падеж", true)
     )
+
+    override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
+        context?.activityCallback<Activity> {
+            title = "Выберите график"
+        }
+        return inflater.inflate(R.layout.fragment_reports, root, false)
+    }
 }
