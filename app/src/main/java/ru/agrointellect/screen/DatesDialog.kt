@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.dialog_dates.*
 import kotlinx.android.synthetic.main.layout_calendar_container.*
@@ -30,7 +29,7 @@ class DatesDialog : BaseDialogFragment() {
     @Suppress("UNNECESSARY_SAFE_CALL")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         toolbar.apply {
-            setNavigationIcon(R.drawable.ic_arrow_back)
+            setNavigationIcon(R.drawable.ic_close_24dp)
             setNavigationOnClickListener {
                 dismiss()
             }
@@ -50,9 +49,6 @@ class DatesDialog : BaseDialogFragment() {
                 return@setOnMenuItemClickListener true
             }
         }
-        rlHeaderCalendar.isVisible = false
-        imgVNavLeft.isVisible = false
-        imgVNavRight.isVisible = false
     }
 
     companion object {
