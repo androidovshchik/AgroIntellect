@@ -56,6 +56,11 @@ suspend inline fun <T> HttpResponse.readJson(
         return block(text)
     } catch (e: Throwable) {
         Timber.e(e)
-        throw Throwable("Ошибка: $text")
+        throw Throwable(
+            when {
+                text.contains("wrong_uid") -> "Неправильный логин/пароль"
+                else -> "Ошибка: $text"
+            }
+        )
     }
 }
