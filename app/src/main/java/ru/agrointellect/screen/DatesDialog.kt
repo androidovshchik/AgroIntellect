@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.archit.calendardaterangepicker.customviews.DateRangeCalendarView
+import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.layout_calendar_container.*
 import ru.agrointellect.R
 import ru.agrointellect.screen.base.BaseDialogFragment
@@ -12,10 +12,7 @@ import ru.agrointellect.screen.base.BaseDialogFragment
 class DatesDialog : BaseDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
-        super.onCreateView(inflater, root, bundle)
-        return DateRangeCalendarView(requireContext()).apply {
-
-        }
+        return inflater.inflate(R.layout.dialog_dates, root, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,5 +29,8 @@ class DatesDialog : BaseDialogFragment() {
                 return@setOnMenuItemClickListener true
             }
         }
+        rlHeaderCalendar.isVisible = false
+        imgVNavLeft.isVisible = false
+        imgVNavRight.isVisible = false
     }
 }

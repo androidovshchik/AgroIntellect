@@ -41,6 +41,7 @@
 
         <com.archit.calendardaterangepicker.customviews.CustomTextView
             android:id="@+id/tvYearTitle"
+            fontPath="font/Ubuntu-Medium.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
