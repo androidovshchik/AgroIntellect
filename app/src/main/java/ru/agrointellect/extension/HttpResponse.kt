@@ -59,6 +59,7 @@ suspend inline fun <T> HttpResponse.readJson(
         throw Throwable(
             when {
                 text.contains("wrong_uid") -> "Неправильный логин/пароль"
+                text.contains("no_data") -> "Нет данных для отображения"
                 else -> "Ошибка: $text"
             }
         )

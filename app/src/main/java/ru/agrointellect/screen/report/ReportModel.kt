@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.agrointellect.remote.dto.Farm
 import ru.agrointellect.remote.dto.Report
+import java.util.*
 
 open class ReportModel : ViewModel() {
 
@@ -11,9 +12,9 @@ open class ReportModel : ViewModel() {
 
     lateinit var report: Report.Default
 
-    var dateFrom: String? = null
+    var dateFrom: Date? = null
 
-    var dateTo: String? = null
+    var dateTo: Date? = null
 
-    val datesChanged = MutableLiveData<Pair<String, String>>()
+    val datesChanged = MutableLiveData<Boolean>()
 }

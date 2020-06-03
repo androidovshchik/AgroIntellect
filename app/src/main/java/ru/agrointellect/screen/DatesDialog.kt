@@ -13,7 +13,6 @@ import com.appeaser.sublimepickerlibrary.recurrencepicker.SublimeRecurrencePicke
 import org.jetbrains.anko.wrapContent
 import ru.agrointellect.screen.base.BaseDialogFragment
 import ru.agrointellect.screen.report.ReportModel
-import java.text.SimpleDateFormat
 import java.util.*
 
 class DatesDialog : BaseDialogFragment() {
@@ -31,14 +30,17 @@ class DatesDialog : BaseDialogFragment() {
             recurrenceRule: String?
         ) {
             reportModel.apply {
-                dateFrom = selectedDate.startDate?.let {
-                    formatter.format(it.time)
+                dateFrom = when (selectedDate.type) {
+                    SelectedDate.Type.SINGLE -> {
+                        selectedDate.startDate.apply {
+                            add(Calendar.DAY_OF_MONTH, -6)
+                        }.time
+                    }
+                    else -> selectedDate.startDate.time
                 }
-                dateTo = selectedDate.endDate?.let {
-                    formatter.format(it.time)
-                }
+                dateTo = selectedDate.endDate.time
+                datesChanged.value = true
             }
-            dismiss()
         }
 
         override fun onCancelled() {
@@ -65,8 +67,6 @@ class DatesDialog : BaseDialogFragment() {
     companion object {
 
         val TAG = DatesDialog::class.java.simpleName
-
-        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
 
         fun newInstance(): DatesDialog {
             return DatesDialog().apply {
