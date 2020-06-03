@@ -16,10 +16,10 @@ abstract class BaseFragment : Fragment(), KodeinAware, CoroutineScope {
 
     protected val job = SupervisorJob()
 
-    private val waitDialogDelegate = lazy {
+    private val waitDelegate = lazy {
         WaitDialog(requireActivity())
     }
-    protected val waitDialog by waitDialogDelegate
+    protected val waitDialog by waitDelegate
 
     protected val args: Bundle
         get() = arguments ?: Bundle()
@@ -30,7 +30,7 @@ abstract class BaseFragment : Fragment(), KodeinAware, CoroutineScope {
     }
 
     override fun onDestroyView() {
-        if (waitDialogDelegate.isInitialized()) {
+        if (waitDelegate.isInitialized()) {
             waitDialog.dismiss()
         }
         job.cancelChildren()

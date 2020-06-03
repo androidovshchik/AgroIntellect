@@ -21,10 +21,10 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
 
     protected val job = SupervisorJob()
 
-    private val waitDialogDelegate = lazy {
+    private val waitDelegate = lazy {
         WaitDialog(this)
     }
-    protected val waitDialog by waitDialogDelegate
+    protected val waitDialog by waitDelegate
 
     override fun setTitle(title: CharSequence?) {
         val font = Typeface.createFromAsset(assets, "font/Ubuntu-Medium.ttf")
@@ -51,7 +51,7 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
     }
 
     override fun onDestroy() {
-        if (waitDialogDelegate.isInitialized()) {
+        if (waitDelegate.isInitialized()) {
             waitDialog.dismiss()
         }
         job.cancelChildren()

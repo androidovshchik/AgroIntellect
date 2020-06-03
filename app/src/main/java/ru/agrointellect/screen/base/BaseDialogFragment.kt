@@ -17,7 +17,10 @@ abstract class BaseDialogFragment : DialogFragment(), KodeinAware {
     override val kodein by closestKodein()
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View? {
-        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+        dialog?.window?.apply {
+            setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+            setDimAmount(0.2f)
+        }
         return null
     }
 
