@@ -72,7 +72,6 @@ class FarmsFragment : BaseFragment() {
         val context = requireContext()
         val space = context.dip(20)
         val assets = context.assets
-        val lightFont = Typeface.createFromAsset(assets, "font/Ubuntu-Light.ttf")
         val regularFont = Typeface.createFromAsset(assets, "font/Ubuntu-Regular.ttf")
         sl_farms.setOnRefreshListener {
             loadFarms()
@@ -87,12 +86,12 @@ class FarmsFragment : BaseFragment() {
                 withItem<Farm, FarmHolder>(R.layout.item_farm) {
                     onBind(::FarmHolder) { _, item ->
                         val circleSize = if (item.selected) {
-                            CalligraphyUtils.applyFontToTextView(name, regularFont)
+                            name.text = CalligraphyUtils.applyTypefaceSpan(item.name, regularFont)
                             circle.setBackgroundResource(R.drawable.ring_farm)
                             circle.setImageResource(R.drawable.ic_daw)
                             resources.getDimensionPixelSize(R.dimen.image_farm_max)
                         } else {
-                            CalligraphyUtils.applyFontToTextView(name, lightFont)
+                            name.text = item.name
                             circle.setBackgroundResource(R.drawable.circle_farm)
                             circle.setImageResource(0)
                             resources.getDimensionPixelSize(R.dimen.image_farm_min)
@@ -101,7 +100,6 @@ class FarmsFragment : BaseFragment() {
                             width = circleSize
                             height = circleSize
                         }
-                        name.text = item.name
                     }
                     onClick { i ->
                         mainModel.reports.clear()
