@@ -39,7 +39,7 @@
         tools:text="Авангард Комплекс-3" />
 
     <View
-        android:id="@+id/v_top"
+        android:id="@+id/v1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="20dp"
@@ -50,38 +50,50 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_farm" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ll_dates"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="62dp"
-        android:paddingTop="18dp"
-        android:paddingEnd="30dp"
-        android:paddingBottom="18dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/v_top"
-        tools:ignore="MissingPrefix"
+        app:layout_constraintTop_toBottomOf="@+id/v1"
         tools:visibility="visible">
 
         <TextView
             fontPath="font/Ubuntu-Regular.ttf"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginStart="42dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="18dp"
+            android:maxLines="1"
             android:textColor="#506482"
             android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/iv_arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Даты: 10.04.20 – 13.04.20" />
 
         <ImageView
+            android:id="@+id/iv_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="6dp"
-            android:src="@drawable/ic_arrow_right" />
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_arrow_right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#C3C6CD"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:layout_width="132dp"
