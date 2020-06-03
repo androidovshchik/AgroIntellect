@@ -31,6 +31,8 @@ import ru.agrointellect.local.Preferences
 import ru.agrointellect.remote.dto.Table
 import ru.agrointellect.screen.DatesDialog
 import ru.agrointellect.screen.base.BaseFragment
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ReportFragment : BaseFragment() {
 
@@ -91,7 +93,10 @@ class ReportFragment : BaseFragment() {
             it.adapter = adapter
         }
         reportModel.datesChanged.observe(viewLifecycleOwner, Observer {
-            tv_dates.text = "Даты: ${it.first} – ${it.second}"
+            datesDialog.dismiss()
+            val dateFrom = userFormatter.format(reportModel.dateFrom!!)
+            val dateTo = userFormatter.format(reportModel.dateTo!!)
+            tv_dates.text = "Даты: $dateFrom – $dateTo"
             waitDialog.show()
             loadReport()
         })
@@ -116,19 +121,22 @@ class ReportFragment : BaseFragment() {
                         append("farm_id", farmId)
                         append("report_id", reportId)
                         reportModel.dateFrom?.let {
-                            append("report_date_from", it)
+                            append("report_date_from", apiFormatter.format(it))
                         }
                         reportModel.dateTo?.let {
-                            append("report_date_to", it)
+                            append("report_date_to", apiFormatter.format(it))
                         }
                     })
                 }
                 response.readObject<Table>(gson, 1, farmId, reportId)
             }
             sl_data.isVisible = true
+            val columns = data.columns
             adapter.setAll(data.columns)
             adapter.notifyDataSetChanged()
-            adapter.toggleGroup(0)
+            if (columns.isNotEmpty()) {
+                adapter.toggleGroup(0)
+            }
             waitDialog.hide()
             sl_data.isRefreshing = false
         }
@@ -139,5 +147,12 @@ class ReportFragment : BaseFragment() {
             datesDialog.dismiss()
         }
         super.onDestroyView()
+    }
+
+    companion object {
+
+        val apiFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+
+        val userFormatter = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
     }
 }
