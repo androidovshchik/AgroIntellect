@@ -9,4 +9,8 @@ class ReportModel : ViewModel() {
     lateinit var farm: Farm
 
     lateinit var report: Report.Default
+
+    var dateFrom: String? = null
+
+    var dateTo: String? = null
 }

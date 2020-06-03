@@ -23,8 +23,10 @@ import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.extension.readObject
+import ru.agrointellect.extension.transact
 import ru.agrointellect.local.Preferences
 import ru.agrointellect.remote.dto.Table
+import ru.agrointellect.screen.DatesDialog
 import ru.agrointellect.screen.base.BaseFragment
 
 class ReportFragment : BaseFragment() {
@@ -38,6 +40,11 @@ class ReportFragment : BaseFragment() {
     private lateinit var reportModel: ReportModel
 
     private lateinit var adapter: TableAdapter
+
+    private val datesDelegate = lazy {
+        DatesDialog.newInstance()
+    }
+    private val datesDialog by datesDelegate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,14 +62,19 @@ class ReportFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         tv_report.text = reportModel.report.name
         tv_farm.text = reportModel.farm.name
+        ll_dates.isVisible = reportModel.report.dates > 0
+        ll_dates.setOnClickListener {
+            if (!datesDialog.isAdded) {
+                childFragmentManager.transact(false) {
+                    datesDialog.show(this, DatesDialog.TAG)
+                }
+            }
+        }
         sl_data.setOnRefreshListener {
             loadReport()
         }
         rv_data.also {
             it.adapter = adapter
-        }
-        mb_export.setOnClickListener {
-
         }
         waitDialog.show()
         loadReport()
@@ -84,6 +96,12 @@ class ReportFragment : BaseFragment() {
                         append("uid", preferences.getHash().toString())
                         append("farm_id", farmId)
                         append("report_id", reportId)
+                        reportModel.dateFrom?.let {
+                            append("report_date_from", it)
+                        }
+                        reportModel.dateTo?.let {
+                            append("report_date_to", it)
+                        }
                     })
                 }
                 response.readObject<Table>(gson, 1, farmId, reportId)
@@ -97,5 +115,12 @@ class ReportFragment : BaseFragment() {
             waitDialog.hide()
             sl_data.isRefreshing = false
         }
+    }
+
+    override fun onDestroyView() {
+        if (datesDelegate.isInitialized()) {
+            datesDialog.dismiss()
+        }
+        super.onDestroyView()
     }
 }
