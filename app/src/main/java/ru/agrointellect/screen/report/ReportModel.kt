@@ -1,5 +1,6 @@
 package ru.agrointellect.screen.report
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.agrointellect.remote.dto.Farm
 import ru.agrointellect.remote.dto.Report
@@ -13,4 +14,6 @@ open class ReportModel : ViewModel() {
     var dateFrom: String? = null
 
     var dateTo: String? = null
+
+    val datesChanged = MutableLiveData<Pair<String, String>>()
 }

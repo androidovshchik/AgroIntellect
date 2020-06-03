@@ -1,5 +1,6 @@
 package ru.agrointellect.screen.report
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.res.Configuration
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import io.ktor.client.HttpClient
@@ -70,10 +72,11 @@ class ReportFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_report, root, false)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         tv_report.text = reportModel.report.name
         tv_farm.text = reportModel.farm.name
-        ll_dates.isVisible = reportModel.report.dates > 0
+        ll_dates.isVisible = reportModel.report.supportDates
         ll_dates.setOnClickListener {
             if (!datesDialog.isAdded) {
                 childFragmentManager.transact(false) {
@@ -87,6 +90,11 @@ class ReportFragment : BaseFragment() {
         rv_data.also {
             it.adapter = adapter
         }
+        reportModel.datesChanged.observe(viewLifecycleOwner, Observer {
+            tv_dates.text = "Даты: ${it.first} – ${it.second}"
+            waitDialog.show()
+            loadReport()
+        })
         waitDialog.show()
         loadReport()
     }
