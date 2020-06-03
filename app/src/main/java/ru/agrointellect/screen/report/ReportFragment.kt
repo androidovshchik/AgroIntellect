@@ -1,6 +1,7 @@
 package ru.agrointellect.screen.report
 
 import android.app.Activity
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -50,6 +51,16 @@ class ReportFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         reportModel = ViewModelProvider(requireActivity()).get(ReportModel::class.java)
         adapter = TableAdapter(requireContext())
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        val landscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
+        tv_farm.isVisible = !landscape
+        iv_excel.isVisible = !landscape
+        if (datesDelegate.isInitialized()) {
+            datesDialog.dismiss()
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
@@ -109,9 +120,7 @@ class ReportFragment : BaseFragment() {
             sl_data.isVisible = true
             adapter.setAll(data.columns)
             adapter.notifyDataSetChanged()
-            if (adapter.singleHeader) {
-                adapter.toggleGroup(0)
-            }
+            adapter.toggleGroup(0)
             waitDialog.hide()
             sl_data.isRefreshing = false
         }

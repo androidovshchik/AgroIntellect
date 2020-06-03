@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceTypedOf
@@ -51,7 +50,9 @@ open class ReportsFragment : BaseFragment() {
 
     private lateinit var mainModel: MainModel
 
-    private lateinit var navController: NavController
+    private val navController by lazy {
+        findNavController()
+    }
 
     private val dataSource = dataSourceTypedOf<Report.Default>()
 
@@ -83,7 +84,6 @@ open class ReportsFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainModel = ViewModelProvider(requireActivity()).get(MainModel::class.java)
-        navController = findNavController()
     }
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
