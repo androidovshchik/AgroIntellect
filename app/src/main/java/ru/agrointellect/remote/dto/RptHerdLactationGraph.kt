@@ -1,6 +1,6 @@
 package ru.agrointellect.remote.dto
 
-import androidx.collection.SimpleArrayMap
+import androidx.collection.ArrayMap
 
 @Suppress("SpellCheckingInspection")
 class RptHerdLactationGraph {
@@ -15,5 +15,5 @@ class RptHerdLactationGraph {
 
     var lactationOver2DailyMilk: String? = null
 
-    val sampleLactations = SimpleArrayMap<String, String?>()
+    val sampleLactations = ArrayMap<String, String?>()
 }
