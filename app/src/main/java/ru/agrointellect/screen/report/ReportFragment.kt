@@ -133,6 +133,9 @@ class ReportFragment : BaseFragment() {
                             append("report_date_from", apiFormatter.format(it))
                         }
                         reportModel.dateTo?.let {
+                            if (reportModel.report.id == "rpt_herd_alignment_history") {
+                                set("report_date_from", apiFormatter.format(it))
+                            }
                             append("report_date_to", apiFormatter.format(it))
                         }
                     })

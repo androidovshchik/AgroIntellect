@@ -60,6 +60,9 @@ class DatesDialog : BaseDialogFragment() {
                 pickerToShow = SublimeOptions.Picker.DATE_PICKER
                 setDisplayOptions(SublimeOptions.ACTIVATE_DATE_PICKER)
                 setCanPickDateRange(true)
+                setDateParams(Calendar.getInstance().apply {
+                    add(Calendar.DAY_OF_MONTH, -1)
+                })
             }, listener)
         }
     }
