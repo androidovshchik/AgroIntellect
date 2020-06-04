@@ -32,13 +32,14 @@ class RptsHerdLactationGraph : Table {
                 columns.add("Лактация > 2")
                 text.appendln(it)
             }
-            val first = "_lactation_"
             items[0].sampleLactations.forEach {
-                val start = it.key.indexOf(first)
-                val end = it.key.indexOf("_per_")
-                if (start in 0 until end) {
-                    val num = it.key.substring(start + first.length, end)
-                    columns.add("Образец $num за 305 дней")
+                val lactation = it.key.indexOf("_lactation_")
+                val per = it.key.indexOf("_per_", lactation)
+                val milking = it.key.indexOf("_milking_", per)
+                if (lactation > 0 && per > 0 && milking > 0) {
+                    val number = it.key.substring(lactation + "_lactation_".length, per)
+                    val days = it.key.substring(per + "_per_".length, milking)
+                    columns.add("Образец $number за $days дней")
                     text.appendln(it.value)
                 }
             }
