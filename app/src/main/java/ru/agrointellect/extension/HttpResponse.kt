@@ -5,8 +5,9 @@ import com.google.gson.reflect.TypeToken
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.readText
 import org.json.JSONObject
+import ru.agrointellect.exception.NoDataException
+import ru.agrointellect.exception.WrongUidException
 import ru.agrointellect.remote.dto.*
-import timber.log.Timber
 import kotlin.math.min
 
 suspend inline fun <reified T> HttpResponse.readObject(
@@ -55,13 +56,10 @@ suspend inline fun <T> HttpResponse.readJson(
         }
         return block(text)
     } catch (e: Throwable) {
-        Timber.e(e)
-        throw Throwable(
-            when {
-                text.contains("wrong_uid") -> "Неправильный логин/пароль"
-                text.contains("no_data") -> "Нет данных для отображения"
-                else -> "Ошибка: $text"
-            }
-        )
+        throw when {
+            text.contains("wrong_uid") -> WrongUidException(e)
+            text.contains("no_data") -> NoDataException(e)
+            else -> Throwable("Ошибка: $text", e)
+        }
     }
 }

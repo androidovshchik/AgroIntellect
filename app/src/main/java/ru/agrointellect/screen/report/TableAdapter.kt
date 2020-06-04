@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.item_column.view.*
 import kotlinx.android.synthetic.main.item_row.view.*
 import org.jetbrains.anko.layoutInflater
 import ru.agrointellect.R
+import ru.agrointellect.extension.setAll
 import ru.agrointellect.remote.dto.Column
 import ru.agrointellect.remote.dto.Row
 
@@ -43,13 +44,13 @@ class RowHolder(itemView: View) : ChildViewHolder(itemView) {
 }
 
 class TableAdapter(context: Context) :
-    ExpandableRecyclerViewAdapter<ColumnHeader, RowHolder>(emptyList()) {
+    ExpandableRecyclerViewAdapter<ColumnHeader, RowHolder>(mutableListOf<Column>()) {
 
     private val grayColor = ContextCompat.getColor(context, R.color.colorRowGray)
 
     private val regularFont = Typeface.createFromAsset(context.assets, "font/Ubuntu-Regular.ttf")
 
-    var singleHeader = false
+    private var singleHeader = false
 
     override fun onCreateGroupViewHolder(parent: ViewGroup, viewType: Int): ColumnHeader {
         return ColumnHeader(
@@ -105,10 +106,15 @@ class TableAdapter(context: Context) :
         }
     }
 
-    fun setAll(groups: List<Column>) {
-        expandableList.groups = groups
-        expandableList.expandedGroupIndexes = BooleanArray(groups.size)
-        singleHeader = groups.size == 1
+    @Suppress("UNCHECKED_CAST")
+    fun setAll(columns: List<Column>) {
+        (expandableList.groups as MutableList<Column>).setAll(columns)
+        expandableList.expandedGroupIndexes = BooleanArray(columns.size)
+        singleHeader = columns.size == 1
+    }
+
+    fun clear() {
+        expandableList.groups.clear()
     }
 
     private fun ViewGroup.inflate(@LayoutRes layout: Int): View {

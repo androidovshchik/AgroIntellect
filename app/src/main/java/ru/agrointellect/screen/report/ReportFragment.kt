@@ -24,6 +24,7 @@ import kotlinx.coroutines.withContext
 import org.kodein.di.generic.instance
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
+import ru.agrointellect.exception.NoDataException
 import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.extension.readObject
 import ru.agrointellect.extension.transact
@@ -105,6 +106,10 @@ class ReportFragment : BaseFragment() {
     }
 
     override fun showError(e: Throwable) {
+        if (e is NoDataException) {
+            adapter.clear()
+            adapter.notifyDataSetChanged()
+        }
         super.showError(e)
         sl_data.isRefreshing = false
     }
