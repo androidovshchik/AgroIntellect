@@ -20,7 +20,7 @@ class RptsLastUpdate : Table {
                     Row("Conception Rate телок", items[0].lastHeifCrFileDate),
                     Row("Pregnancy Rate телок", items[0].lastHeifPrFileDate),
                     Row("Суммарного надоя", items[0].lastMilkSumFileDate),
-                    Row("KPI кормления", items[0].lastFeedKpiFileDate)
+                    Row("KPI кормления", items[0].lastFeedKpiFileDate ?: "-")
                 )
             )
         )

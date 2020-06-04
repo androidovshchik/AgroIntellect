@@ -36,5 +36,5 @@ class RptLastUpdate {
 
     @SerializedName("last_feed_kpi_file_date")
     @Expose
-    lateinit var lastFeedKpiFileDate: String
+    var lastFeedKpiFileDate: String? = null
 }

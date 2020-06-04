@@ -109,6 +109,7 @@ class ReportFragment : BaseFragment() {
         if (e is NoDataException) {
             adapter.clear()
             adapter.notifyDataSetChanged()
+            sl_data.isVisible = false
         }
         super.showError(e)
         sl_data.isRefreshing = false
@@ -135,11 +136,11 @@ class ReportFragment : BaseFragment() {
                 }
                 response.readObject<Table>(gson, 1, farmId, reportId)
             }
-            sl_data.isVisible = true
             val columns = data.columns
             adapter.setAll(data.columns)
             adapter.notifyDataSetChanged()
             if (columns.isNotEmpty()) {
+                sl_data.isVisible = true
                 adapter.toggleGroup(0)
             }
             waitDialog.hide()

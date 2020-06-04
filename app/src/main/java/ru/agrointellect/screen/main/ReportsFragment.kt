@@ -72,7 +72,7 @@ open class ReportsFragment : BaseFragment() {
         Report.Default("rpt_milk_events_kpi", "Надой, события, кормление", true),
         Report.Default("rpt_fresh_disease", "Послеотельные заболевания", true),
         Report.Default("rpt_farm_summary_history", "Сводный отчет", true),
-        Report.Default("rpt_herd_forecast", "Прогноз поголовья", false),
+        Report.Default("rpt_herd_forecast", "Прогноз", false),
         Report.Default("rpt_sold_animals", "Продажа", true),
         Report.Default("rpt_died_animals", "Падеж", true),
         Report.Default("rpt_last_updates", "Даты актуальности данных", false)
