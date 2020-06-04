@@ -97,7 +97,10 @@ class ReportFragment : BaseFragment() {
             datesDialog.dismiss()
             val dateFrom = userFormatter.format(reportModel.dateFrom!!)
             val dateTo = userFormatter.format(reportModel.dateTo!!)
-            tv_dates.text = "Даты: $dateFrom – $dateTo"
+            tv_dates.text = when (reportModel.report.id) {
+                "rpt_herd_alignment_history" -> "Дата: $dateTo"
+                else -> "Даты: $dateFrom – $dateTo"
+            }
             waitDialog.show()
             loadReport()
         })
