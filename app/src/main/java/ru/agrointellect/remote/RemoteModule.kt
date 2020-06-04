@@ -2,11 +2,10 @@ package ru.agrointellect.remote
 
 import com.google.gson.*
 import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.features.json.GsonSerializer
 import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.logging.LogLevel
-import io.ktor.client.features.logging.Logger
-import io.ktor.client.features.logging.Logging
+import okhttp3.logging.HttpLoggingInterceptor
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.provider
@@ -17,7 +16,7 @@ import ru.agrointellect.remote.dto.RptHerdLactationGraph
 import timber.log.Timber
 import java.lang.reflect.Type
 
-class NetworkLogger : Logger {
+class LogInterceptor : HttpLoggingInterceptor.Logger {
 
     override fun log(message: String) {
         Timber.tag("API").d(message)
@@ -61,11 +60,13 @@ val remoteModule = Kodein.Module("remote") {
     }
 
     bind<HttpClient>() with singleton {
-        HttpClient {
-            if (BuildConfig.DEBUG) {
-                install(Logging) {
-                    logger = NetworkLogger()
-                    level = LogLevel.ALL
+        HttpClient(OkHttp) {
+            engine {
+                if (BuildConfig.DEBUG) {
+                    addInterceptor(
+                        HttpLoggingInterceptor(LogInterceptor())
+                            .setLevel(HttpLoggingInterceptor.Level.BODY)
+                    )
                 }
             }
             install(JsonFeature) {
