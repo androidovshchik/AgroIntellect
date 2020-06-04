@@ -56,6 +56,7 @@ open class ReportsFragment : BaseFragment() {
 
     private val dataSource = dataSourceTypedOf<Report.Default>()
 
+    @Suppress("SpellCheckingInspection")
     protected open val defaultList = listOf(
         Report.Default("rpt_herd_distribution", "Поголовье: фуражное, дойное, стельное", true),
         Report.Default(
@@ -70,6 +71,7 @@ open class ReportsFragment : BaseFragment() {
         ),
         Report.Default("rpt_herd_lactation_graph", "График лактации поголовья", false),
         Report.Default("rpt_milk_events_kpi", "Надой, события, кормление", true),
+        Report.Default("rpt_breed_effectivity", "Воспроизводство", true),
         Report.Default("rpt_fresh_disease", "Послеотельные заболевания", true),
         Report.Default("rpt_farm_summary_history", "Сводный отчет", true),
         Report.Default("rpt_herd_forecast", "Прогноз", false),
