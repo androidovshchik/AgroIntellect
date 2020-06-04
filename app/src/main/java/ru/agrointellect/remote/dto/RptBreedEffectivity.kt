@@ -14,51 +14,51 @@ class RptBreedEffectivity {
 
     @SerializedName("avg_lact_num")
     @Expose
-    lateinit var avgLactNum: String
+    var avgLactNum: String? = null
 
     @SerializedName("avg_days_in_milk")
     @Expose
-    lateinit var avgDaysInMilk: String
+    var avgDaysInMilk: String? = null
 
     @SerializedName("avg_open_days")
     @Expose
-    lateinit var avgOpenDays: String
+    var avgOpenDays: String? = null
 
     @SerializedName("avg_dry_days")
     @Expose
-    lateinit var avgDryDays: String
+    var avgDryDays: String? = null
 
     @SerializedName("avg_pregnant_days_cows")
     @Expose
-    lateinit var avgPregnantDaysCows: String
+    var avgPregnantDaysCows: String? = null
 
     @SerializedName("avg_pregnant_days_heifers")
     @Expose
-    lateinit var avgPregnantDaysHeifers: String
+    var avgPregnantDaysHeifers: String? = null
 
     @SerializedName("avg_calv_int_days")
     @Expose
-    lateinit var avgCalvIntDays: String
+    var avgCalvIntDays: String? = null
 
     @SerializedName("avg_insem_int_days_cows")
     @Expose
-    lateinit var avgInsemIntDaysCows: String
+    var avgInsemIntDaysCows: String? = null
 
     @SerializedName("avg_insem_int_days_heifers")
     @Expose
-    lateinit var avgInsemIntDaysHeifers: String
+    var avgInsemIntDaysHeifers: String? = null
 
     @SerializedName("avg_first_insem_dim_cows")
     @Expose
-    lateinit var avgFirstInsemDimCows: String
+    var avgFirstInsemDimCows: String? = null
 
     @SerializedName("avg_first_insem_age_heifers")
     @Expose
-    lateinit var avgFirstInsemAgeHeifers: String
+    var avgFirstInsemAgeHeifers: String? = null
 
     @SerializedName("avg_first_calv_age_1_lact")
     @Expose
-    lateinit var avgFirstCalvAge1Lact: String
+    var avgFirstCalvAge1Lact: String? = null
 
     @SerializedName("hrd_cows_lact_all_pcnt")
     @Expose
@@ -98,33 +98,33 @@ class RptBreedEffectivity {
 
     @SerializedName("brd_heat_det_rate_cow")
     @Expose
-    lateinit var brdHeatDetRateCow: String
+    var brdHeatDetRateCow: String? = null
 
     @SerializedName("brd_heat_det_rate_heif")
     @Expose
-    lateinit var brdHeatDetRateHeif: String
+    var brdHeatDetRateHeif: String? = null
 
     @SerializedName("brd_conc_rate_cow")
     @Expose
-    lateinit var brdConcRateCow: String
+    var brdConcRateCow: String? = null
 
     @SerializedName("brd_conc_rate_heif")
     @Expose
-    lateinit var brdConcRateHeif: String
+    var brdConcRateHeif: String? = null
 
     @SerializedName("brd_preg_rate_cow")
     @Expose
-    lateinit var brdPregRateCow: String
+    var brdPregRateCow: String? = null
 
     @SerializedName("brd_preg_rate_heif")
     @Expose
-    lateinit var brdPregRateHeif: String
+    var brdPregRateHeif: String? = null
 
     @SerializedName("brd_straws_per_preg_cow")
     @Expose
-    lateinit var brdStrawsPerPregCow: String
+    var brdStrawsPerPregCow: String? = null
 
     @SerializedName("brd_straws_per_preg_heif")
     @Expose
-    lateinit var brdStrawsPerPregHeif: String
+    var brdStrawsPerPregHeif: String? = null
 }

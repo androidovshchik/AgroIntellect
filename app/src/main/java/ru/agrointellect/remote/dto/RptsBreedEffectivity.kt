@@ -46,7 +46,7 @@ class RptsBreedEffectivity : Table {
     @SuppressLint("DefaultLocale")
     private fun mapByMethod(name: String): List<Row> {
         val method = RptBreedEffectivity::class.java.getMethod("get${name.capitalize()}")
-        return items.map { Row(it.date, method.invoke(it)!!.toString()) }
+        return items.map { Row(it.date, method.invoke(it)?.toString()) }
     }
 
     @SerializedName("rpt_breed_effectivity")
