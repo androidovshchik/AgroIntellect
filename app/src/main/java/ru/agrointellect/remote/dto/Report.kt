@@ -44,7 +44,7 @@ class Report {
         get() = dateNeed == "1"
 
     @Keep
-    class Default(val id: String, val name: String, val supportDates: Boolean) : Serializable {
+    class Default(val id: String, val name: String, val dates: Int) : Serializable {
 
         var selected = false
     }

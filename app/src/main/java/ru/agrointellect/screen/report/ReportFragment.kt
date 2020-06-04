@@ -79,7 +79,7 @@ class ReportFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         tv_report.text = reportModel.report.name
         tv_farm.text = reportModel.farm.name
-        ll_dates.isVisible = reportModel.report.supportDates
+        ll_dates.isVisible = reportModel.report.dates > 0
         ll_dates.setOnClickListener {
             if (!datesDialog.isAdded) {
                 childFragmentManager.transact(false) {
@@ -97,9 +97,10 @@ class ReportFragment : BaseFragment() {
             datesDialog.dismiss()
             val dateFrom = userFormatter.format(reportModel.dateFrom!!)
             val dateTo = userFormatter.format(reportModel.dateTo!!)
-            tv_dates.text = when (reportModel.report.id) {
-                "rpt_herd_alignment_history" -> "Дата: $dateTo"
-                else -> "Даты: $dateFrom – $dateTo"
+            tv_dates.text = if (reportModel.report.dates > 1) {
+                "Даты: $dateFrom – $dateTo"
+            } else {
+                "Дата: $dateTo"
             }
             waitDialog.show()
             loadReport()
@@ -133,7 +134,7 @@ class ReportFragment : BaseFragment() {
                             append("report_date_from", apiFormatter.format(it))
                         }
                         reportModel.dateTo?.let {
-                            if (reportModel.report.id == "rpt_herd_alignment_history") {
+                            if (reportModel.report.dates == 1) {
                                 set("report_date_from", apiFormatter.format(it))
                             }
                             append("report_date_to", apiFormatter.format(it))
@@ -143,7 +144,7 @@ class ReportFragment : BaseFragment() {
                 response.readObject<Table>(gson, 1, farmId, reportId)
             }
             val columns = data.columns
-            adapter.setAll(data.columns)
+            adapter.setAll(columns)
             adapter.notifyDataSetChanged()
             if (columns.isNotEmpty()) {
                 sl_data.isVisible = true
