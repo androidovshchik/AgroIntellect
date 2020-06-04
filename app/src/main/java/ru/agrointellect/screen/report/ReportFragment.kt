@@ -55,6 +55,11 @@ class ReportFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         reportModel = ViewModelProvider(requireActivity()).get(ReportModel::class.java)
+        if (reportModel.report.dates == 1) {
+            reportModel.dateTo = Calendar.getInstance().apply {
+                add(Calendar.DAY_OF_MONTH, -1)
+            }.time
+        }
         adapter = TableAdapter(requireContext())
     }
 
@@ -95,16 +100,11 @@ class ReportFragment : BaseFragment() {
         }
         reportModel.datesChanged.observe(viewLifecycleOwner, Observer {
             datesDialog.dismiss()
-            val dateFrom = userFormatter.format(reportModel.dateFrom!!)
-            val dateTo = userFormatter.format(reportModel.dateTo!!)
-            tv_dates.text = if (reportModel.report.dates > 1) {
-                "Даты: $dateFrom – $dateTo"
-            } else {
-                "Дата: $dateTo"
-            }
+            updateDates()
             waitDialog.show()
             loadReport()
         })
+        updateDates()
         waitDialog.show()
         loadReport()
     }
@@ -117,6 +117,16 @@ class ReportFragment : BaseFragment() {
         }
         super.showError(e)
         sl_data.isRefreshing = false
+    }
+
+    private fun updateDates() {
+        val dateTo = userFormatter.format(reportModel.dateTo ?: return)
+        tv_dates.text = if (reportModel.report.dates > 1) {
+            val dateFrom = userFormatter.format(reportModel.dateFrom ?: return)
+            "Даты: $dateFrom – $dateTo"
+        } else {
+            "Дата: $dateTo"
+        }
     }
 
     private fun loadReport() {

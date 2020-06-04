@@ -21,6 +21,9 @@
         android:name="ru.agrointellect.screen.report.ReportActivity"
         android:label="ReportActivity">
         <argument
+            android:name="farm"
+            app:argType="ru.agrointellect.remote.dto.Farm" />
+        <argument
             android:name="report"
             app:argType="ru.agrointellect.remote.dto.Report$Default" />
     </activity>
@@ -28,6 +31,9 @@
         android:id="@+id/chartActivity"
         android:name="ru.agrointellect.screen.chart.ChartActivity"
         android:label="ChartActivity">
+        <argument
+            android:name="farm"
+            app:argType="ru.agrointellect.remote.dto.Farm" />
         <argument
             android:name="report"
             app:argType="ru.agrointellect.remote.dto.Report$Default" />
