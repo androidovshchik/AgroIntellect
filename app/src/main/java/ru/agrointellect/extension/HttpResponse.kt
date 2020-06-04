@@ -10,6 +10,7 @@ import ru.agrointellect.exception.WrongUidException
 import ru.agrointellect.remote.dto.*
 import kotlin.math.min
 
+@Suppress("SpellCheckingInspection")
 suspend inline fun <reified T> HttpResponse.readObject(
     gson: Gson,
     depth: Int,
@@ -22,6 +23,7 @@ suspend inline fun <reified T> HttpResponse.readObject(
             "rpt_herd_alignment_history" -> RptsHerdAlignmentHistory::class.java
             "rpt_herd_lactation_graph" -> RptsHerdLactationGraph::class.java
             "rpt_milk_events_kpi" -> RptsMilkEventsKpi::class.java
+            "rpt_breed_effectivity" -> RptsBreedEffectivity::class.java
             "rpt_fresh_disease" -> RptsFreshDisease::class.java
             "rpt_farm_summary_history" -> RptsFarmSummaryHistory::class.java
             "rpt_herd_forecast" -> RptsHerdForecast::class.java
