@@ -8,7 +8,8 @@ class RptSoldAnimal {
 
     @SerializedName("date")
     @Expose
-    lateinit var date: String
+    var date = ""
+        get() = formatDate(field)
 
     @SerializedName("evt_sold_cows_total")
     @Expose

@@ -10,7 +10,8 @@ class RptMilkEventsKpi {
 
     @SerializedName("date")
     @Expose
-    lateinit var date: String
+    var date = ""
+        get() = formatDate(field)
 
     @SerializedName("mlk_milk_sum_yield")
     @Expose

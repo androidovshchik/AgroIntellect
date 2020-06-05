@@ -10,7 +10,8 @@ class RptFarmSummaryHistory {
 
     @SerializedName("date")
     @Expose
-    lateinit var date: String
+    var date = ""
+        get() = formatDate(field)
 
     @SerializedName("avg_lact_num")
     @Expose

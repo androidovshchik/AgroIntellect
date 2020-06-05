@@ -10,7 +10,8 @@ class RptHerdForecast {
 
     @SerializedName("yyyy_mm")
     @Expose
-    lateinit var yyyyMm: String
+    var yyyyMm = ""
+        get() = formatDate(field)
 
     @SerializedName("hrd_cows_all")
     @Expose

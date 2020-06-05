@@ -4,6 +4,22 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
 
+/**
+ * From YYYY-MM-DD
+ * To DD.MM.YYYY
+ */
+fun formatDate(date: String): String {
+    val first = date.indexOf("-")
+    val second = date.indexOf("-", first + 1)
+    if (first > 0 && second > 0) {
+        return "${date.substring(second + 1)}.${date.substring(first + 1, second)}.${date.substring(
+            0,
+            first
+        )}"
+    }
+    return date
+}
+
 interface Table {
 
     val columns: List<Column>

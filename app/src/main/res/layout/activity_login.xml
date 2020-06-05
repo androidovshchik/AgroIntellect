@@ -34,7 +34,7 @@
                     app:backgroundTint="@android:color/white"
                     app:elevation="10dp"
                     app:fabCustomSize="72dp"
-                    app:maxImageSize="49dp"
+                    app:maxImageSize="56dp"
                     app:tint="@null" />
 
                 <TextView

@@ -8,7 +8,8 @@ class RptFreshDisease {
 
     @SerializedName("date")
     @Expose
-    lateinit var date: String
+    var date = ""
+        get() = formatDate(field)
 
     @SerializedName("evt_calv_total")
     @Expose
