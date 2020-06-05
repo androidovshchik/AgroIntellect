@@ -88,9 +88,7 @@ class RptsHerdForecast : Table {
     @SuppressLint("DefaultLocale")
     private fun mapByMethod(name: String): List<Row> {
         val method = RptHerdForecast::class.java.getMethod("get${name.capitalize()}")
-        return items.map {
-            Row(it.yyyyMm.substring(0, it.yyyyMm.length - 3), method.invoke(it)!!.toString())
-        }
+        return items.map { Row(it.yyyyMm.substringAfter("."), method.invoke(it)!!.toString()) }
     }
 
     @SerializedName("rpt_herd_forecast")

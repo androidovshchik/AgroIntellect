@@ -74,7 +74,7 @@ open class ReportsFragment : BaseFragment() {
         Report.Default("rpt_breed_effectivity", "Воспроизводство", 2),
         Report.Default("rpt_fresh_disease", "Послеотельные заболевания", 2),
         Report.Default("rpt_farm_summary_history", "Сводный отчет", 2),
-        Report.Default("rpt_herd_forecast", "Прогноз поголовья", 0),
+        Report.Default("rpt_herd_forecast", "Прогноз", 0),
         Report.Default("rpt_sold_animals", "Продажа", 2),
         Report.Default("rpt_died_animals", "Падеж", 2),
         Report.Default("rpt_last_updates", "Даты актуальности данных", 0)
@@ -162,7 +162,7 @@ open class ReportsFragment : BaseFragment() {
             mainModel.reports.setAll(data)
             dataSource.setAll(defaultList.filter { item -> data.any { item.id == it.id } })
             dataSource.invalidateAll()
-            waitDialog.hide()
+            waitDialog.dismiss()
             sl_reports.isRefreshing = false
         }
     }

@@ -46,7 +46,7 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware, CoroutineScope {
     }
 
     protected open fun showError(e: Throwable) {
-        waitDialog.hide()
+        waitDialog.dismiss()
         contentView?.longSnackbar(e.message ?: e.toString())
     }
 

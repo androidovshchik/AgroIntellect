@@ -144,7 +144,7 @@ class FarmsFragment : BaseFragment() {
             mainModel.farms.setAll(data)
             dataSource.setAll(data)
             dataSource.invalidateAll()
-            waitDialog.hide()
+            waitDialog.dismiss()
             sl_farms.isRefreshing = false
         }
     }

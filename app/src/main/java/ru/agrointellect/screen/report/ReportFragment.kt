@@ -160,7 +160,7 @@ class ReportFragment : BaseFragment() {
                 sl_data.isVisible = true
                 adapter.toggleGroup(0)
             }
-            waitDialog.hide()
+            waitDialog.dismiss()
             sl_data.isRefreshing = false
         }
     }
