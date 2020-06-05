@@ -12,10 +12,10 @@ fun formatDate(date: String): String {
     val first = date.indexOf("-")
     val second = date.indexOf("-", first + 1)
     if (first > 0 && second > 0) {
-        return "${date.substring(second + 1)}.${date.substring(first + 1, second)}.${date.substring(
-            0,
-            first
-        )}"
+        val dd = date.substring(second + 1)
+        val mm = date.substring(first + 1, second)
+        val yyyy = date.substring(0, first)
+        return "$dd.$mm.$yyyy"
     }
     return date
 }
