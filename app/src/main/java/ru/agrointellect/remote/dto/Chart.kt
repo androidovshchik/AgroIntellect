@@ -1,6 +1,7 @@
 package ru.agrointellect.remote.dto
 
 import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.LineData
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,9 +17,10 @@ fun parseDate(date: String): Float {
 
 interface ChartLine {
 
+    val lineData: LineData
 }
 
 interface ChartBar {
 
-    val data: BarData
+    val barData: BarData
 }

@@ -17,7 +17,7 @@ class RptsSoldAnimal : Table, ChartBar {
             Column("Продажа быков", items.map { Row(it.date, it.evtSoldBulls) })
         )
 
-    override val data: BarData
+    override val barData: BarData
         get() = BarData(
             BarDataSet(items.map {
                 BarEntry(parseDate(it.date), it.evtSoldCowsTotal?.toFloatOrNull() ?: 0f)

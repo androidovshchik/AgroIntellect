@@ -16,7 +16,7 @@ class RptsHerdDistribution : Table, ChartBar {
             Column("Стельных коров", items.map { Row(it.date, it.hrdCowsPregAll) })
         )
 
-    override val data: BarData
+    override val barData: BarData
         get() = BarData(
             BarDataSet(items.map {
                 val val1 = it.hrdCowsPregAll?.toFloatOrNull() ?: 0f
