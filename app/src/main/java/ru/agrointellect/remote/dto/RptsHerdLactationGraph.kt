@@ -1,5 +1,6 @@
 package ru.agrointellect.remote.dto
 
+import android.text.TextUtils
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -11,7 +12,7 @@ import java.io.StringReader
 @Suppress("SpellCheckingInspection")
 class RptsHerdLactationGraph : Table, ChartLine {
 
-    private val data: LinkedHashMap<String, String>
+    private val map: Map<String, String>
         get() {
             val data = linkedMapOf<String, String>()
             items[0].averageLactationDailyMilk?.let {
@@ -27,32 +28,33 @@ class RptsHerdLactationGraph : Table, ChartLine {
                 data["Лактация > 2"] = it
             }
             items[0].sampleLactations.forEach {
+                val value = it.value ?: return@forEach
                 val lactation = it.key.indexOf("_lactation_")
                 val per = it.key.indexOf("_per_", lactation)
                 val milking = it.key.indexOf("_milking_", per)
                 if (lactation > 0 && per > 0 && milking > 0) {
                     val number = it.key.substring(lactation + "_lactation_".length, per)
                     val days = it.key.substring(per + "_per_".length, milking)
-                    data["Образец $number за $days дней"] = it.value.toString()
+                    data["Образец $number за $days дней"] = value
                 }
             }
             return data
         }
 
-    override val legends: MutableSet<String>
-        get() = data.keys
+    override val legends: Set<String>
+        get() = map.keys
 
     override val columns: List<Column>
         get() {
-            val data = data
-            val columns = mutableListOf<String>()
+            val data = map
             val text = StringBuilder()
             text.appendln(items[0].lactationDays)
-            val csvReader = CsvReader()
-            val csv = csvReader.read(StringReader(data.toString().trim()))
+            text.append(TextUtils.join("\n", data.values))
+            val reader = CsvReader()
+            val csv = reader.read(StringReader(text.toString()))
             val days = csv.getRow(0)
-            return columns.mapIndexed { i, column ->
-                Column(column, csv.getRow(i + 1).fields.mapIndexed { j, value ->
+            return data.keys.mapIndexed { i, key ->
+                Column(key, csv.getRow(i + 1).fields.mapIndexed { j, value ->
                     Row("${days.getField(j)} день доения", value)
                 })
             }
