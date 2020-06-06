@@ -15,12 +15,17 @@ fun parseDate(date: String): Float {
     return chartFormatter.parse(date)!!.time / 1000f
 }
 
-interface ChartLine {
+interface ChartBase {
+
+    val legends: List<String>
+}
+
+interface ChartLine : ChartBase {
 
     val lineData: LineData
 }
 
-interface ChartBar {
+interface ChartBar : ChartBase {
 
     val barData: BarData
 }

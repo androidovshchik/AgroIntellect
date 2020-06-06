@@ -9,11 +9,17 @@ import com.google.gson.annotations.SerializedName
 @Suppress("SpellCheckingInspection")
 class RptsHerdDistribution : Table, ChartBar {
 
+    override val legends = listOf(
+        "Фуражных коров",
+        "Дойных коров всего",
+        "Стельных коров"
+    )
+
     override val columns: List<Column>
         get() = listOf(
-            Column("Фуражных коров", items.map { Row(it.date, it.hrdCowsAll) }),
-            Column("Дойных коров всего", items.map { Row(it.date, it.hrdCowsLactAll) }),
-            Column("Стельных коров", items.map { Row(it.date, it.hrdCowsPregAll) })
+            Column(legends[0], items.map { Row(it.date, it.hrdCowsAll) }),
+            Column(legends[1], items.map { Row(it.date, it.hrdCowsLactAll) }),
+            Column(legends[2], items.map { Row(it.date, it.hrdCowsPregAll) })
         )
 
     override val barData: BarData
