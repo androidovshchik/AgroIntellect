@@ -17,7 +17,7 @@ fun parseDate(date: String): Float {
 
 interface ChartBase {
 
-    val legends: List<String>
+    val legends: Collection<String>
 }
 
 interface ChartLine : ChartBase {
