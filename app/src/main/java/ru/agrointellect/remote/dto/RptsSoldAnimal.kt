@@ -6,9 +6,6 @@ import com.github.mikephil.charting.data.BarEntry
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-/**
- * Продажа
- */
 @Suppress("SpellCheckingInspection")
 class RptsSoldAnimal : Table, ChartBar {
 
