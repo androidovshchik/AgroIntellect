@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import ru.agrointellect.R
+import com.github.mikephil.charting.charts.LineChart
 import ru.agrointellect.screen.base.BaseFragment
 
 class LineFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_chart, root, false)
+        return LineChart(requireContext())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
