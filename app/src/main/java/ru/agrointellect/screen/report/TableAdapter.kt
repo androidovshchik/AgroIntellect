@@ -23,7 +23,7 @@ import ru.agrointellect.extension.setAll
 import ru.agrointellect.remote.dto.Column
 import ru.agrointellect.remote.dto.Row
 
-class ColumnHeader(itemView: View) : GroupViewHolder(itemView) {
+class ColumnHolder(itemView: View) : GroupViewHolder(itemView) {
 
     val top: View? = itemView.v_top
     val name: TextView? = itemView.tv_name
@@ -44,7 +44,7 @@ class RowHolder(itemView: View) : ChildViewHolder(itemView) {
 }
 
 class TableAdapter(context: Context) :
-    ExpandableRecyclerViewAdapter<ColumnHeader, RowHolder>(mutableListOf<Column>()) {
+    ExpandableRecyclerViewAdapter<ColumnHolder, RowHolder>(mutableListOf<Column>()) {
 
     private val grayColor = ContextCompat.getColor(context, R.color.colorRowGray)
 
@@ -52,8 +52,8 @@ class TableAdapter(context: Context) :
 
     private var singleHeader = false
 
-    override fun onCreateGroupViewHolder(parent: ViewGroup, viewType: Int): ColumnHeader {
-        return ColumnHeader(
+    override fun onCreateGroupViewHolder(parent: ViewGroup, viewType: Int): ColumnHolder {
+        return ColumnHolder(
             parent.inflate(
                 if (singleHeader) {
                     R.layout.item_dummy
@@ -69,7 +69,7 @@ class TableAdapter(context: Context) :
     }
 
     override fun onBindGroupViewHolder(
-        holder: ColumnHeader,
+        holder: ColumnHolder,
         flatPosition: Int,
         group: ExpandableGroup<*>
     ) {
