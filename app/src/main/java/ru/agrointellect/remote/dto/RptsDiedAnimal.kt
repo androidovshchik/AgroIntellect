@@ -9,20 +9,24 @@ import com.google.gson.annotations.SerializedName
 @Suppress("SpellCheckingInspection")
 class RptsDiedAnimal : Table, ChartBar {
 
-    override val legends = listOf(
-        "Падеж коров всего",
-        "Падеж нетелей",
-        "Падеж телок всего",
-        "Падеж быков"
-    )
+    override val legends: List<String>
+        get() = listOf(
+            "Падеж коров всего",
+            "Падеж нетелей",
+            "Падеж телок всего",
+            "Падеж быков"
+        )
 
     override val columns: List<Column>
-        get() = listOf(
-            Column(legends[0], items.map { Row(it.date, it.evtDeadCowsTotal) }),
-            Column(legends[1], items.map { Row(it.date, it.evtDeadPheifers) }),
-            Column(legends[2], items.map { Row(it.date, it.evtDeadHeifersTotal) }),
-            Column(legends[3], items.map { Row(it.date, it.evtDeadBulls) })
-        )
+        get() {
+            val legends = legends
+            return listOf(
+                Column(legends[0], items.map { Row(it.date, it.evtDeadCowsTotal) }),
+                Column(legends[1], items.map { Row(it.date, it.evtDeadPheifers) }),
+                Column(legends[2], items.map { Row(it.date, it.evtDeadHeifersTotal) }),
+                Column(legends[3], items.map { Row(it.date, it.evtDeadBulls) })
+            )
+        }
 
     override val barData: BarData
         get() = BarData(
