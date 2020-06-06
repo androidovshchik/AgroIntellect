@@ -1,31 +1,69 @@
 package ru.agrointellect.remote.dto
 
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-/**
- * Надой, события, кормление
- */
 @Suppress("SpellCheckingInspection")
-class RptsMilkEventsKpi : Table {
+class RptsMilkEventsKpi : Table, ChartLine {
 
-    override val columns: List<Column>
+    override val legends: List<String>
         get() = listOf(
-            Column("Валовой надой", mapByField("mlkMilkSumYield")),
-            Column("Надой 1 ф/к", mapByField("mlkMilkPerCow")),
-            Column("Надой 1 д/к", mapByField("mlkMilkPerLactCow")),
-            Column("Осеменений коров", mapByField("evtInsemCows")),
-            Column("Выявлено стельных коров", mapByField("evtGotPregCows")),
-            Column("Запущено коров", mapByField("evtDryCows")),
-            Column("Переводов коров", mapByField("evtMoveCows")),
-            Column("Вакцинация коров", mapByField("evtVaccCows")),
-            Column("Расчистка копыт коров", mapByField("evtFootrimCows")),
-            Column("KPI кормления", mapByField("feedKpi"))
+            "Надой 1 ф/к",
+            "Надой 1 д/к",
+            "Осеменений коров",
+            "Выявлено стельных коров",
+            "Запущено коров",
+            "Переводов коров",
+            "Вакцинация коров",
+            "Расчистка копыт коров",
+            "KPI кормления"
         )
 
-    private fun mapByField(name: String): List<Row> {
+    override val columns: List<Column>
+        get() {
+            val legends = legends
+            return listOf(
+                Column("Валовой надой", rowsByField("mlkMilkSumYield")),
+                Column(legends[0], rowsByField("mlkMilkPerCow")),
+                Column(legends[1], rowsByField("mlkMilkPerLactCow")),
+                Column(legends[2], rowsByField("evtInsemCows")),
+                Column(legends[3], rowsByField("evtGotPregCows")),
+                Column(legends[4], rowsByField("evtDryCows")),
+                Column(legends[5], rowsByField("evtMoveCows")),
+                Column(legends[6], rowsByField("evtVaccCows")),
+                Column(legends[7], rowsByField("evtFootrimCows")),
+                Column(legends[8], rowsByField("feedKpi"))
+            )
+        }
+
+    override val lineData: LineData
+        get() = LineData(
+            listOf(
+                LineDataSet(entriesByField("mlkMilkPerCow"), null),
+                LineDataSet(entriesByField("mlkMilkPerLactCow"), null),
+                LineDataSet(entriesByField("evtInsemCows"), null),
+                LineDataSet(entriesByField("evtGotPregCows"), null),
+                LineDataSet(entriesByField("evtDryCows"), null),
+                LineDataSet(entriesByField("evtMoveCows"), null),
+                LineDataSet(entriesByField("evtVaccCows"), null),
+                LineDataSet(entriesByField("evtFootrimCows"), null),
+                LineDataSet(entriesByField("feedKpi"), null)
+            )
+        )
+
+    private fun rowsByField(name: String): List<Row> {
         val field = RptMilkEventsKpi::class.java.getField(name)
         return items.map { Row(it.date, field.get(it)?.toString()) }
+    }
+
+    private fun entriesByField(name: String): List<Entry> {
+        val field = RptMilkEventsKpi::class.java.getField(name)
+        return items.map {
+            Entry(parseDate(it.date), field.get(it)?.toString()?.toFloatOrNull() ?: 0f)
+        }
     }
 
     @SerializedName("rpt_milk_events_kpi")
