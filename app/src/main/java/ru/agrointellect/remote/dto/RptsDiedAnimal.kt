@@ -18,30 +18,20 @@ class RptsDiedAnimal : Table, ChartBar {
         )
 
     override val data: BarData
-        get() {
-            return BarData(
-                BarDataSet(items.mapNotNull {
-                    it.evtDeadCowsTotal?.toFloatOrNull()?.let { value ->
-                        BarEntry(parseDate(it.date), value)
-                    }
-                }, "Падеж коров всего"),
-                BarDataSet(items.mapNotNull {
-                    it.evtDeadPheifers?.toFloatOrNull()?.let { value ->
-                        BarEntry(parseDate(it.date), value)
-                    }
-                }, "Падеж нетелей"),
-                BarDataSet(items.mapNotNull {
-                    it.evtDeadHeifersTotal?.toFloatOrNull()?.let { value ->
-                        BarEntry(parseDate(it.date), value)
-                    }
-                }, "Падеж телок всего"),
-                BarDataSet(items.mapNotNull {
-                    it.evtDeadBulls?.toFloatOrNull()?.let { value ->
-                        BarEntry(parseDate(it.date), value)
-                    }
-                }, "Падеж быков")
-            )
-        }
+        get() = BarData(
+            BarDataSet(items.map {
+                BarEntry(parseDate(it.date), it.evtDeadCowsTotal?.toFloatOrNull() ?: 0f)
+            }, null),
+            BarDataSet(items.map {
+                BarEntry(parseDate(it.date), it.evtDeadPheifers?.toFloatOrNull() ?: 0f)
+            }, null),
+            BarDataSet(items.map {
+                BarEntry(parseDate(it.date), it.evtDeadHeifersTotal?.toFloatOrNull() ?: 0f)
+            }, null),
+            BarDataSet(items.map {
+                BarEntry(parseDate(it.date), it.evtDeadBulls?.toFloatOrNull() ?: 0f)
+            }, null)
+        )
 
     @SerializedName("rpt_died_animals")
     @Expose
