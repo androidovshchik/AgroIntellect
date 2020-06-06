@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName
 import de.siegmar.fastcsv.reader.CsvReader
 import java.io.StringReader
 
-@Suppress("SpellCheckingInspection")
+@Suppress("SpellCheckingInspection", "ReplaceManualRangeWithIndicesCalls")
 class RptsHerdLactationGraph : Table, ChartLine {
 
     private val map: Map<String, String>
@@ -28,14 +28,13 @@ class RptsHerdLactationGraph : Table, ChartLine {
                 data["Лактация > 2"] = it
             }
             items[0].sampleLactations.forEach {
-                val value = it.value ?: return@forEach
                 val lactation = it.key.indexOf("_lactation_")
                 val per = it.key.indexOf("_per_", lactation)
                 val milking = it.key.indexOf("_milking_", per)
                 if (lactation > 0 && per > 0 && milking > 0) {
                     val number = it.key.substring(lactation + "_lactation_".length, per)
                     val days = it.key.substring(per + "_per_".length, milking)
-                    data["Образец $number за $days дней"] = value
+                    data["Образец $number за $days дней"] = it.value ?: return@forEach
                 }
             }
             return data
@@ -61,15 +60,20 @@ class RptsHerdLactationGraph : Table, ChartLine {
         }
 
     override val lineData: LineData
-        get() = LineData(
-            listOf(
-                LineDataSet(
-                    listOf(
-                        Entry(0f, 0f)
-                    ), null
-                )
-            )
-        )
+        get() {
+            val data = map
+            val text = StringBuilder()
+            text.appendln(items[0].lactationDays)
+            text.append(TextUtils.join("\n", data.values))
+            val reader = CsvReader()
+            val csv = reader.read(StringReader(text.toString()))
+            val days = csv.getRow(0)
+            return LineData((0 until data.size).map {
+                LineDataSet(csv.getRow(it + 1).fields.mapIndexed { j, value ->
+                    Entry(days.getField(j).toFloatOrNull() ?: 0f, value.toFloatOrNull() ?: 0f)
+                }, null)
+            })
+        }
 
     @SerializedName("rpt_herd_lactation_graph")
     @Expose
