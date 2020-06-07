@@ -5,15 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.mikephil.charting.charts.BarChart
-import ru.agrointellect.screen.base.BaseFragment
+import org.jetbrains.anko.matchParent
 
-class BarFragment : BaseFragment() {
+class BarFragment : DataFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
-        return BarChart(requireContext())
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        chart = BarChart(requireContext()).apply {
+            layoutParams = ViewGroup.LayoutParams(matchParent, matchParent)
+        }
+        return chart
     }
 }

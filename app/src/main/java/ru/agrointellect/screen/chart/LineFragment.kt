@@ -5,15 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.mikephil.charting.charts.LineChart
-import ru.agrointellect.screen.base.BaseFragment
+import org.jetbrains.anko.matchParent
 
-class LineFragment : BaseFragment() {
+class LineFragment : DataFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
-        return LineChart(requireContext())
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        chart = LineChart(requireContext()).apply {
+            layoutParams = ViewGroup.LayoutParams(matchParent, matchParent)
+        }
+        return chart
     }
 }
