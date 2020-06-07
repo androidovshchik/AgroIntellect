@@ -8,16 +8,15 @@ import org.json.JSONObject
 import ru.agrointellect.exception.NoDataException
 import ru.agrointellect.exception.WrongUidException
 import ru.agrointellect.remote.dto.*
-import kotlin.math.min
 
 @Suppress("SpellCheckingInspection")
 suspend inline fun <reified T> HttpResponse.readObject(
     gson: Gson,
-    depth: Int,
+    id: String,
     vararg keys: String
 ): T {
-    return readJson(depth, *keys) {
-        val cls = when (keys.lastOrNull()) {
+    return readJson(*keys) {
+        val cls = when (id) {
             "rpt_herd_distribution" -> RptsHerdDistribution::class.java
             "rpt_herd_alignment_now" -> RptsHerdAlignmentNow::class.java
             "rpt_herd_alignment_history" -> RptsHerdAlignmentHistory::class.java
@@ -26,6 +25,11 @@ suspend inline fun <reified T> HttpResponse.readObject(
             "rpt_breed_effectivity" -> RptsBreedEffectivity::class.java
             "rpt_fresh_disease" -> RptsFreshDisease::class.java
             "rpt_farm_summary_history" -> RptsFarmSummaryHistory::class.java
+            "rpt_farm_summary_history2" -> ChrtsFarmSummaryHistory2::class.java
+            "rpt_farm_summary_history3" -> ChrtsFarmSummaryHistory3::class.java
+            "rpt_farm_summary_history4" -> ChrtsFarmSummaryHistory4::class.java
+            "rpt_farm_summary_history5" -> ChrtsFarmSummaryHistory5::class.java
+            "rpt_farm_summary_history6" -> ChrtsFarmSummaryHistory6::class.java
             "rpt_herd_forecast" -> RptsHerdForecast::class.java
             "rpt_sold_animals" -> RptsSoldAnimal::class.java
             "rpt_died_animals" -> RptsDiedAnimal::class.java
@@ -37,22 +41,18 @@ suspend inline fun <reified T> HttpResponse.readObject(
 }
 
 suspend inline fun <reified T> HttpResponse.readArray(gson: Gson, vararg keys: String): List<T> {
-    return readJson(keys.size, *keys) {
+    return readJson(*keys) {
         gson.fromJson(it, TypeToken.getParameterized(List::class.java, T::class.java).type)
     }
 }
 
-suspend inline fun <T> HttpResponse.readJson(
-    depth: Int,
-    vararg keys: String,
-    block: (String) -> T
-): T {
+suspend inline fun <T> HttpResponse.readJson(vararg keys: String, block: (String) -> T): T {
     var text = readText()
     try {
         if (keys.isNotEmpty()) {
             var json: Any = JSONObject(text)
-            (0 until min(depth, keys.size)).forEach {
-                json = (json as JSONObject).get(keys[it])
+            keys.forEach {
+                json = (json as JSONObject).get(it)
             }
             text = json.toString()
         }
