@@ -117,8 +117,6 @@
         android:background="?android:colorBackground"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/mb_send"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_dates"
         tools:background="@android:color/transparent"
         tools:visibility="visible">
