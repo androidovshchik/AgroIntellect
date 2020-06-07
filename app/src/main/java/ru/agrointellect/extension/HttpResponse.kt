@@ -24,7 +24,7 @@ suspend inline fun <reified T> HttpResponse.readObject(
             "rpt_milk_events_kpi" -> RptsMilkEventsKpi::class.java
             "rpt_breed_effectivity" -> RptsBreedEffectivity::class.java
             "rpt_fresh_disease" -> RptsFreshDisease::class.java
-            "rpt_farm_summary_history" -> RptsFarmSummaryHistory::class.java
+            "rpt_farm_summary_history", "rpt_farm_summary_history1" -> RptsFarmSummaryHistory::class.java
             "rpt_farm_summary_history2" -> ChrtsFarmSummaryHistory2::class.java
             "rpt_farm_summary_history3" -> ChrtsFarmSummaryHistory3::class.java
             "rpt_farm_summary_history4" -> ChrtsFarmSummaryHistory4::class.java

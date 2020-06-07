@@ -891,7 +891,7 @@ class RptFarmSummaryHistory {
     @SerializedName("mlk_milk_sum_yield")
     @Expose
     @JvmField
-    var mlkMilkSumYield: String? = null
+    var mlkSumYield: String? = null
 
     @SerializedName("mlk_milk_per_cow")
     @Expose

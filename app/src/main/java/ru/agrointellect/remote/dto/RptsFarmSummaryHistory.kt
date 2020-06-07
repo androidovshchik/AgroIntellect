@@ -1,13 +1,21 @@
 package ru.agrointellect.remote.dto
 
+import com.github.mikephil.charting.data.ChartData
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import ru.agrointellect.extension.asFloat
 
 /**
- * Сводный отчет
+ * График: Валовой надой + KPI
  */
 @Suppress("SpellCheckingInspection")
-class RptsFarmSummaryHistory : Table {
+class RptsFarmSummaryHistory : Table, ChartBase {
+
+    override val legends: Collection<String>
+        get() = listOf("Валовой надой", "KPI кормления")
 
     override val columns: List<Column>
         get() = listOf(
@@ -186,10 +194,18 @@ class RptsFarmSummaryHistory : Table {
             Column("Индекс стельности телок", mapByField("brdPregRateHeif")),
             Column("Доз семени на стельную корову", mapByField("brdStrawsPerPregCow")),
             Column("Доз семени на стельную телку", mapByField("brdStrawsPerPregHeif")),
-            Column("Валовой надой", mapByField("mlkMilkSumYield")),
+            Column("Валовой надой", mapByField("mlkSumYield")),
             Column("Надой 1 ф/к", mapByField("mlkMilkPerCow")),
             Column("Надой 1 д/к", mapByField("mlkMilkPerLactCow")),
             Column("KPI кормления", mapByField("feedKpi"))
+        )
+
+    override val data: ChartData<*>
+        get() = LineData(
+            listOf(
+                LineDataSet(items.map { Entry(parseDate(it.date), it.mlkSumYield.asFloat) }, null),
+                LineDataSet(items.map { Entry(parseDate(it.date), it.feedKpi.asFloat) }, null)
+            )
         )
 
     private fun mapByField(name: String): List<Row> {
