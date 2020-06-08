@@ -4,9 +4,8 @@ package ru.agrointellect.remote.dto
 
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.ChartData
-import ru.agrointellect.extension.f
+import ru.agrointellect.extension.asFloat
 import kotlin.math.max
 
 /**
@@ -19,11 +18,11 @@ class ChrtsFarmSummaryHistory2 : RptsFarmSummaryHistory() {
 
     override val data: ChartData<*>
         get() = BarData(
-            BarDataSet(items.map {
-                val val1 = it.hrdCowsPregAll.f
-                val val2 = max(0f, it.hrdCowsLactAll.f - val1)
-                val val3 = max(0f, it.hrdCowsAll.f - val2 - val1)
-                BarEntry(parseDate(it.date), floatArrayOf(val1, val2, val3))
+            BarDataSet(items.mapNotNull {
+                val val1 = it.hrdCowsPregAll.asFloat
+                val val2 = max(0f, it.hrdCowsLactAll.asFloat - val1)
+                val val3 = max(0f, it.hrdCowsAll.asFloat - val2 - val1)
+                newBarEntry(it.date, floatArrayOf(val1, val2, val3))
             }, null)
         )
 }
@@ -38,7 +37,7 @@ class ChrtsFarmSummaryHistory3 : RptsFarmSummaryHistory() {
 
     override val data: ChartData<*>
         get() = BarData(
-            BarDataSet(items.map { BarEntry(parseDate(it.date), it.evtKetosTotal.f) }, null)
+            BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtKetosTotal) }, null)
         )
 }
 
@@ -52,9 +51,9 @@ class ChrtsFarmSummaryHistory4 : RptsFarmSummaryHistory() {
 
     override val data: ChartData<*>
         get() = BarData(
-            BarDataSet(items.map { BarEntry(parseDate(it.date), it.evtCalvTotal.f) }, null),
-            BarDataSet(items.map { BarEntry(parseDate(it.date), it.evtRetPlacTotal.f) }, null),
-            BarDataSet(items.map { BarEntry(parseDate(it.date), it.evtParesTotal.f) }, null)
+            BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtCalvTotal) }, null),
+            BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtRetPlacTotal) }, null),
+            BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtParesTotal) }, null)
         )
 }
 
@@ -68,9 +67,9 @@ class ChrtsFarmSummaryHistory5 : RptsFarmSummaryHistory() {
 
     override val data: ChartData<*>
         get() = BarData(
-            BarDataSet(items.map { BarEntry(parseDate(it.date), it.evtSoldCowsTotal.f) }, null),
-            BarDataSet(items.map { BarEntry(parseDate(it.date), it.evtSoldHeifersTotal.f) }, null),
-            BarDataSet(items.map { BarEntry(parseDate(it.date), it.evtSoldPheifers.f) }, null)
+            BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtSoldCowsTotal) }, null),
+            BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtSoldHeifersTotal) }, null),
+            BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtSoldPheifers) }, null)
         )
 }
 
@@ -84,8 +83,8 @@ class ChrtsFarmSummaryHistory6 : RptsFarmSummaryHistory() {
 
     override val data: ChartData<*>
         get() = BarData(
-            BarDataSet(items.map { BarEntry(parseDate(it.date), it.evtDeadCowsTotal.f) }, null),
-            BarDataSet(items.map { BarEntry(parseDate(it.date), it.evtDeadHeifersTotal.f) }, null),
-            BarDataSet(items.map { BarEntry(parseDate(it.date), it.evtDeadPheifers.f) }, null)
+            BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtDeadCowsTotal) }, null),
+            BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtDeadHeifersTotal) }, null),
+            BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtDeadPheifers) }, null)
         )
 }
