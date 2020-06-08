@@ -54,10 +54,13 @@ class ChrtsFarmSummaryHistory4 : RptsFarmSummaryHistory() {
     override val data: ChartData<*>
         get() = BarData(
             BarDataSet(items.map {
-                val val1 = it.evtCalvTotal.asFloat
-                val val2 = max(0f, it.evtRetPlacTotal.asFloat - val1)
-                val val3 = max(0f, it.evtParesTotal.asFloat - val2 - val1)
-                BarEntry(parseDate(it.date), floatArrayOf(val1, val2, val3))
+                BarEntry(parseDate(it.date), it.evtCalvTotal.asFloat)
+            }, null),
+            BarDataSet(items.map {
+                BarEntry(parseDate(it.date), it.evtRetPlacTotal.asFloat)
+            }, null),
+            BarDataSet(items.map {
+                BarEntry(parseDate(it.date), it.evtParesTotal.asFloat)
             }, null)
         )
 }
@@ -74,10 +77,13 @@ class ChrtsFarmSummaryHistory5 : RptsFarmSummaryHistory() {
     override val data: ChartData<*>
         get() = BarData(
             BarDataSet(items.map {
-                val val1 = it.evtCalvTotal.asFloat
-                val val2 = max(0f, it.evtRetPlacTotal.asFloat - val1)
-                val val3 = max(0f, it.evtParesTotal.asFloat - val2 - val1)
-                BarEntry(parseDate(it.date), floatArrayOf(val1, val2, val3))
+                BarEntry(parseDate(it.date), it.evtSoldCowsTotal.asFloat)
+            }, null),
+            BarDataSet(items.map {
+                BarEntry(parseDate(it.date), it.evtSoldHeifersTotal.asFloat)
+            }, null),
+            BarDataSet(items.map {
+                BarEntry(parseDate(it.date), it.evtSoldPheifers.asFloat)
             }, null)
         )
 }
@@ -89,18 +95,18 @@ class ChrtsFarmSummaryHistory5 : RptsFarmSummaryHistory() {
 class ChrtsFarmSummaryHistory6 : RptsFarmSummaryHistory() {
 
     override val legends: Collection<String>
-        get() = listOf("Продажа коров всего", "Продажа нетелей", "Падеж телок всего")
+        get() = listOf("Падеж коров всего", "Падеж телок всего", "Падеж нетелей")
 
     override val data: ChartData<*>
         get() = BarData(
             BarDataSet(items.map {
-                BarEntry(parseDate(it.date), it.evtSoldCowsTotal?.toFloatOrNull() ?: 0f)
+                BarEntry(parseDate(it.date), it.evtDeadCowsTotal.asFloat)
             }, null),
             BarDataSet(items.map {
-                BarEntry(parseDate(it.date), it.evtSoldPheifers?.toFloatOrNull() ?: 0f)
+                BarEntry(parseDate(it.date), it.evtDeadHeifersTotal.asFloat)
             }, null),
             BarDataSet(items.map {
-                BarEntry(parseDate(it.date), it.evtSoldHeifersTotal?.toFloatOrNull() ?: 0f)
+                BarEntry(parseDate(it.date), it.evtDeadPheifers.asFloat)
             }, null)
         )
 }

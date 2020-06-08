@@ -12,7 +12,7 @@ import ru.agrointellect.extension.asFloat
  * График: Валовой надой + KPI
  */
 @Suppress("SpellCheckingInspection")
-class RptsFarmSummaryHistory : Table, ChartBase {
+open class RptsFarmSummaryHistory : Table, ChartBase {
 
     override val legends: Collection<String>
         get() = listOf("Валовой надой", "KPI кормления")
