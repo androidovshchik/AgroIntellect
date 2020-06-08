@@ -26,7 +26,7 @@ class RptsHerdDistribution : Table, ChartBase {
 
     override val data: ChartData<*>
         get() = BarData(
-            BarDataSet(items.map {
+            BarDataSet(items.mapNotNull {
                 val val1 = it.hrdCowsPregAll.asFloat
                 val val2 = max(0f, it.hrdCowsLactAll.asFloat - val1)
                 val val3 = max(0f, it.hrdCowsAll.asFloat - val2 - val1)

@@ -45,21 +45,21 @@ class Report {
 
     @Keep
     @Suppress("SpellCheckingInspection")
-    class Default(val id: String, val name: String, val dates: Int, val uid: String = id) :
+    class Default(val id: String, val name: String, val countDates: Int, val uid: String = id) :
         Serializable {
 
-        val singleDate: Boolean
-            get() = dates == 1
+        val hasSingleDate: Boolean
+            get() = countDates == 1
 
-        val isLineChart
+        val hasLineChart
             get() = uid == "rpt_farm_summary_history" || uid == "rpt_milk_events_kpi" || uid == "rpt_herd_lactation_graph"
 
-        val isBarChart
+        val hasBarChart
             get() = uid == "chrt_farm_summary_history2" || uid == "rpt_herd_distribution"
 
-        val isGroupedBarChart
-            get() = !isLineChart && !isBarChart
+        val hasGroupedBarChart
+            get() = !hasLineChart && !hasBarChart
 
-        var selected = false
+        var isSelected = false
     }
 }

@@ -29,15 +29,15 @@ class Column(title: String, items: List<Row>) : ExpandableGroup<Row>(title, item
 
 class Row(key: String, value: String?) : Parcelable {
 
-    var bold = false
+    var isBold = false
 
     val key = when (key) {
         "average" -> {
-            bold = true
+            isBold = true
             "Средние показатели"
         }
         "summary" -> {
-            bold = true
+            isBold = true
             "Суммарные показатели"
         }
         else -> key

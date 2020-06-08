@@ -94,7 +94,7 @@ class TableAdapter(context: Context) :
     ) {
         val row = group.items[childIndex] as Row
         holder.apply {
-            if (row.bold) {
+            if (row.isBold) {
                 itemView.setBackgroundColor(Color.TRANSPARENT)
                 key.text = CalligraphyUtils.applyTypefaceSpan(row.key, regularFont)
                 value.text = CalligraphyUtils.applyTypefaceSpan(row.value, regularFont)
