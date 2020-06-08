@@ -5,9 +5,10 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import ru.agrointellect.extension.f
 
 @Suppress("SpellCheckingInspection")
-class RptsMilkEventsKpi : Table, ChartLine {
+class RptsMilkEventsKpi : Table, ChartBase {
 
     override val legends: List<String>
         get() = listOf(
@@ -39,7 +40,7 @@ class RptsMilkEventsKpi : Table, ChartLine {
             )
         }
 
-    override val lineData: LineData
+    override val data: LineData
         get() = LineData(
             listOf(
                 LineDataSet(entriesByField("mlkMilkPerCow"), null),
@@ -61,9 +62,7 @@ class RptsMilkEventsKpi : Table, ChartLine {
 
     private fun entriesByField(name: String): List<Entry> {
         val field = RptMilkEventsKpi::class.java.getField(name)
-        return items.map {
-            Entry(parseDate(it.date), field.get(it)?.toString()?.toFloatOrNull() ?: 0f)
-        }
+        return items.map { Entry(parseDate(it.date), field.get(it).f) }
     }
 
     @SerializedName("rpt_milk_events_kpi")
