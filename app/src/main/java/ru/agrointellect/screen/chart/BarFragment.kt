@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.github.mikephil.charting.charts.BarChart
 import org.jetbrains.anko.matchParent
 
-class BarFragment : DataFragment() {
+class BarFragment : GraphFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
         chart = BarChart(requireContext()).apply {

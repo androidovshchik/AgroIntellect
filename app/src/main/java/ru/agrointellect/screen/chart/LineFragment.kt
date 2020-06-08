@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.github.mikephil.charting.charts.LineChart
 import org.jetbrains.anko.matchParent
 
-class LineFragment : DataFragment() {
+class LineFragment : GraphFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
         chart = LineChart(requireContext()).apply {
