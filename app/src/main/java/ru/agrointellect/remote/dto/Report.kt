@@ -51,14 +51,14 @@ class Report {
         val singleDate: Boolean
             get() = dates == 1
 
-        val isLine
+        val isLineChart
             get() = uid == "rpt_farm_summary_history" || uid == "rpt_milk_events_kpi" || uid == "rpt_herd_lactation_graph"
 
-        val isBar
+        val isBarChart
             get() = uid == "chrt_farm_summary_history2" || uid == "rpt_herd_distribution"
 
-        val isGroupedBar
-            get() = !isLine && !isBar
+        val isGroupedBarChart
+            get() = !isLineChart && !isBarChart
 
         var selected = false
     }

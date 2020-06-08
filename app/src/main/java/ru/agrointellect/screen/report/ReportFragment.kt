@@ -132,6 +132,7 @@ class ReportFragment : BaseFragment() {
     private fun loadReport() {
         val farmId = reportModel.farm.id
         val reportId = reportModel.report.id
+        val reportUid = reportModel.report.uid
         job.cancelChildren()
         launch {
             val data = withContext(Dispatchers.IO) {
@@ -151,7 +152,7 @@ class ReportFragment : BaseFragment() {
                         }
                     })
                 }
-                response.readObject<Table>(gson, 1, farmId, reportId)
+                response.readObject<Table>(gson, reportUid, farmId)
             }
             val columns = data.columns
             adapter.setAll(columns)

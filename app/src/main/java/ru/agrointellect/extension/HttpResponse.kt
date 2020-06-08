@@ -12,11 +12,11 @@ import ru.agrointellect.remote.dto.*
 @Suppress("SpellCheckingInspection")
 suspend inline fun <reified T> HttpResponse.readObject(
     gson: Gson,
-    id: String,
+    uid: String,
     vararg keys: String
 ): T {
     return readJson(*keys) {
-        val cls = when (id) {
+        val cls = when (uid) {
             "rpt_herd_distribution" -> RptsHerdDistribution::class.java
             "rpt_herd_alignment_now" -> RptsHerdAlignmentNow::class.java
             "rpt_herd_alignment_history" -> RptsHerdAlignmentHistory::class.java
