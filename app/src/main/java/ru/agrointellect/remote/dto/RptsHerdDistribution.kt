@@ -2,11 +2,10 @@ package ru.agrointellect.remote.dto
 
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.ChartData
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ru.agrointellect.extension.f
+import ru.agrointellect.extension.asFloat
 import kotlin.math.max
 
 @Suppress("SpellCheckingInspection")
@@ -28,10 +27,10 @@ class RptsHerdDistribution : Table, ChartBase {
     override val data: ChartData<*>
         get() = BarData(
             BarDataSet(items.map {
-                val val1 = it.hrdCowsPregAll.f
-                val val2 = max(0f, it.hrdCowsLactAll.f - val1)
-                val val3 = max(0f, it.hrdCowsAll.f - val2 - val1)
-                BarEntry(parseDate(it.date), floatArrayOf(val1, val2, val3))
+                val val1 = it.hrdCowsPregAll.asFloat
+                val val2 = max(0f, it.hrdCowsLactAll.asFloat - val1)
+                val val3 = max(0f, it.hrdCowsAll.asFloat - val2 - val1)
+                newGroupBarEntry(it.date, floatArrayOf(val1, val2, val3))
             }, null)
         )
 

@@ -1,12 +1,10 @@
 package ru.agrointellect.remote.dto
 
 import com.github.mikephil.charting.data.ChartData
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ru.agrointellect.extension.f
 
 /**
  * График: Валовой надой + KPI
@@ -206,8 +204,8 @@ open class RptsFarmSummaryHistory : Table, ChartBase {
     override val data: ChartData<*>
         get() = LineData(
             listOf(
-                LineDataSet(items.map { Entry(parseDate(it.date), it.mlkSumYield.f) }, null),
-                LineDataSet(items.map { Entry(parseDate(it.date), it.feedKpi.f) }, null)
+                LineDataSet(items.mapNotNull { newEntry(it.date, it.mlkSumYield) }, null),
+                LineDataSet(items.mapNotNull { newEntry(it.date, it.feedKpi) }, null)
             )
         )
 

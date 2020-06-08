@@ -8,7 +8,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import de.siegmar.fastcsv.reader.CsvReader
-import ru.agrointellect.extension.f
+import ru.agrointellect.extension.asFloat
 import java.io.StringReader
 
 @Suppress("SpellCheckingInspection", "ReplaceManualRangeWithIndicesCalls")
@@ -72,7 +72,7 @@ class RptsHerdLactationGraph : Table, ChartBase {
             val days = csv.getRow(0)
             return LineData((0 until data.size).map {
                 LineDataSet(csv.getRow(it + 1).fields.mapIndexed { j, value ->
-                    Entry(days.getField(j).f, value.f)
+                    Entry(days.getField(j).asFloat, value.asFloat)
                 }, null)
             })
         }
