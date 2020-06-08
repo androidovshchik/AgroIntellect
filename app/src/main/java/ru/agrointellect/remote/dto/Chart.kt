@@ -9,15 +9,15 @@ import java.util.*
 
 private val chartFormatter = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
 
-fun newEntry(date: String, y: String?): Entry? {
-    return Entry(parseDate(date) ?: return null, y.asFloat)
+fun newEntry(date: String, value: String?): Entry? {
+    return Entry(parseDate(date) ?: return null, value.asFloat)
 }
 
-fun newBarEntry(date: String, y: String?): BarEntry? {
-    return BarEntry(parseDate(date) ?: return null, y.asFloat)
+fun newBarEntry(date: String, value: String?): BarEntry? {
+    return BarEntry(parseDate(date) ?: return null, value.asFloat)
 }
 
-fun newBarEntry(date: String, array: FloatArray): BarEntry? {
+fun newGroupBarEntry(date: String, array: FloatArray): BarEntry? {
     return BarEntry(parseDate(date) ?: return null, array)
 }
 

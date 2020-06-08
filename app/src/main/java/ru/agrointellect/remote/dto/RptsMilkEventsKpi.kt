@@ -6,7 +6,6 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ru.agrointellect.extension.f
 
 @Suppress("SpellCheckingInspection")
 class RptsMilkEventsKpi : Table, ChartBase {
@@ -63,7 +62,7 @@ class RptsMilkEventsKpi : Table, ChartBase {
 
     private fun entriesByField(name: String): List<Entry> {
         val field = RptMilkEventsKpi::class.java.getField(name)
-        return items.map { Entry(parseDate(it.date), field.get(it).f) }
+        return items.mapNotNull { newEntry(it.date, field.get(it)?.toString()) }
     }
 
     @SerializedName("rpt_milk_events_kpi")

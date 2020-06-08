@@ -2,11 +2,9 @@ package ru.agrointellect.remote.dto
 
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.ChartData
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ru.agrointellect.extension.f
 
 @Suppress("SpellCheckingInspection")
 class RptsSoldAnimal : Table, ChartBase {
@@ -32,10 +30,10 @@ class RptsSoldAnimal : Table, ChartBase {
 
     override val data: ChartData<*>
         get() = BarData(
-            BarDataSet(items.map { BarEntry(parseDate(it.date), it.evtSoldCowsTotal.f) }, null),
-            BarDataSet(items.map { BarEntry(parseDate(it.date), it.evtSoldPheifers.f) }, null),
-            BarDataSet(items.map { BarEntry(parseDate(it.date), it.evtSoldHeifersTotal.f) }, null),
-            BarDataSet(items.map { BarEntry(parseDate(it.date), it.evtSoldBulls.f) }, null)
+            BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtSoldCowsTotal) }, null),
+            BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtSoldPheifers) }, null),
+            BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtSoldHeifersTotal) }, null),
+            BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtSoldBulls) }, null)
         )
 
     @SerializedName("rpt_sold_animals")
