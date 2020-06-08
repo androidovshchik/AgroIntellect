@@ -1,6 +1,7 @@
 package ru.agrointellect.remote.dto
 
 import android.text.TextUtils
+import com.github.mikephil.charting.data.ChartData
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -10,7 +11,7 @@ import de.siegmar.fastcsv.reader.CsvReader
 import java.io.StringReader
 
 @Suppress("SpellCheckingInspection", "ReplaceManualRangeWithIndicesCalls")
-class RptsHerdLactationGraph : Table, ChartLine {
+class RptsHerdLactationGraph : Table, ChartBase {
 
     private val map: Map<String, String>
         get() {
@@ -59,7 +60,7 @@ class RptsHerdLactationGraph : Table, ChartLine {
             }
         }
 
-    override val lineData: LineData
+    override val data: ChartData<*>
         get() {
             val data = map
             val text = StringBuilder()

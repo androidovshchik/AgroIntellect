@@ -3,6 +3,7 @@ package ru.agrointellect.remote.dto
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.ChartData
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import ru.agrointellect.extension.f
@@ -24,7 +25,7 @@ class RptsDiedAnimal : Table, ChartBase {
             )
         }
 
-    override val data: BarData
+    override val data: ChartData<*>
         get() = BarData(
             BarDataSet(items.map { BarEntry(parseDate(it.date), it.evtDeadCowsTotal.f) }, null),
             BarDataSet(items.map { BarEntry(parseDate(it.date), it.evtDeadPheifers.f) }, null),
