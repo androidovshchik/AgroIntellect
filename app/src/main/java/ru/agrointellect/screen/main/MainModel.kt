@@ -7,7 +7,7 @@ import ru.agrointellect.remote.dto.Report
 class MainModel : ViewModel() {
 
     val farm: Farm?
-        get() = farms.firstOrNull { it.selected }
+        get() = farms.firstOrNull { it.isSelected }
 
     val farms = mutableListOf<Farm>()
 

@@ -107,16 +107,16 @@ open class ReportsFragment : BaseFragment() {
                 withItem<Report.Default, ReportHolder>(R.layout.item_report) {
                     onBind(::ReportHolder) { i, item ->
                         itemView.setBackgroundColor(if (i % 2 != 0) grayColor else Color.TRANSPARENT)
-                        button.setChecked(item.selected, false)
+                        button.setChecked(item.isSelected, false)
                         button.text = item.name
                     }
                     onClick { i ->
                         dataSource.toList().forEachIndexed { j, report ->
                             if (i == j) {
-                                report.selected = true
+                                report.isSelected = true
                                 dataSource.invalidateAt(i)
-                            } else if (report.selected) {
-                                report.selected = false
+                            } else if (report.isSelected) {
+                                report.isSelected = false
                                 dataSource.invalidateAt(j)
                             }
                         }

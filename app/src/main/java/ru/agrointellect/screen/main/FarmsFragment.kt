@@ -85,7 +85,7 @@ class FarmsFragment : BaseFragment() {
                 withDataSource(dataSource)
                 withItem<Farm, FarmHolder>(R.layout.item_farm) {
                     onBind(::FarmHolder) { _, item ->
-                        val circleSize = if (item.selected) {
+                        val circleSize = if (item.isSelected) {
                             name.text = CalligraphyUtils.applyTypefaceSpan(item.name, regularFont)
                             circle.setBackgroundResource(R.drawable.ring_farm)
                             circle.setImageResource(R.drawable.ic_daw)
@@ -105,10 +105,10 @@ class FarmsFragment : BaseFragment() {
                         mainModel.reports.clear()
                         dataSource.toList().forEachIndexed { j, farm ->
                             if (i == j) {
-                                farm.selected = true
+                                farm.isSelected = true
                                 dataSource.invalidateAt(i)
-                            } else if (farm.selected) {
-                                farm.selected = false
+                            } else if (farm.isSelected) {
+                                farm.isSelected = false
                                 dataSource.invalidateAt(j)
                             }
                         }
