@@ -11,12 +11,7 @@ import ru.agrointellect.extension.f
 class RptsDiedAnimal : Table, ChartBase {
 
     override val legends: List<String>
-        get() = listOf(
-            "Падеж коров всего",
-            "Падеж нетелей",
-            "Падеж телок всего",
-            "Падеж быков"
-        )
+        get() = listOf("Падеж коров всего", "Падеж нетелей", "Падеж телок всего", "Падеж быков")
 
     override val columns: List<Column>
         get() {
