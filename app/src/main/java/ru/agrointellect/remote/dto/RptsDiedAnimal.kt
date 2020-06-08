@@ -5,9 +5,10 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import ru.agrointellect.extension.f
 
 @Suppress("SpellCheckingInspection")
-class RptsDiedAnimal : Table, ChartBar {
+class RptsDiedAnimal : Table, ChartBase {
 
     override val legends: List<String>
         get() = listOf(
@@ -28,20 +29,12 @@ class RptsDiedAnimal : Table, ChartBar {
             )
         }
 
-    override val barData: BarData
+    override val data: BarData
         get() = BarData(
-            BarDataSet(items.map {
-                BarEntry(parseDate(it.date), it.evtDeadCowsTotal?.toFloatOrNull() ?: 0f)
-            }, null),
-            BarDataSet(items.map {
-                BarEntry(parseDate(it.date), it.evtDeadPheifers?.toFloatOrNull() ?: 0f)
-            }, null),
-            BarDataSet(items.map {
-                BarEntry(parseDate(it.date), it.evtDeadHeifersTotal?.toFloatOrNull() ?: 0f)
-            }, null),
-            BarDataSet(items.map {
-                BarEntry(parseDate(it.date), it.evtDeadBulls?.toFloatOrNull() ?: 0f)
-            }, null)
+            BarDataSet(items.map { BarEntry(parseDate(it.date), it.evtDeadCowsTotal.f) }, null),
+            BarDataSet(items.map { BarEntry(parseDate(it.date), it.evtDeadPheifers.f) }, null),
+            BarDataSet(items.map { BarEntry(parseDate(it.date), it.evtDeadHeifersTotal.f) }, null),
+            BarDataSet(items.map { BarEntry(parseDate(it.date), it.evtDeadBulls.f) }, null)
         )
 
     @SerializedName("rpt_died_animals")
