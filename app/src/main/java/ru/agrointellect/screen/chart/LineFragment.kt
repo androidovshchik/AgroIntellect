@@ -15,4 +15,14 @@ class LineFragment : DataFragment() {
         }
         return chart
     }
+
+    companion object {
+
+        fun newInstance(): LineFragment {
+            return LineFragment().apply {
+                arguments = Bundle().apply {
+                }
+            }
+        }
+    }
 }

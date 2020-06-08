@@ -44,8 +44,21 @@ class Report {
         get() = dateNeed == "1"
 
     @Keep
+    @Suppress("SpellCheckingInspection")
     class Default(val id: String, val name: String, val dates: Int, val uid: String = id) :
         Serializable {
+
+        val singleDate: Boolean
+            get() = dates == 1
+
+        val isLine
+            get() = uid == "rpt_farm_summary_history" || uid == "rpt_milk_events_kpi" || uid == "rpt_herd_lactation_graph"
+
+        val isBar
+            get() = uid == "chrt_farm_summary_history2" || uid == "rpt_herd_distribution"
+
+        val isGroupedBar
+            get() = !isLine && !isBar
 
         var selected = false
     }
