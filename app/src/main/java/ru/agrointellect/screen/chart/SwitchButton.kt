@@ -22,4 +22,6 @@ class SwitchButton @JvmOverloads constructor(
         programmatically = true
         super.setChecked(checked)
     }
+
+    override fun hasOverlappingRendering() = false
 }

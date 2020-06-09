@@ -6,7 +6,7 @@
     android:gravity="center"
     android:padding="10dp">
 
-    <ImageView
+    <ru.agrointellect.screen.chart.CircleView
         android:id="@+id/iv_circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
