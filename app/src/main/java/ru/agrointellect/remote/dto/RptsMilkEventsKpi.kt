@@ -1,6 +1,5 @@
 package ru.agrointellect.remote.dto
 
-import com.github.mikephil.charting.data.ChartData
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -40,7 +39,7 @@ class RptsMilkEventsKpi : Table, ChartBase {
             )
         }
 
-    override val data: ChartData<*>
+    override val data: GraphData
         get() = LineData(
             listOf(
                 LineDataSet(entriesByField("mlkMilkPerCow"), null),

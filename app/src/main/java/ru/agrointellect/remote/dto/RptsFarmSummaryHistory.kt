@@ -1,6 +1,5 @@
 package ru.agrointellect.remote.dto
 
-import com.github.mikephil.charting.data.ChartData
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.google.gson.annotations.Expose
@@ -201,7 +200,7 @@ open class RptsFarmSummaryHistory : Table, ChartBase {
             Column("KPI кормления", rowsByField("feedKpi"))
         )
 
-    override val data: ChartData<*>
+    override val data: GraphData
         get() = LineData(
             listOf(
                 LineDataSet(items.mapNotNull { newEntry(it.date, it.mlkSumYield) }, null),

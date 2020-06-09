@@ -1,7 +1,6 @@
 package ru.agrointellect.remote.dto
 
 import android.text.TextUtils
-import com.github.mikephil.charting.data.ChartData
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -47,30 +46,30 @@ class RptsHerdLactationGraph : Table, ChartBase {
 
     override val columns: List<Column>
         get() {
-            val data = map
+            val map = map
             val text = StringBuilder()
             text.appendln(items[0].lactationDays)
-            text.append(TextUtils.join("\n", data.values))
+            text.append(TextUtils.join("\n", map.values))
             val reader = CsvReader()
             val csv = reader.read(StringReader(text.toString()))
             val days = csv.getRow(0)
-            return data.keys.mapIndexed { i, key ->
+            return map.keys.mapIndexed { i, key ->
                 Column(key, csv.getRow(i + 1).fields.mapIndexed { j, value ->
                     Row("${days.getField(j)} день доения", value)
                 })
             }
         }
 
-    override val data: ChartData<*>
+    override val data: GraphData
         get() {
-            val data = map
+            val map = map
             val text = StringBuilder()
             text.appendln(items[0].lactationDays)
-            text.append(TextUtils.join("\n", data.values))
+            text.append(TextUtils.join("\n", map.values))
             val reader = CsvReader()
             val csv = reader.read(StringReader(text.toString()))
             val days = csv.getRow(0)
-            return LineData((0 until data.size).map {
+            return LineData((0 until map.size).map {
                 LineDataSet(csv.getRow(it + 1).fields.mapIndexed { j, value ->
                     Entry(days.getField(j).asFloat, value.asFloat)
                 }, null)

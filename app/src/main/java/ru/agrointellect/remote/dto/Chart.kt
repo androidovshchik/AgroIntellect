@@ -1,11 +1,13 @@
 package ru.agrointellect.remote.dto
 
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.ChartData
+import com.github.mikephil.charting.data.BarLineScatterCandleBubbleData
 import com.github.mikephil.charting.data.Entry
 import ru.agrointellect.extension.asFloat
 import java.text.SimpleDateFormat
 import java.util.*
+
+typealias GraphData = BarLineScatterCandleBubbleData<*>
 
 private val chartFormatter = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
 
@@ -37,5 +39,5 @@ interface ChartBase {
 
     val legends: Collection<String>
 
-    val data: ChartData<*>
+    val data: GraphData
 }

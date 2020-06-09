@@ -4,7 +4,6 @@ package ru.agrointellect.remote.dto
 
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.ChartData
 import ru.agrointellect.extension.asFloat
 import kotlin.math.max
 
@@ -16,7 +15,7 @@ class ChrtsFarmSummaryHistory2 : RptsFarmSummaryHistory() {
     override val legends: List<String>
         get() = listOf("Фуражных коров", "Дойных коров всего", "Стельных коров")
 
-    override val data: ChartData<*>
+    override val data: GraphData
         get() = BarData(
             BarDataSet(items.mapNotNull {
                 val val1 = it.hrdCowsPregAll.asFloat
@@ -35,7 +34,7 @@ class ChrtsFarmSummaryHistory3 : RptsFarmSummaryHistory() {
     override val legends: List<String>
         get() = listOf("Кетозов всего")
 
-    override val data: ChartData<*>
+    override val data: GraphData
         get() = BarData(
             BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtKetosTotal) }, null)
         )
@@ -49,7 +48,7 @@ class ChrtsFarmSummaryHistory4 : RptsFarmSummaryHistory() {
     override val legends: List<String>
         get() = listOf("Отелов всего", "Задержаний последа всего", "Парезов всего")
 
-    override val data: ChartData<*>
+    override val data: GraphData
         get() = BarData(
             BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtCalvTotal) }, null),
             BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtRetPlacTotal) }, null),
@@ -65,7 +64,7 @@ class ChrtsFarmSummaryHistory5 : RptsFarmSummaryHistory() {
     override val legends: List<String>
         get() = listOf("Продажа коров всего", "Продажа телок всего", "Продажа нетелей")
 
-    override val data: ChartData<*>
+    override val data: GraphData
         get() = BarData(
             BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtSoldCowsTotal) }, null),
             BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtSoldHeifersTotal) }, null),
@@ -81,7 +80,7 @@ class ChrtsFarmSummaryHistory6 : RptsFarmSummaryHistory() {
     override val legends: List<String>
         get() = listOf("Падеж коров всего", "Падеж телок всего", "Падеж нетелей")
 
-    override val data: ChartData<*>
+    override val data: GraphData
         get() = BarData(
             BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtDeadCowsTotal) }, null),
             BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtDeadHeifersTotal) }, null),
