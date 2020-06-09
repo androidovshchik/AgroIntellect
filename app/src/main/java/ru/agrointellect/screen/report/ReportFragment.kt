@@ -36,9 +36,9 @@ class ReportFragment : DataFragment() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        val landscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
-        tv_farm.isVisible = !landscape
-        iv_excel.isVisible = !landscape
+        val isLandscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
+        tv_farm.isVisible = !isLandscape
+        iv_excel.isVisible = !isLandscape
     }
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {

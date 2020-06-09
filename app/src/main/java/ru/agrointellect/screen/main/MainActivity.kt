@@ -57,11 +57,11 @@ class MainActivity : BaseActivity() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        val landscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
-        tv_exit.isVisible = !landscape
+        val isLandscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
+        tv_exit.isVisible = !isLandscape
         val exitItem = nv_main.menu.findItem(R.id.action_exit)
-        exitItem.isVisible = landscape
-        if (landscape) {
+        exitItem.isVisible = isLandscape
+        if (isLandscape) {
             exitItem.title = SpannableString(exitItem.title).apply {
                 val foreground = ForegroundColorSpan(Color.parseColor("#2EC0D1"))
                 setSpan(foreground, 0, exitItem.title.length, SPAN_EXCLUSIVE_EXCLUSIVE)
