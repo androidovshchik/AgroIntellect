@@ -14,7 +14,7 @@ import ru.agrointellect.screen.base.BaseFragment
 import java.text.SimpleDateFormat
 import java.util.*
 
-val chartColors = listOf(
+val graphColors = listOf(
     Color.parseColor("#F44336"),
     Color.parseColor("#2196F3"),
     Color.parseColor("#8BC34A"),
@@ -50,11 +50,18 @@ abstract class GraphFragment : BaseFragment() {
     protected lateinit var chart: BarLineChartBase<*>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val lineColor = Color.parseColor("#67C3C6CD")
         chart.apply {
+            axisLeft.apply {
+                gridColor = lineColor
+                gridLineWidth = 1f
+                setDrawAxisLine(false)
+            }
             axisRight.isEnabled = false
             xAxis.apply {
                 setDrawGridLines(false)
                 position = XAxis.XAxisPosition.BOTTOM
+                axisLineColor = lineColor
             }
             legend.isEnabled = false
             description.isEnabled = false
@@ -80,13 +87,18 @@ abstract class GraphFragment : BaseFragment() {
         chart.data = data.apply {
             setDrawValues(false)
             isHighlightEnabled = false
-            dataSets.forEachIndexed { i, item ->
-                when (item) {
+            dataSets.forEachIndexed { i, dataSet ->
+                val graphColor = graphColors[i]
+                when (dataSet) {
                     is LineDataSet -> {
-                        item.color = chartColors[i]
+                        dataSet.apply {
+                            mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+                            setDrawCircles(false)
+                            color = graphColor
+                        }
                     }
                     is BarDataSet -> {
-                        item.color = chartColors[i]
+                        dataSet.color = graphColor
                     }
                 }
             }
