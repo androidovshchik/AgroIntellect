@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.include_toolbar.*
+import ru.agrointellect.extension.getDate
 import ru.agrointellect.extension.transact
 import ru.agrointellect.extension.transactLegacy
 import ru.agrointellect.remote.dto.Farm
@@ -81,18 +82,18 @@ abstract class DataActivity : BaseActivity(), OneDateSetListener, TwoDatesSetLis
         }
     }
 
-    fun showOneDateDialog() {
-        if (!oneDateDialog.isAdded) {
-            supportFragmentManager.transact(false) {
-                oneDateDialog.show(this, PICKER_TAG)
+    fun showDateDialog() {
+        if (reportModel.report.datesCount == 1) {
+            if (!oneDateDialog.isAdded) {
+                supportFragmentManager.transact(false) {
+                    oneDateDialog.show(this, PICKER_TAG)
+                }
             }
-        }
-    }
-
-    fun showTwoDatesDialog() {
-        if (!twoDatesDialog.isAdded) {
-            fragmentManager.transactLegacy(false) {
-                twoDatesDialog.show(this, PICKER_TAG)
+        } else {
+            if (!twoDatesDialog.isAdded) {
+                fragmentManager.transactLegacy(false) {
+                    twoDatesDialog.show(this, PICKER_TAG)
+                }
             }
         }
     }
@@ -103,7 +104,10 @@ abstract class DataActivity : BaseActivity(), OneDateSetListener, TwoDatesSetLis
         monthOfYear: Int,
         dayOfMonth: Int
     ) {
-
+        reportModel.apply {
+            dateTo = getDate(year, monthOfYear, dayOfMonth)
+            datesChanged.value = true
+        }
     }
 
     override fun onDateSet(
@@ -115,7 +119,11 @@ abstract class DataActivity : BaseActivity(), OneDateSetListener, TwoDatesSetLis
         monthOfYearEnd: Int,
         dayOfMonthEnd: Int
     ) {
-
+        reportModel.apply {
+            dateFrom = getDate(year, monthOfYear, dayOfMonth)
+            dateTo = getDate(yearEnd, monthOfYearEnd, dayOfMonthEnd)
+            datesChanged.value = true
+        }
     }
 
     override fun onDestroy() {

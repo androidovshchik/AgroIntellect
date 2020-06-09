@@ -24,7 +24,7 @@ abstract class DataFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         reportModel = ViewModelProvider(requireActivity()).get(ReportModel::class.java).also {
-            if (it.report.hasSingleDate) {
+            if (it.report.datesCount == 1) {
                 it.dateTo = Calendar.getInstance().apply {
                     add(Calendar.DAY_OF_MONTH, -1)
                 }.time
