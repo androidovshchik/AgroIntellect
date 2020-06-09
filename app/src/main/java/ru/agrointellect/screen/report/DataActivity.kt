@@ -1,35 +1,61 @@
 package ru.agrointellect.screen.report
 
+import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import com.borax12.materialdaterangepicker.date.DatePickerDialog
 import kotlinx.android.synthetic.main.include_toolbar.*
+import ru.agrointellect.extension.transact
 import ru.agrointellect.extension.transactLegacy
 import ru.agrointellect.remote.dto.Farm
 import ru.agrointellect.remote.dto.Report
 import ru.agrointellect.screen.base.BaseActivity
 import java.util.*
 
+private typealias OneDatePickerDialog = com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+
+private typealias OneDateSetListener = com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener
+
+private typealias TwoDatesPickerDialog = com.borax12.materialdaterangepicker.date.DatePickerDialog
+
+private typealias TwoDatesSetListener = com.borax12.materialdaterangepicker.date.DatePickerDialog.OnDateSetListener
+
 @Suppress("DEPRECATION")
-abstract class DataActivity : BaseActivity(), DatePickerDialog.OnDateChangedListener {
+abstract class DataActivity : BaseActivity(), OneDateSetListener, TwoDatesSetListener {
 
     protected lateinit var reportModel: ReportModel
 
-    private val datesDelegate = lazy {
+    private val oneDateDelegate = lazy {
         val now = Calendar.getInstance().apply {
             add(Calendar.DAY_OF_MONTH, -1)
         }
-        val dialog = DatePickerDialog.newInstance(
-            null,
+        val dialog = OneDatePickerDialog.newInstance(
+            this,
             now[Calendar.YEAR],
             now[Calendar.MONTH],
             now[Calendar.DAY_OF_MONTH]
         )
         dialog.also {
-            it.registerOnDateChangedListener(this)
+            it.accentColor = Color.parseColor("#2EC0D1")
         }
     }
-    protected val datesDialog by datesDelegate
+    protected val oneDateDialog by oneDateDelegate
+
+    private val twoDatesDelegate = lazy {
+        val now = Calendar.getInstance().apply {
+            add(Calendar.DAY_OF_MONTH, -1)
+        }
+        val dialog = TwoDatesPickerDialog.newInstance(
+            this,
+            now[Calendar.YEAR],
+            now[Calendar.MONTH],
+            now[Calendar.DAY_OF_MONTH]
+        )
+        dialog.also {
+            it.accentColor = Color.parseColor("#2EC0D1")
+        }
+    }
+    protected val twoDatesDialog by twoDatesDelegate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,22 +71,65 @@ abstract class DataActivity : BaseActivity(), DatePickerDialog.OnDateChangedList
         super.onPostCreate(savedInstanceState)
     }
 
-    fun showDatePicker() {
-        if (!datesDialog.isAdded) {
-            fragmentManager.transactLegacy(false) {
-                datesDialog.show(this, PICKER_TAG)
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        if (oneDateDelegate.isInitialized()) {
+            oneDateDialog.dismiss()
+        }
+        if (twoDatesDelegate.isInitialized()) {
+            twoDatesDialog.dismiss()
+        }
+    }
+
+    fun showOneDateDialog() {
+        if (!oneDateDialog.isAdded) {
+            supportFragmentManager.transact(false) {
+                oneDateDialog.show(this, PICKER_TAG)
             }
         }
     }
 
-    override fun onDateChanged() {
+    fun showTwoDatesDialog() {
+        if (!twoDatesDialog.isAdded) {
+            fragmentManager.transactLegacy(false) {
+                twoDatesDialog.show(this, PICKER_TAG)
+            }
+        }
+    }
+
+    override fun onDateSet(
+        view: OneDatePickerDialog?,
+        year: Int,
+        monthOfYear: Int,
+        dayOfMonth: Int
+    ) {
+
+    }
+
+    override fun onDateSet(
+        view: TwoDatesPickerDialog?,
+        year: Int,
+        monthOfYear: Int,
+        dayOfMonth: Int,
+        yearEnd: Int,
+        monthOfYearEnd: Int,
+        dayOfMonthEnd: Int
+    ) {
 
     }
 
     override fun onDestroy() {
-        if (datesDelegate.isInitialized()) {
-            datesDialog.unregisterOnDateChangedListener(this)
-            datesDialog.dismiss()
+        if (oneDateDelegate.isInitialized()) {
+            oneDateDialog.apply {
+                onDateSetListener = null
+                dismiss()
+            }
+        }
+        if (twoDatesDelegate.isInitialized()) {
+            twoDatesDialog.apply {
+                setOnDateSetListener(null)
+                dismiss()
+            }
         }
         super.onDestroy()
     }
