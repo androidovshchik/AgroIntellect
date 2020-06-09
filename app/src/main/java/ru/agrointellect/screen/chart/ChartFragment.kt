@@ -53,6 +53,8 @@ class ChartFragment : DataFragment() {
 
     private val dataSource = dataSourceTypedOf<String>()
 
+    private var isLandscape = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         graphFragment = if (reportModel.report.hasLineChart) {
@@ -60,6 +62,7 @@ class ChartFragment : DataFragment() {
         } else {
             BarFragment.newInstance()
         }
+        isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     }
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
@@ -71,9 +74,9 @@ class ChartFragment : DataFragment() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        val landscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
-        tv_farm.isVisible = !landscape
-        iv_excel.isVisible = !landscape
+        isLandscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
+        tv_farm.isVisible = !isLandscape
+        iv_excel.isVisible = !isLandscape
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -121,7 +124,9 @@ class ChartFragment : DataFragment() {
     }
 
     fun toggleScroll(disallow: Boolean) {
-        nsv_graph.requestDisallowInterceptTouchEvent(disallow)
+        if (!isLandscape) {
+            nsv_graph.requestDisallowInterceptTouchEvent(disallow)
+        }
     }
 
     override fun showError(e: Throwable) {

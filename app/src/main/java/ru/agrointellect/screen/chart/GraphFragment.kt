@@ -84,6 +84,7 @@ abstract class GraphFragment : BaseFragment() {
     open fun setData(data: GraphData) {
         chart.data = data.apply {
             setDrawValues(false)
+            isHighlightEnabled = false
         }
         chart.invalidate()
     }
