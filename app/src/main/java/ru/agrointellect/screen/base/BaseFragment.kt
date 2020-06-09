@@ -29,6 +29,14 @@ abstract class BaseFragment : Fragment(), KodeinAware, CoroutineScope {
         view?.longSnackbar(e.message ?: e.toString())
     }
 
+    inline fun <reified T> parentCallback(nullableView: Boolean = false, action: T.() -> Unit) {
+        parentFragment?.let {
+            if (it is T && (nullableView || it.view != null)) {
+                action(it)
+            }
+        }
+    }
+
     override fun onDestroyView() {
         if (waitDelegate.isInitialized()) {
             waitDialog.dismiss()
