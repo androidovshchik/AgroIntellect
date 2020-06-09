@@ -57,28 +57,29 @@ open class ReportsFragment : BaseFragment() {
     private val dataSource = dataSourceTypedOf<Report.Default>()
 
     @Suppress("SpellCheckingInspection")
-    protected open val defaultList = listOf(
-        Report.Default("rpt_herd_distribution", "Поголовье: фуражное, дойное, стельное", 2),
-        Report.Default(
-            "rpt_herd_alignment_now",
-            "Распределение поголовья по группам на текущий момент",
-            0
-        ),
-        Report.Default(
-            "rpt_herd_alignment_history",
-            "История распределения поголовья по группам",
-            1
-        ),
-        Report.Default("rpt_herd_lactation_graph", "График лактации поголовья", 0),
-        Report.Default("rpt_milk_events_kpi", "Надой, события, кормление", 2),
-        Report.Default("rpt_breed_effectivity", "Воспроизводство", 2),
-        Report.Default("rpt_fresh_disease", "Послеотельные заболевания", 2),
-        Report.Default("rpt_farm_summary_history", "Сводный отчет", 2),
-        Report.Default("rpt_herd_forecast", "Прогноз", 0),
-        Report.Default("rpt_sold_animals", "Продажа", 2),
-        Report.Default("rpt_died_animals", "Падеж", 2),
-        Report.Default("rpt_last_updates", "Даты актуальности данных", 0)
-    )
+    protected open val defaultList: List<Report.Default>
+        get() = listOf(
+            Report.Default("rpt_herd_distribution", "Поголовье: фуражное, дойное, стельное", 2),
+            Report.Default(
+                "rpt_herd_alignment_now",
+                "Распределение поголовья по группам на текущий момент",
+                0
+            ),
+            Report.Default(
+                "rpt_herd_alignment_history",
+                "История распределения поголовья по группам",
+                1
+            ),
+            Report.Default("rpt_herd_lactation_graph", "График лактации поголовья", 0),
+            Report.Default("rpt_milk_events_kpi", "Надой, события, кормление", 2),
+            Report.Default("rpt_breed_effectivity", "Воспроизводство", 2),
+            Report.Default("rpt_fresh_disease", "Послеотельные заболевания", 2),
+            Report.Default("rpt_farm_summary_history", "Сводный отчет", 2),
+            Report.Default("rpt_herd_forecast", "Прогноз", 0),
+            Report.Default("rpt_sold_animals", "Продажа", 2),
+            Report.Default("rpt_died_animals", "Падеж", 2),
+            Report.Default("rpt_last_updates", "Даты актуальности данных", 0)
+        )
 
     private val thisClass
         get() = javaClass
