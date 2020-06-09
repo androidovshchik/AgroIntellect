@@ -4,7 +4,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="sublimePickerStyle">@style/SublimePickerStyle</item>
     </style>
 
     <style name="AppDialog" parent="Theme.MaterialComponents.Light.Dialog" />
@@ -21,7 +20,4 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="SublimePickerStyle" parent="SublimePickerStyleLight">
-        <item name="colorAccent">#2EC0D1</item>
-    </style>
 </resources>
