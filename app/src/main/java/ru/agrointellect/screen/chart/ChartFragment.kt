@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceTypedOf
 import com.afollestad.recyclical.setup
@@ -52,6 +53,15 @@ class ChartFragment : DataFragment() {
 
     private val dataSource = dataSourceTypedOf<String>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        graphFragment = if (reportModel.report.hasLineChart) {
+            LineFragment.newInstance()
+        } else {
+            BarFragment.newInstance()
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
         context?.activityCallback<Activity> {
             title = "График"
@@ -76,13 +86,11 @@ class ChartFragment : DataFragment() {
                 showDateDialog()
             }
         }
-        graphFragment = if (reportModel.report.hasLineChart) {
-            LineFragment.newInstance()
-        } else {
-            BarFragment.newInstance()
-        }
         childFragmentManager.transact {
             add(R.id.fl_container, graphFragment)
+        }
+        sl_info.setOnRefreshListener {
+            loadReport()
         }
         rv_info.apply {
             setup {
@@ -106,7 +114,9 @@ class ChartFragment : DataFragment() {
                 }
             }
         }
-        waitDialog.show()
+        reportModel.datesChanged.observe(viewLifecycleOwner, Observer {
+            loadReport()
+        })
         loadReport()
     }
 
@@ -116,6 +126,7 @@ class ChartFragment : DataFragment() {
 
     override fun showError(e: Throwable) {
         if (e is NoDataException) {
+            graphFragment.clearData()
             dataSource.clear()
             dataSource.invalidateAll()
             sl_info.isVisible = false
@@ -129,6 +140,8 @@ class ChartFragment : DataFragment() {
         val reportId = reportModel.report.id
         val reportUid = reportModel.report.uid
         job.cancelChildren()
+        tv_dates.updateDates()
+        waitDialog.show()
         launch {
             val data = withContext(Dispatchers.IO) {
                 val response = client.post<HttpResponse>(BuildConfig.API_URL) {
@@ -150,10 +163,12 @@ class ChartFragment : DataFragment() {
                 response.readObject<ChartBase>(gson, reportUid, farmId)
             }
             val graphData = data.data
-            graphFragment.setData(graphData)
-            dataSource.setAll(data.legends)
-            dataSource.invalidateAll()
-            sl_info.isVisible = true
+            if (graphData.entryCount > 0) {
+                graphFragment.setData(graphData)
+                dataSource.setAll(data.legends)
+                dataSource.invalidateAll()
+                sl_info.isVisible = true
+            }
             waitDialog.dismiss()
             sl_info.isRefreshing = false
         }

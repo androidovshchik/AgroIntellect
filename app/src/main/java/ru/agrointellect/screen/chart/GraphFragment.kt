@@ -6,8 +6,6 @@ import android.view.MotionEvent
 import android.view.View
 import com.github.mikephil.charting.charts.BarLineChartBase
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import ru.agrointellect.remote.dto.GraphData
 import ru.agrointellect.screen.base.BaseFragment
@@ -86,23 +84,11 @@ abstract class GraphFragment : BaseFragment() {
     open fun setData(data: GraphData) {
         chart.data = data.apply {
             setDrawValues(false)
-            isHighlightEnabled = false
-            dataSets.forEachIndexed { i, dataSet ->
-                val graphColor = graphColors[i]
-                when (dataSet) {
-                    is LineDataSet -> {
-                        dataSet.apply {
-                            mode = LineDataSet.Mode.HORIZONTAL_BEZIER
-                            setDrawCircles(false)
-                            color = graphColor
-                        }
-                    }
-                    is BarDataSet -> {
-                        dataSet.color = graphColor
-                    }
-                }
-            }
         }
         chart.invalidate()
+    }
+
+    fun clearData() {
+        chart.clearValues()
     }
 }

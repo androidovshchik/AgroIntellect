@@ -48,27 +48,18 @@ class Report {
     class Default(
         val id: String,
         val name: String,
-        private val datesCount: Int,
+        val datesCount: Int,
         val uid: String = id
     ) : Serializable {
-
-        val hasSingleDate: Boolean
-            get() = datesCount == 1
-
-        val hasAtLeast1Date: Boolean
-            get() = datesCount >= 1
-
-        val hasAtLeast2Dates: Boolean
-            get() = datesCount >= 2
 
         val hasLineChart
             get() = uid == "rpt_farm_summary_history" || uid == "rpt_milk_events_kpi" || uid == "rpt_herd_lactation_graph"
 
         val hasBarChart
-            get() = uid == "chrt_farm_summary_history2" || uid == "rpt_herd_distribution"
+            get() = !hasLineChart && !hasGroupedBarChart
 
         val hasGroupedBarChart
-            get() = !hasLineChart && !hasBarChart
+            get() = uid == "chrt_farm_summary_history2" || uid == "rpt_herd_distribution"
 
         var isSelected = false
     }

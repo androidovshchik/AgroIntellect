@@ -108,9 +108,9 @@ class ReportFragment : DataFragment() {
                 response.readObject<Table>(gson, reportUid, farmId)
             }
             val columns = data.columns
-            adapter.setAll(columns)
-            adapter.notifyDataSetChanged()
             if (columns.isNotEmpty()) {
+                adapter.setAll(columns)
+                adapter.notifyDataSetChanged()
                 sl_data.isVisible = true
                 adapter.toggleGroup(0)
             }
