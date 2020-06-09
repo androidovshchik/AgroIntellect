@@ -1,15 +1,40 @@
 package ru.agrointellect.screen.chart
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import com.github.mikephil.charting.charts.BarLineChartBase
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import ru.agrointellect.remote.dto.GraphData
 import ru.agrointellect.screen.base.BaseFragment
 import java.text.SimpleDateFormat
 import java.util.*
+
+val chartColors = listOf(
+    Color.parseColor("#F44336"),
+    Color.parseColor("#2196F3"),
+    Color.parseColor("#8BC34A"),
+    Color.parseColor("#FF5722"),
+    Color.parseColor("#E91E63"),
+    Color.parseColor("#03A9F4"),
+    Color.parseColor("#CDDC39"),
+    Color.parseColor("#795548"),
+    Color.parseColor("#9C27B0"),
+    Color.parseColor("#00BCD4"),
+    Color.parseColor("#FFEB3B"),
+    Color.parseColor("#9E9E9E"),
+    Color.parseColor("#673AB7"),
+    Color.parseColor("#009688"),
+    Color.parseColor("#FFC107"),
+    Color.parseColor("#607D8B"),
+    Color.parseColor("#3F51B5"),
+    Color.parseColor("#4CAF50"),
+    Color.parseColor("#FF9800")
+)
 
 class DateFormatter : ValueFormatter() {
 
@@ -54,7 +79,17 @@ abstract class GraphFragment : BaseFragment() {
     open fun setData(data: GraphData) {
         chart.data = data.apply {
             setDrawValues(false)
-            setHighlightEnabled(false)
+            isHighlightEnabled = false
+            dataSets.forEachIndexed { i, item ->
+                when (item) {
+                    is LineDataSet -> {
+                        item.color = chartColors[i]
+                    }
+                    is BarDataSet -> {
+                        item.color = chartColors[i]
+                    }
+                }
+            }
         }
         chart.invalidate()
     }
