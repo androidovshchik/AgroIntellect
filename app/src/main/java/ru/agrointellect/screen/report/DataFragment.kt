@@ -1,6 +1,7 @@
 package ru.agrointellect.screen.report
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import io.ktor.client.HttpClient
@@ -29,6 +30,16 @@ abstract class DataFragment : BaseFragment() {
                     add(Calendar.DAY_OF_MONTH, -1)
                 }.time
             }
+        }
+    }
+
+    protected fun TextView.updateDates() {
+        val dateTo = userFormatter.format(reportModel.dateTo ?: return)
+        text = if (reportModel.report.datesCount > 1) {
+            val dateFrom = userFormatter.format(reportModel.dateFrom ?: return)
+            "Даты: $dateFrom – $dateTo"
+        } else {
+            "Дата: $dateTo"
         }
     }
 

@@ -22,7 +22,7 @@ private typealias TwoDatesPickerDialog = com.borax12.materialdaterangepicker.dat
 private typealias TwoDatesSetListener = com.borax12.materialdaterangepicker.date.DatePickerDialog.OnDateSetListener
 
 @Suppress("DEPRECATION")
-abstract class DataActivity : BaseActivity(), OneDateSetListener, TwoDatesSetListener {
+abstract class DateActivity : BaseActivity(), OneDateSetListener, TwoDatesSetListener {
 
     protected lateinit var reportModel: ReportModel
 
@@ -40,7 +40,7 @@ abstract class DataActivity : BaseActivity(), OneDateSetListener, TwoDatesSetLis
             it.accentColor = Color.parseColor("#2EC0D1")
         }
     }
-    protected val oneDateDialog by oneDateDelegate
+    private val oneDateDialog by oneDateDelegate
 
     private val twoDatesDelegate = lazy {
         val now = Calendar.getInstance().apply {
@@ -56,7 +56,7 @@ abstract class DataActivity : BaseActivity(), OneDateSetListener, TwoDatesSetLis
             it.accentColor = Color.parseColor("#2EC0D1")
         }
     }
-    protected val twoDatesDialog by twoDatesDelegate
+    private val twoDatesDialog by twoDatesDelegate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
