@@ -6,7 +6,7 @@ import android.os.Build
 import java.util.*
 
 fun getDate(year: Int, month: Int, day: Int): Date = Calendar.getInstance().run {
-    set(year, month - 1, day, 0, 0, 0)
+    set(year, month, day, 0, 0, 0)
     set(Calendar.MILLISECOND, 0)
     time
 }

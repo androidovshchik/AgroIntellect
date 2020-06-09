@@ -120,8 +120,15 @@ abstract class DateActivity : BaseActivity(), OneDateSetListener, TwoDatesSetLis
         dayOfMonthEnd: Int
     ) {
         reportModel.apply {
-            dateFrom = getDate(year, monthOfYear, dayOfMonth)
-            dateTo = getDate(yearEnd, monthOfYearEnd, dayOfMonthEnd)
+            val startDate = getDate(year, monthOfYear, dayOfMonth)
+            val endDate = getDate(yearEnd, monthOfYearEnd, dayOfMonthEnd)
+            if (endDate.after(startDate)) {
+                dateFrom = startDate
+                dateTo = endDate
+            } else {
+                dateTo = startDate
+                dateFrom = endDate
+            }
             datesChanged.value = true
         }
     }
