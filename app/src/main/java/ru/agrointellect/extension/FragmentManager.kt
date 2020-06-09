@@ -52,6 +52,19 @@ inline fun FragmentManager.transact(
     }
 }
 
+inline fun android.app.FragmentManager.transactLegacy(
+    commit: Boolean = true,
+    action: android.app.FragmentTransaction.() -> Unit
+) {
+    beginTransaction().apply {
+        action()
+        if (commit) {
+            commitAllowingStateLoss()
+            executePendingTransactions()
+        }
+    }
+}
+
 fun FragmentManager.popFragment(name: String?, immediate: Boolean): Boolean {
     return if (name != null) {
         if (immediate) {
