@@ -1,12 +1,12 @@
 package ru.agrointellect.screen.chart
 
 import android.app.Activity
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -27,15 +27,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
+import ru.agrointellect.exception.NoDataException
 import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.extension.readObject
 import ru.agrointellect.extension.setAll
 import ru.agrointellect.extension.transact
 import ru.agrointellect.remote.dto.ChartBase
 import ru.agrointellect.screen.report.DataFragment
+import ru.agrointellect.screen.report.DateActivity
 
 class LegendHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val circle: ImageView = itemView.iv_circle
+    val circle: CircleView = itemView.iv_circle
     val legend: TextView = itemView.tv_legend
 }
 
@@ -57,16 +59,21 @@ class ChartFragment : DataFragment() {
         return inflater.inflate(R.layout.fragment_chart, root, false)
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        val landscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE
+        tv_farm.isVisible = !landscape
+        iv_excel.isVisible = !landscape
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val grayColor = ContextCompat.getColor(requireContext(), R.color.colorRowGray)
         tv_report.text = reportModel.report.name
         tv_farm.text = reportModel.farm.name
-        ll_dates.isVisible = reportModel.report.hasAtLeast1Date
+        ll_dates.isVisible = reportModel.report.datesCount > 0
         ll_dates.setOnClickListener {
-            if (!datesDialog.isAdded) {
-                childFragmentManager.transact(false) {
-                    datesDialog.show(this, datesDialog.javaClass.simpleName)
-                }
+            context?.activityCallback<DateActivity> {
+                showDateDialog()
             }
         }
         graphFragment = if (reportModel.report.hasLineChart) {
@@ -83,6 +90,7 @@ class ChartFragment : DataFragment() {
                 if (reportModel.report.hasGroupedBarChart) {
                     withItem<String, LegendHolder>(R.layout.item_legend) {
                         onBind(::LegendHolder) { i, item ->
+                            circle.color = graphColors[i]
                             legend.text = item
                         }
                     }
@@ -91,6 +99,8 @@ class ChartFragment : DataFragment() {
                         onBind(::OptionHolder) { i, item ->
                             itemView.setBackgroundColor(if (i % 2 == 0) grayColor else Color.TRANSPARENT)
                             caption.text = item
+                            switch.color = graphColors[i]
+                            switch.isCheckedProgrammatically = true
                         }
                     }
                 }
@@ -98,6 +108,20 @@ class ChartFragment : DataFragment() {
         }
         waitDialog.show()
         loadReport()
+    }
+
+    fun toggleScroll(disallow: Boolean) {
+        nsv_graph.requestDisallowInterceptTouchEvent(disallow)
+    }
+
+    override fun showError(e: Throwable) {
+        if (e is NoDataException) {
+            dataSource.clear()
+            dataSource.invalidateAll()
+            sl_info.isVisible = false
+        }
+        super.showError(e)
+        sl_info.isRefreshing = false
     }
 
     private fun loadReport() {
@@ -116,7 +140,7 @@ class ChartFragment : DataFragment() {
                             append("report_date_from", apiFormatter.format(it))
                         }
                         reportModel.dateTo?.let {
-                            if (reportModel.report.hasSingleDate) {
+                            if (reportModel.report.datesCount == 1) {
                                 set("report_date_from", apiFormatter.format(it))
                             }
                             append("report_date_to", apiFormatter.format(it))
