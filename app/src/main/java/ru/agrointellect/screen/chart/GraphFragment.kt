@@ -57,22 +57,25 @@ abstract class GraphFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val lineColor = Color.parseColor("#67C3C6CD")
+        val colorLine = Color.parseColor("#67C3C6CD")
+        val colorText = Color.parseColor("#506482")
         val font = Typeface.createFromAsset(requireContext().assets, "font/Ubuntu-Light.ttf")
         chart.apply {
             axisLeft.apply {
-                gridColor = lineColor
+                gridColor = colorLine
                 gridLineWidth = 1f
                 setDrawAxisLine(false)
                 textSize = 10f
+                textColor = colorText
                 typeface = font
             }
             axisRight.isEnabled = false
             xAxis.apply {
                 setDrawGridLines(false)
                 position = XAxis.XAxisPosition.BOTTOM
-                axisLineColor = lineColor
+                axisLineColor = colorLine
                 textSize = 10f
+                textColor = colorText
                 typeface = font
                 if (desc.useDateFormatter) {
                     valueFormatter = DateFormatter()

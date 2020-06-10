@@ -178,6 +178,9 @@ class ChartFragment : DataFragment() {
                 dataSource.setAll(data.legends)
                 dataSource.invalidateAll()
                 sl_info.isVisible = true
+                nsv_graph.post {
+                    nsv_graph.scrollTo(0, 0)
+                }
             }
             waitDialog.dismiss()
             sl_info.isRefreshing = false
