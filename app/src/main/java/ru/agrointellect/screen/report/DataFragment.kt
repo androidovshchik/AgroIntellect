@@ -18,7 +18,7 @@ abstract class DataFragment : BaseFragment() {
 
     protected val gson by instance<Gson>()
 
-    abstract val reportModel: ReportModel
+    protected abstract val reportModel: ReportModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

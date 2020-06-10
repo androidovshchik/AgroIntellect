@@ -26,7 +26,7 @@ class OneDateDialog : DatePickerDialog() {
 abstract class DateActivity : BaseActivity(), DatePickerDialog.OnDateSetListener,
     TwoDatesDialog.OnDateSetListener {
 
-    abstract val reportModel: ReportModel
+    protected abstract val reportModel: ReportModel
 
     private val oneDateDelegate = lazy {
         val calendar = Calendar.getInstance().apply {

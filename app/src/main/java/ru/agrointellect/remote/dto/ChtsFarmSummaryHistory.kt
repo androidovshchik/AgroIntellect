@@ -12,8 +12,12 @@ import kotlin.math.max
  */
 class ChtsFarmSummaryHistory2 : RptsFarmSummaryHistory() {
 
-    override val legends: List<String>
-        get() = listOf("Фуражных коров", "Дойных коров всего", "Стельных коров")
+    override val legends: List<Option>
+        get() = listOf(
+            Option("Фуражных коров"),
+            Option("Дойных коров всего"),
+            Option("Стельных коров")
+        )
 
     override val data: GraphData
         get() = BarData(
@@ -31,8 +35,8 @@ class ChtsFarmSummaryHistory2 : RptsFarmSummaryHistory() {
  */
 class ChtsFarmSummaryHistory3 : RptsFarmSummaryHistory() {
 
-    override val legends: List<String>
-        get() = listOf("Кетозов всего")
+    override val legends: List<Option>
+        get() = listOf(Option("Кетозов всего"))
 
     override val data: GraphData
         get() = BarData(
@@ -45,8 +49,12 @@ class ChtsFarmSummaryHistory3 : RptsFarmSummaryHistory() {
  */
 class ChtsFarmSummaryHistory4 : RptsFarmSummaryHistory() {
 
-    override val legends: List<String>
-        get() = listOf("Отелов всего", "Задержаний последа всего", "Парезов всего")
+    override val legends: List<Option>
+        get() = listOf(
+            Option("Отелов всего"),
+            Option("Задержаний последа всего"),
+            Option("Парезов всего")
+        )
 
     override val data: GraphData
         get() = BarData(
@@ -61,8 +69,12 @@ class ChtsFarmSummaryHistory4 : RptsFarmSummaryHistory() {
  */
 class ChtsFarmSummaryHistory5 : RptsFarmSummaryHistory() {
 
-    override val legends: List<String>
-        get() = listOf("Продажа коров всего", "Продажа телок всего", "Продажа нетелей")
+    override val legends: List<Option>
+        get() = listOf(
+            Option("Продажа коров всего"),
+            Option("Продажа телок всего"),
+            Option("Продажа нетелей")
+        )
 
     override val data: GraphData
         get() = BarData(
@@ -77,8 +89,12 @@ class ChtsFarmSummaryHistory5 : RptsFarmSummaryHistory() {
  */
 class ChtsFarmSummaryHistory6 : RptsFarmSummaryHistory() {
 
-    override val legends: List<String>
-        get() = listOf("Падеж коров всего", "Падеж телок всего", "Падеж нетелей")
+    override val legends: List<Option>
+        get() = listOf(
+            Option("Падеж коров всего"),
+            Option("Падеж телок всего"),
+            Option("Падеж нетелей")
+        )
 
     override val data: GraphData
         get() = BarData(

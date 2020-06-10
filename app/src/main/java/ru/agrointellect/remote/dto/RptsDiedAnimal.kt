@@ -8,17 +8,22 @@ import com.google.gson.annotations.SerializedName
 @Suppress("SpellCheckingInspection")
 class RptsDiedAnimal : Table, Graph {
 
-    override val legends: List<String>
-        get() = listOf("Падеж коров всего", "Падеж нетелей", "Падеж телок всего", "Падеж быков")
+    override val legends: List<Option>
+        get() = listOf(
+            Option("Падеж коров всего"),
+            Option("Падеж нетелей"),
+            Option("Падеж телок всего"),
+            Option("Падеж быков")
+        )
 
     override val columns: List<Column>
         get() {
             val legends = legends
             return listOf(
-                Column(legends[0], items.map { Row(it.date, it.evtDeadCowsTotal) }),
-                Column(legends[1], items.map { Row(it.date, it.evtDeadPheifers) }),
-                Column(legends[2], items.map { Row(it.date, it.evtDeadHeifersTotal) }),
-                Column(legends[3], items.map { Row(it.date, it.evtDeadBulls) })
+                Column(legends[0].name, items.map { Row(it.date, it.evtDeadCowsTotal) }),
+                Column(legends[1].name, items.map { Row(it.date, it.evtDeadPheifers) }),
+                Column(legends[2].name, items.map { Row(it.date, it.evtDeadHeifersTotal) }),
+                Column(legends[3].name, items.map { Row(it.date, it.evtDeadBulls) })
             )
         }
 
