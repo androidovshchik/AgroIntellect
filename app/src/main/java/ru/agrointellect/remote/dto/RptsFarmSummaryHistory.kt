@@ -2,6 +2,7 @@ package ru.agrointellect.remote.dto
 
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -202,7 +203,7 @@ open class RptsFarmSummaryHistory : Table, Graph {
 
     override val data: GraphData
         get() = LineData(
-            listOf(
+            mutableListOf<ILineDataSet>(
                 LineDataSet(items.mapNotNull { newEntry(it.date, it.mlkSumYield) }, null),
                 LineDataSet(items.mapNotNull { newEntry(it.date, it.feedKpi) }, null)
             )

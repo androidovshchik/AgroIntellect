@@ -3,6 +3,7 @@
 package ru.agrointellect.remote.dto
 
 import androidx.annotation.Keep
+import com.github.mikephil.charting.data.LineDataSet
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
@@ -64,4 +65,10 @@ class ChtDesc(
 
     val isGroupedBarChart
         get() = uid == "cht_farm_summary_history2" || uid == "rpt_herd_distribution"
+
+    val lineMode: LineDataSet.Mode
+        get() = when (uid) {
+            "rpt_herd_lactation_graph" -> LineDataSet.Mode.CUBIC_BEZIER
+            else -> LineDataSet.Mode.HORIZONTAL_BEZIER
+        }
 }

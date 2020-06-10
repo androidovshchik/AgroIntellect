@@ -26,7 +26,7 @@ class LineFragment : GraphFragment() {
             dataSets.forEachIndexed { i, dataSet ->
                 val graphColor = getGraphColor(i)
                 (dataSet as LineDataSet).apply {
-                    mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+                    mode = desc.lineMode
                     setDrawCircles(false)
                     lineWidth = 1.5f
                     color = graphColor

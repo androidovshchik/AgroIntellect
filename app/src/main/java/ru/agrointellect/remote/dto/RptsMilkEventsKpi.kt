@@ -3,6 +3,7 @@ package ru.agrointellect.remote.dto
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -41,7 +42,7 @@ class RptsMilkEventsKpi : Table, Graph {
 
     override val data: GraphData
         get() = LineData(
-            listOf(
+            mutableListOf<ILineDataSet>(
                 LineDataSet(entriesByField("mlkMilkPerCow"), null),
                 LineDataSet(entriesByField("mlkMilkPerLactCow"), null),
                 LineDataSet(entriesByField("evtInsemCows"), null),
