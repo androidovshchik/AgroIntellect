@@ -49,7 +49,7 @@ open class RptDesc(
 }
 
 @Keep
-class ChrtDesc(
+class ChtDesc(
     id: String,
     name: String,
     datesCount: Int,
@@ -63,5 +63,5 @@ class ChrtDesc(
         get() = !isLineChart && !isGroupedBarChart
 
     val isGroupedBarChart
-        get() = uid == "chrt_farm_summary_history2" || uid == "rpt_herd_distribution"
+        get() = uid == "cht_farm_summary_history2" || uid == "rpt_herd_distribution"
 }

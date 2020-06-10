@@ -26,11 +26,11 @@ suspend inline fun <reified T> HttpResponse.readObject(
             "rpt_breed_effectivity" -> RptsBreedEffectivity::class.java
             "rpt_fresh_disease" -> RptsFreshDisease::class.java
             "rpt_farm_summary_history" -> RptsFarmSummaryHistory::class.java
-            "chrt_farm_summary_history2" -> ChrtsFarmSummaryHistory2::class.java
-            "chrt_farm_summary_history3" -> ChrtsFarmSummaryHistory3::class.java
-            "chrt_farm_summary_history4" -> ChrtsFarmSummaryHistory4::class.java
-            "chrt_farm_summary_history5" -> ChrtsFarmSummaryHistory5::class.java
-            "chrt_farm_summary_history6" -> ChrtsFarmSummaryHistory6::class.java
+            "cht_farm_summary_history2" -> ChtsFarmSummaryHistory2::class.java
+            "cht_farm_summary_history3" -> ChtsFarmSummaryHistory3::class.java
+            "cht_farm_summary_history4" -> ChtsFarmSummaryHistory4::class.java
+            "cht_farm_summary_history5" -> ChtsFarmSummaryHistory5::class.java
+            "cht_farm_summary_history6" -> ChtsFarmSummaryHistory6::class.java
             "rpt_herd_forecast" -> RptsHerdForecast::class.java
             "rpt_sold_animals" -> RptsSoldAnimal::class.java
             "rpt_died_animals" -> RptsDiedAnimal::class.java

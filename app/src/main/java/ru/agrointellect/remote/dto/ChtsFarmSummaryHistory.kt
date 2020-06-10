@@ -10,7 +10,7 @@ import kotlin.math.max
 /**
  * График: Поголовье: фуражное, дойное, стельное
  */
-class ChrtsFarmSummaryHistory2 : RptsFarmSummaryHistory() {
+class ChtsFarmSummaryHistory2 : RptsFarmSummaryHistory() {
 
     override val legends: List<String>
         get() = listOf("Фуражных коров", "Дойных коров всего", "Стельных коров")
@@ -29,7 +29,7 @@ class ChrtsFarmSummaryHistory2 : RptsFarmSummaryHistory() {
 /**
  * График: Кетозы
  */
-class ChrtsFarmSummaryHistory3 : RptsFarmSummaryHistory() {
+class ChtsFarmSummaryHistory3 : RptsFarmSummaryHistory() {
 
     override val legends: List<String>
         get() = listOf("Кетозов всего")
@@ -43,7 +43,7 @@ class ChrtsFarmSummaryHistory3 : RptsFarmSummaryHistory() {
 /**
  * График: График послеотельных осложнений
  */
-class ChrtsFarmSummaryHistory4 : RptsFarmSummaryHistory() {
+class ChtsFarmSummaryHistory4 : RptsFarmSummaryHistory() {
 
     override val legends: List<String>
         get() = listOf("Отелов всего", "Задержаний последа всего", "Парезов всего")
@@ -59,7 +59,7 @@ class ChrtsFarmSummaryHistory4 : RptsFarmSummaryHistory() {
 /**
  * График: Продажа коров всего + продажа нетелей + продажа телок
  */
-class ChrtsFarmSummaryHistory5 : RptsFarmSummaryHistory() {
+class ChtsFarmSummaryHistory5 : RptsFarmSummaryHistory() {
 
     override val legends: List<String>
         get() = listOf("Продажа коров всего", "Продажа телок всего", "Продажа нетелей")
@@ -75,7 +75,7 @@ class ChrtsFarmSummaryHistory5 : RptsFarmSummaryHistory() {
 /**
  * График: Падеж коров всего + падеж нетелей + падеж телок
  */
-class ChrtsFarmSummaryHistory6 : RptsFarmSummaryHistory() {
+class ChtsFarmSummaryHistory6 : RptsFarmSummaryHistory() {
 
     override val legends: List<String>
         get() = listOf("Падеж коров всего", "Падеж телок всего", "Падеж нетелей")
