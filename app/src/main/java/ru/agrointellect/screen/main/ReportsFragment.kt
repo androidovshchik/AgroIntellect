@@ -123,15 +123,14 @@ open class ReportsFragment : BaseFragment() {
                                 R.id.reportActivity
                             } else {
                                 R.id.chartActivity
-                            }, bundleOf("farm" to mainModel.farm, "report" to item)
+                            }, bundleOf("farm" to mainModel.farm, "desc" to item)
                         )
                     }
                 }
             }
         }
-        val reports = mainModel.reports
-        if (reports.isNotEmpty()) {
-            dataSource.setAll(defaultList.filter { item -> reports.any { item.id == it.id } })
+        if (mainModel.reports.isNotEmpty()) {
+            dataSource.setAll(defaultList.filter { item -> mainModel.reports.any { item.id == it.id } })
             dataSource.invalidateAll()
         } else {
             waitDialog.show()

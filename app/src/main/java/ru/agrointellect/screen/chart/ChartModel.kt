@@ -1,16 +1,16 @@
-package ru.agrointellect.screen.report
+package ru.agrointellect.screen.chart
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ru.agrointellect.remote.dto.ChtDesc
 import ru.agrointellect.remote.dto.Farm
-import ru.agrointellect.remote.dto.RptDesc
 import java.util.*
 
-class ReportModel : ViewModel() {
+class ChartModel : ViewModel() {
 
     lateinit var farm: Farm
 
-    lateinit var desc: RptDesc
+    lateinit var desc: ChtDesc
 
     var dateFrom: Date? = null
 

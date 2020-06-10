@@ -24,7 +24,7 @@
             android:name="farm"
             app:argType="ru.agrointellect.remote.dto.Farm" />
         <argument
-            android:name="report"
+            android:name="desc"
             app:argType="ru.agrointellect.remote.dto.RptDesc" />
     </activity>
     <activity
@@ -35,7 +35,7 @@
             android:name="farm"
             app:argType="ru.agrointellect.remote.dto.Farm" />
         <argument
-            android:name="report"
-            app:argType="ru.agrointellect.remote.dto.ChrtDesc" />
+            android:name="desc"
+            app:argType="ru.agrointellect.remote.dto.ChtDesc" />
     </activity>
 </navigation>
