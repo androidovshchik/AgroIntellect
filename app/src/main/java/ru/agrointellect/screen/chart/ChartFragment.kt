@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceTypedOf
 import com.afollestad.recyclical.setup
@@ -33,7 +34,7 @@ import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.extension.readObject
 import ru.agrointellect.extension.setAll
 import ru.agrointellect.extension.transact
-import ru.agrointellect.remote.dto.ChartBase
+import ru.agrointellect.remote.dto.Graph
 import ru.agrointellect.screen.report.DataFragment
 import ru.agrointellect.screen.report.DateActivity
 
@@ -49,6 +50,10 @@ class OptionHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 class ChartFragment : DataFragment() {
 
+    override val reportModel by lazy {
+        ViewModelProvider(requireActivity()).get(ChartModel::class.java)
+    }
+
     private lateinit var graphFragment: GraphFragment
 
     private val dataSource = dataSourceTypedOf<String>()
@@ -57,7 +62,7 @@ class ChartFragment : DataFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        graphFragment = if (reportModel.report.hasLineChart) {
+        graphFragment = if (reportModel.getDesc().isLineChart) {
             LineFragment.newInstance()
         } else {
             BarFragment.newInstance()
@@ -81,9 +86,9 @@ class ChartFragment : DataFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val grayColor = ContextCompat.getColor(requireContext(), R.color.colorRowGray)
-        tv_report.text = reportModel.report.name
+        tv_report.text = reportModel.getDesc().name
         tv_farm.text = reportModel.farm.name
-        ll_dates.isVisible = reportModel.report.datesCount > 0
+        ll_dates.isVisible = reportModel.getDesc().datesCount > 0
         ll_dates.setOnClickListener {
             context?.activityCallback<DateActivity> {
                 showDateDialog()
@@ -98,10 +103,10 @@ class ChartFragment : DataFragment() {
         rv_info.apply {
             setup {
                 withDataSource(dataSource)
-                if (reportModel.report.hasGroupedBarChart) {
+                if (reportModel.getDesc().isGroupedBarChart) {
                     withItem<String, LegendHolder>(R.layout.item_legend) {
                         onBind(::LegendHolder) { i, item ->
-                            circle.color = graphColors[i]
+                            circle.color = getGraphColor(i)
                             legend.text = item
                         }
                     }
@@ -110,7 +115,7 @@ class ChartFragment : DataFragment() {
                         onBind(::OptionHolder) { i, item ->
                             itemView.setBackgroundColor(if (i % 2 == 0) grayColor else Color.TRANSPARENT)
                             caption.text = item
-                            switch.color = graphColors[i]
+                            switch.color = getGraphColor(i)
                             switch.isCheckedProgrammatically = true
                         }
                     }
@@ -142,8 +147,8 @@ class ChartFragment : DataFragment() {
 
     private fun loadReport() {
         val farmId = reportModel.farm.id
-        val reportId = reportModel.report.id
-        val reportUid = reportModel.report.uid
+        val reportId = reportModel.getDesc().id
+        val reportUid = reportModel.getDesc().uid
         job.cancelChildren()
         tv_dates.updateDates()
         waitDialog.show()
@@ -158,14 +163,14 @@ class ChartFragment : DataFragment() {
                             append("report_date_from", apiFormatter.format(it))
                         }
                         reportModel.dateTo?.let {
-                            if (reportModel.report.datesCount == 1) {
+                            if (reportModel.getDesc().datesCount == 1) {
                                 set("report_date_from", apiFormatter.format(it))
                             }
                             append("report_date_to", apiFormatter.format(it))
                         }
                     })
                 }
-                response.readObject<ChartBase>(gson, reportUid, farmId)
+                response.readObject<Graph>(gson, reportUid, farmId)
             }
             val graphData = data.data
             if (graphData.entryCount > 0) {

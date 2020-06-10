@@ -18,21 +18,21 @@ abstract class DataFragment : BaseFragment() {
 
     protected val gson by instance<Gson>()
 
-    abstract val descModel: DescModel<*>
+    abstract val reportModel: ReportModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (descModel.desc.datesCount == 1) {
-            descModel.dateTo = Calendar.getInstance().apply {
+        if (reportModel.getDesc().datesCount == 1) {
+            reportModel.dateTo = Calendar.getInstance().apply {
                 add(Calendar.DAY_OF_MONTH, -1)
             }.time
         }
     }
 
     protected fun TextView.updateDates() {
-        val dateTo = userFormatter.format(descModel.dateTo ?: return)
-        text = if (descModel.desc.datesCount > 1) {
-            val dateFrom = userFormatter.format(descModel.dateFrom ?: return)
+        val dateTo = userFormatter.format(reportModel.dateTo ?: return)
+        text = if (reportModel.getDesc().datesCount > 1) {
+            val dateFrom = userFormatter.format(reportModel.dateFrom ?: return)
             "Даты: $dateFrom – $dateTo"
         } else {
             "Дата: $dateTo"
