@@ -16,7 +16,7 @@ import ru.agrointellect.screen.base.BaseActivity
 import ru.agrointellect.screen.base.BaseDialog
 import java.util.*
 
-class OneDatePickerDialog : DatePickerDialog() {
+class OneDateDialog : DatePickerDialog() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return BaseDialog(requireActivity())
@@ -24,7 +24,7 @@ class OneDatePickerDialog : DatePickerDialog() {
 }
 
 abstract class DateActivity : BaseActivity(), DatePickerDialog.OnDateSetListener,
-    TwoDatesPickerDialog.OnDateSetListener {
+    TwoDatesDialog.OnDateSetListener {
 
     abstract val reportModel: ReportModel
 
@@ -32,7 +32,7 @@ abstract class DateActivity : BaseActivity(), DatePickerDialog.OnDateSetListener
         val calendar = Calendar.getInstance().apply {
             add(Calendar.DAY_OF_MONTH, -1)
         }
-        OneDatePickerDialog().also {
+        OneDateDialog().also {
             it.initialize(this, calendar)
             it.accentColor = Color.parseColor("#2EC0D1")
         }
@@ -43,7 +43,7 @@ abstract class DateActivity : BaseActivity(), DatePickerDialog.OnDateSetListener
         val calendar = Calendar.getInstance().apply {
             add(Calendar.DAY_OF_MONTH, -1)
         }
-        TwoDatesPickerDialog().also {
+        TwoDatesDialog().also {
             it.initialize(
                 this,
                 calendar[Calendar.YEAR],
@@ -103,7 +103,7 @@ abstract class DateActivity : BaseActivity(), DatePickerDialog.OnDateSetListener
     }
 
     override fun onDateSet(
-        view: TwoDatesPickerDialog?,
+        view: TwoDatesDialog?,
         year: Int,
         monthOfYear: Int,
         dayOfMonth: Int,

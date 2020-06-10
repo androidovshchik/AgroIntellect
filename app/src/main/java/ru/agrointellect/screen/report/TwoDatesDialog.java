@@ -43,10 +43,10 @@ import java.util.Locale;
 
 import ru.agrointellect.screen.base.BaseDialog;
 
-public class TwoDatesPickerDialog extends DialogFragment implements
+public class TwoDatesDialog extends DialogFragment implements
         OnClickListener, DatePickerController {
 
-    private static final String TAG = "TwoDatesPickerDialog";
+    private static final String TAG = "TwoDatesDialog";
 
     private static final int UNINITIALIZED = -1;
     private static final int MONTH_AND_DAY_VIEW = 0;
@@ -162,7 +162,7 @@ public class TwoDatesPickerDialog extends DialogFragment implements
          *                    with {@link java.util.Calendar}.
          * @param dayOfMonth  The day of the month that was set.
          */
-        void onDateSet(TwoDatesPickerDialog view, int year, int monthOfYear, int dayOfMonth, int yearEnd, int monthOfYearEnd, int dayOfMonthEnd);
+        void onDateSet(TwoDatesDialog view, int year, int monthOfYear, int dayOfMonth, int yearEnd, int monthOfYearEnd, int dayOfMonthEnd);
     }
 
     /**
@@ -174,7 +174,7 @@ public class TwoDatesPickerDialog extends DialogFragment implements
     }
 
 
-    public TwoDatesPickerDialog() {
+    public TwoDatesDialog() {
         // Empty constructor required for dialog fragment.
     }
 
@@ -184,10 +184,10 @@ public class TwoDatesPickerDialog extends DialogFragment implements
      * @param monthOfYear The initial month of the dialog.
      * @param dayOfMonth  The initial day of the dialog.
      */
-    public static TwoDatesPickerDialog newInstance(OnDateSetListener callBack, int year,
-                                                   int monthOfYear,
-                                                   int dayOfMonth) {
-        TwoDatesPickerDialog ret = new TwoDatesPickerDialog();
+    public static TwoDatesDialog newInstance(OnDateSetListener callBack, int year,
+                                             int monthOfYear,
+                                             int dayOfMonth) {
+        TwoDatesDialog ret = new TwoDatesDialog();
         ret.initialize(callBack, year, monthOfYear, dayOfMonth);
         return ret;
     }
@@ -201,13 +201,13 @@ public class TwoDatesPickerDialog extends DialogFragment implements
      * @param montOfYearEnd The end month of the dialog.
      * @param dayOfMonthEnd The end day of the dialog.
      */
-    public static TwoDatesPickerDialog newInstance(OnDateSetListener callBack, int year,
-                                                   int monthOfYear,
-                                                   int dayOfMonth,
-                                                   int yearEnd,
-                                                   int montOfYearEnd,
-                                                   int dayOfMonthEnd) {
-        TwoDatesPickerDialog ret = new TwoDatesPickerDialog();
+    public static TwoDatesDialog newInstance(OnDateSetListener callBack, int year,
+                                             int monthOfYear,
+                                             int dayOfMonth,
+                                             int yearEnd,
+                                             int montOfYearEnd,
+                                             int dayOfMonthEnd) {
+        TwoDatesDialog ret = new TwoDatesDialog();
         ret.initialize(callBack, year, monthOfYear, dayOfMonth, yearEnd, montOfYearEnd, dayOfMonthEnd);
         return ret;
     }
@@ -404,7 +404,7 @@ public class TwoDatesPickerDialog extends DialogFragment implements
             public void onClick(View v) {
                 tryVibrate();
                 if (mCallBack != null) {
-                    mCallBack.onDateSet(TwoDatesPickerDialog.this, mCalendar.get(Calendar.YEAR),
+                    mCallBack.onDateSet(TwoDatesDialog.this, mCalendar.get(Calendar.YEAR),
                             mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH), mCalendarEnd.get(Calendar.YEAR),
                             mCalendarEnd.get(Calendar.MONTH), mCalendarEnd.get(Calendar.DAY_OF_MONTH));
                 }
