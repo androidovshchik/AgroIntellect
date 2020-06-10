@@ -6,13 +6,12 @@ import android.app.Dialog
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.include_toolbar.*
 import ru.agrointellect.extension.getDate
 import ru.agrointellect.extension.transact
 import ru.agrointellect.extension.transactLegacy
 import ru.agrointellect.remote.dto.Farm
-import ru.agrointellect.remote.dto.Report
+import ru.agrointellect.remote.dto.RptDesc
 import ru.agrointellect.screen.base.BaseActivity
 import ru.agrointellect.screen.base.BaseDialog
 import java.util.*
@@ -37,7 +36,7 @@ class TwoDatesPickerDialog : com.borax12.materialdaterangepicker.date.DatePicker
 
 abstract class DateActivity : BaseActivity(), OneDateSetListener, TwoDatesSetListener {
 
-    protected lateinit var reportModel: ReportModel
+    abstract val reportModel: ReportModel
 
     private val oneDateDelegate = lazy {
         val calendar = Calendar.getInstance().apply {
@@ -68,9 +67,9 @@ abstract class DateActivity : BaseActivity(), OneDateSetListener, TwoDatesSetLis
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        reportModel = ViewModelProvider(this).get(ReportModel::class.java).also {
-            it.farm = intent.getSerializableExtra("farm") as Farm
-            it.report = intent.getSerializableExtra("report") as Report.Default
+        reportModel.apply {
+            farm = intent.getSerializableExtra("farm") as Farm
+            setDesc(intent.getSerializableExtra("desc") as RptDesc)
         }
     }
 
@@ -91,16 +90,16 @@ abstract class DateActivity : BaseActivity(), OneDateSetListener, TwoDatesSetLis
     }
 
     fun showDateDialog() {
-        if (reportModel.report.datesCount == 1) {
+        if (reportModel.getDesc().datesCount == 1) {
             if (!oneDateDialog.isAdded) {
                 supportFragmentManager.transact(false) {
-                    oneDateDialog.show(this, PICKER_TAG)
+                    oneDateDialog.show(this, DIALOG_TAG)
                 }
             }
         } else {
             if (!twoDatesDialog.isAdded) {
                 fragmentManager.transactLegacy(false) {
-                    twoDatesDialog.show(this, PICKER_TAG)
+                    twoDatesDialog.show(this, DIALOG_TAG)
                 }
             }
         }
@@ -127,9 +126,9 @@ abstract class DateActivity : BaseActivity(), OneDateSetListener, TwoDatesSetLis
         monthOfYearEnd: Int,
         dayOfMonthEnd: Int
     ) {
+        val startDate = getDate(year, monthOfYear, dayOfMonth)
+        val endDate = getDate(yearEnd, monthOfYearEnd, dayOfMonthEnd)
         reportModel.apply {
-            val startDate = getDate(year, monthOfYear, dayOfMonth)
-            val endDate = getDate(yearEnd, monthOfYearEnd, dayOfMonthEnd)
             if (endDate.after(startDate)) {
                 dateFrom = startDate
                 dateTo = endDate
@@ -159,6 +158,6 @@ abstract class DateActivity : BaseActivity(), OneDateSetListener, TwoDatesSetLis
 
     companion object {
 
-        const val PICKER_TAG = "date_picker"
+        const val DIALOG_TAG = "date_picker"
     }
 }
