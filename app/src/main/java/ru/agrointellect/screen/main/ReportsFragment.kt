@@ -34,6 +34,7 @@ import ru.agrointellect.extension.readArray
 import ru.agrointellect.extension.setAll
 import ru.agrointellect.local.Preferences
 import ru.agrointellect.remote.dto.Report
+import ru.agrointellect.remote.dto.RptDesc
 import ru.agrointellect.screen.base.BaseFragment
 
 class ReportHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -54,31 +55,27 @@ open class ReportsFragment : BaseFragment() {
         findNavController()
     }
 
-    private val dataSource = dataSourceTypedOf<Report.Default>()
+    private val dataSource = dataSourceTypedOf<RptDesc>()
 
     @Suppress("SpellCheckingInspection")
-    protected open val defaultList: List<Report.Default>
+    protected open val defaultList: List<RptDesc>
         get() = listOf(
-            Report.Default("rpt_herd_distribution", "Поголовье: фуражное, дойное, стельное", 2),
-            Report.Default(
+            RptDesc("rpt_herd_distribution", "Поголовье: фуражное, дойное, стельное", 2),
+            RptDesc(
                 "rpt_herd_alignment_now",
                 "Распределение поголовья по группам на текущий момент",
                 0
             ),
-            Report.Default(
-                "rpt_herd_alignment_history",
-                "История распределения поголовья по группам",
-                1
-            ),
-            Report.Default("rpt_herd_lactation_graph", "График лактации поголовья", 0),
-            Report.Default("rpt_milk_events_kpi", "Надой, события, кормление", 2),
-            Report.Default("rpt_breed_effectivity", "Воспроизводство", 2),
-            Report.Default("rpt_fresh_disease", "Послеотельные заболевания", 2),
-            Report.Default("rpt_farm_summary_history", "Сводный отчет", 2),
-            Report.Default("rpt_herd_forecast", "Прогноз", 0),
-            Report.Default("rpt_sold_animals", "Продажа", 2),
-            Report.Default("rpt_died_animals", "Падеж", 2),
-            Report.Default("rpt_last_updates", "Даты актуальности данных", 0)
+            RptDesc("rpt_herd_alignment_history", "История распределения поголовья по группам", 1),
+            RptDesc("rpt_herd_lactation_graph", "График лактации поголовья", 0),
+            RptDesc("rpt_milk_events_kpi", "Надой, события, кормление", 2),
+            RptDesc("rpt_breed_effectivity", "Воспроизводство", 2),
+            RptDesc("rpt_fresh_disease", "Послеотельные заболевания", 2),
+            RptDesc("rpt_farm_summary_history", "Сводный отчет", 2),
+            RptDesc("rpt_herd_forecast", "Прогноз", 0),
+            RptDesc("rpt_sold_animals", "Продажа", 2),
+            RptDesc("rpt_died_animals", "Падеж", 2),
+            RptDesc("rpt_last_updates", "Даты актуальности данных", 0)
         )
 
     private val thisClass
@@ -105,7 +102,7 @@ open class ReportsFragment : BaseFragment() {
         rv_reports.apply {
             setup {
                 withDataSource(dataSource)
-                withItem<Report.Default, ReportHolder>(R.layout.item_report) {
+                withItem<RptDesc, ReportHolder>(R.layout.item_report) {
                     onBind(::ReportHolder) { i, item ->
                         itemView.setBackgroundColor(if (i % 2 != 0) grayColor else Color.TRANSPARENT)
                         button.setChecked(item.isSelected, false)

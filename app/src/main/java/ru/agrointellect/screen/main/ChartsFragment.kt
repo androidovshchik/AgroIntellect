@@ -7,49 +7,49 @@ import android.view.View
 import android.view.ViewGroup
 import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
-import ru.agrointellect.remote.dto.Report
+import ru.agrointellect.remote.dto.ChtDesc
 
 @Suppress("SpellCheckingInspection")
 class ChartsFragment : ReportsFragment() {
 
-    override val defaultList: List<Report.Default>
+    override val defaultList: List<ChtDesc>
         get() = listOf(
-            Report.Default("rpt_herd_distribution", "Поголовье: фуражное, дойное, стельное", 2),
-            Report.Default("rpt_herd_lactation_graph", "График лактации поголовья", 0),
-            Report.Default("rpt_milk_events_kpi", "Надой, события, кормление", 2),
-            Report.Default("rpt_farm_summary_history", "Валовой надой + KPI", 2),
-            Report.Default(
+            ChtDesc("rpt_herd_distribution", "Поголовье: фуражное, дойное, стельное", 2),
+            ChtDesc("rpt_herd_lactation_graph", "График лактации поголовья", 0),
+            ChtDesc("rpt_milk_events_kpi", "Надой, события, кормление", 2),
+            ChtDesc("rpt_farm_summary_history", "Валовой надой + KPI", 2),
+            ChtDesc(
                 "rpt_farm_summary_history",
                 "Поголовье: фуражное, дойное, стельное",
                 2,
-                "chrt_farm_summary_history2"
+                "cht_farm_summary_history2"
             ),
-            Report.Default(
+            ChtDesc(
                 "rpt_farm_summary_history",
                 "Кетозы",
                 2,
-                "chrt_farm_summary_history3"
+                "cht_farm_summary_history3"
             ),
-            Report.Default(
+            ChtDesc(
                 "rpt_farm_summary_history",
                 "График послеотельных осложнений",
                 2,
-                "chrt_farm_summary_history4"
+                "cht_farm_summary_history4"
             ),
-            Report.Default(
+            ChtDesc(
                 "rpt_farm_summary_history",
                 "Продажа коров всего + продажа нетелей + продажа телок",
                 2,
-                "chrt_farm_summary_history5"
+                "cht_farm_summary_history5"
             ),
-            Report.Default(
+            ChtDesc(
                 "rpt_farm_summary_history",
                 "Падеж коров всего + падеж нетелей + падеж телок",
                 2,
-                "chrt_farm_summary_history6"
+                "cht_farm_summary_history6"
             ),
-            Report.Default("rpt_sold_animals", "Продажа", 2),
-            Report.Default("rpt_died_animals", "Падеж", 2)
+            ChtDesc("rpt_sold_animals", "Продажа", 2),
+            ChtDesc("rpt_died_animals", "Падеж", 2)
         )
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
