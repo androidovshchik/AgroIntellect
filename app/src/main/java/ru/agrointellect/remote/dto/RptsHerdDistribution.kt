@@ -10,20 +10,16 @@ import kotlin.math.max
 @Suppress("SpellCheckingInspection")
 class RptsHerdDistribution : Table, Graph {
 
-    override val legends: List<Option>
-        get() = listOf(
-            Option("Фуражных коров"),
-            Option("Дойных коров всего"),
-            Option("Стельных коров")
-        )
+    override val legends: List<String>
+        get() = listOf("Фуражных коров", "Дойных коров всего", "Стельных коров")
 
     override val columns: List<Column>
         get() {
             val legends = legends
             return listOf(
-                Column(legends[0].name, items.map { Row(it.date, it.hrdCowsAll) }),
-                Column(legends[1].name, items.map { Row(it.date, it.hrdCowsLactAll) }),
-                Column(legends[2].name, items.map { Row(it.date, it.hrdCowsPregAll) })
+                Column(legends[0], items.map { Row(it.date, it.hrdCowsAll) }),
+                Column(legends[1], items.map { Row(it.date, it.hrdCowsLactAll) }),
+                Column(legends[2], items.map { Row(it.date, it.hrdCowsPregAll) })
             )
         }
 

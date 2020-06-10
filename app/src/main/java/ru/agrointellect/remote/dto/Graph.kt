@@ -35,14 +35,9 @@ private fun parseDate(date: String): Float? {
     }
 }
 
-class Option(val name: String) {
-
-    var isActive = true
-}
-
 interface Graph {
 
-    val legends: List<Option>
+    val legends: Collection<String>
 
     val data: GraphData
 }

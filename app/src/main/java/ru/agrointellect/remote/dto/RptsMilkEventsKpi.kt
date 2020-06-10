@@ -10,17 +10,17 @@ import com.google.gson.annotations.SerializedName
 @Suppress("SpellCheckingInspection")
 class RptsMilkEventsKpi : Table, Graph {
 
-    override val legends: List<Option>
+    override val legends: List<String>
         get() = listOf(
-            Option("Надой 1 ф/к"),
-            Option("Надой 1 д/к"),
-            Option("Осеменений коров"),
-            Option("Выявлено стельных коров"),
-            Option("Запущено коров"),
-            Option("Переводов коров"),
-            Option("Вакцинация коров"),
-            Option("Расчистка копыт коров"),
-            Option("KPI кормления")
+            "Надой 1 ф/к",
+            "Надой 1 д/к",
+            "Осеменений коров",
+            "Выявлено стельных коров",
+            "Запущено коров",
+            "Переводов коров",
+            "Вакцинация коров",
+            "Расчистка копыт коров",
+            "KPI кормления"
         )
 
     override val columns: List<Column>
@@ -28,15 +28,15 @@ class RptsMilkEventsKpi : Table, Graph {
             val legends = legends
             return listOf(
                 Column("Валовой надой", rowsByField("mlkMilkSumYield")),
-                Column(legends[0].name, rowsByField("mlkMilkPerCow")),
-                Column(legends[1].name, rowsByField("mlkMilkPerLactCow")),
-                Column(legends[2].name, rowsByField("evtInsemCows")),
-                Column(legends[3].name, rowsByField("evtGotPregCows")),
-                Column(legends[4].name, rowsByField("evtDryCows")),
-                Column(legends[5].name, rowsByField("evtMoveCows")),
-                Column(legends[6].name, rowsByField("evtVaccCows")),
-                Column(legends[7].name, rowsByField("evtFootrimCows")),
-                Column(legends[8].name, rowsByField("feedKpi"))
+                Column(legends[0], rowsByField("mlkMilkPerCow")),
+                Column(legends[1], rowsByField("mlkMilkPerLactCow")),
+                Column(legends[2], rowsByField("evtInsemCows")),
+                Column(legends[3], rowsByField("evtGotPregCows")),
+                Column(legends[4], rowsByField("evtDryCows")),
+                Column(legends[5], rowsByField("evtMoveCows")),
+                Column(legends[6], rowsByField("evtVaccCows")),
+                Column(legends[7], rowsByField("evtFootrimCows")),
+                Column(legends[8], rowsByField("feedKpi"))
             )
         }
 

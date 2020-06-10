@@ -12,8 +12,8 @@ import com.google.gson.annotations.SerializedName
 @Suppress("SpellCheckingInspection")
 open class RptsFarmSummaryHistory : Table, Graph {
 
-    override val legends: List<Option>
-        get() = listOf(Option("Валовой надой"), Option("KPI кормления"))
+    override val legends: List<String>
+        get() = listOf("Валовой надой", "KPI кормления")
 
     override val columns: List<Column>
         get() = listOf(

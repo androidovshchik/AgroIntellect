@@ -41,8 +41,8 @@ class RptsHerdLactationGraph : Table, Graph {
             return data
         }
 
-    override val legends: List<Option>
-        get() = map.keys.map { Option(it) }
+    override val legends: Set<String>
+        get() = map.keys
 
     override val columns: List<Column>
         get() {
