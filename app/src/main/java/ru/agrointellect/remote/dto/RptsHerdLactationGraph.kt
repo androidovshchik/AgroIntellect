@@ -11,7 +11,7 @@ import ru.agrointellect.extension.asFloat
 import java.io.StringReader
 
 @Suppress("SpellCheckingInspection", "ReplaceManualRangeWithIndicesCalls")
-class RptsHerdLactationGraph : Table, ChartBase {
+class RptsHerdLactationGraph : Table, Graph {
 
     private val map: Map<String, String>
         get() {

@@ -9,7 +9,7 @@ import java.util.*
 
 typealias GraphData = BarLineScatterCandleBubbleData<*>
 
-private val chartFormatter = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
+private val dateFormatter = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
 
 fun newEntry(date: String, value: String?): Entry? {
     return Entry(parseDate(date) ?: return null, value.asFloat)
@@ -29,13 +29,13 @@ fun newGroupBarEntry(date: String, array: FloatArray): BarEntry? {
  */
 private fun parseDate(date: String): Float? {
     return try {
-        chartFormatter.parse(date)!!.time / 1000f
+        dateFormatter.parse(date)!!.time / 1000f
     } catch (ignored: Throwable) {
         null
     }
 }
 
-interface ChartBase {
+interface Graph {
 
     val legends: Collection<String>
 

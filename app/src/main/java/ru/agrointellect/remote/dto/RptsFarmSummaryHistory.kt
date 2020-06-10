@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName
  * График: Валовой надой + KPI
  */
 @Suppress("SpellCheckingInspection")
-open class RptsFarmSummaryHistory : Table, ChartBase {
+open class RptsFarmSummaryHistory : Table, Graph {
 
     override val legends: Collection<String>
         get() = listOf("Валовой надой", "KPI кормления")

@@ -6,6 +6,7 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.readText
 import org.json.JSONObject
 import ru.agrointellect.exception.NoDataException
+import ru.agrointellect.exception.UnknownException
 import ru.agrointellect.exception.WrongUidException
 import ru.agrointellect.remote.dto.*
 
@@ -61,7 +62,7 @@ suspend inline fun <T> HttpResponse.readJson(vararg keys: String, block: (String
         throw when {
             text.contains("wrong_uid") -> WrongUidException(e)
             text.contains("no_data") -> NoDataException(e)
-            else -> Throwable("Ошибка: $text", e)
+            else -> UnknownException(text, e)
         }
     }
 }

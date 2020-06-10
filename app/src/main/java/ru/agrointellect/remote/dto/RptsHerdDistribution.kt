@@ -8,7 +8,7 @@ import ru.agrointellect.extension.asFloat
 import kotlin.math.max
 
 @Suppress("SpellCheckingInspection")
-class RptsHerdDistribution : Table, ChartBase {
+class RptsHerdDistribution : Table, Graph {
 
     override val legends: List<String>
         get() = listOf("Фуражных коров", "Дойных коров всего", "Стельных коров")

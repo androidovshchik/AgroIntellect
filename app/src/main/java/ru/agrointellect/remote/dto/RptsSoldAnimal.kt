@@ -6,7 +6,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 @Suppress("SpellCheckingInspection")
-class RptsSoldAnimal : Table, ChartBase {
+class RptsSoldAnimal : Table, Graph {
 
     override val legends: List<String>
         get() = listOf(
