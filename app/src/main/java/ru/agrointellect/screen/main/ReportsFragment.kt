@@ -98,7 +98,6 @@ open class ReportsFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val grayColor = ContextCompat.getColor(requireContext(), R.color.colorRowGray)
         tv_farm.text = mainModel.farm?.name.toString()
         sl_reports.setOnRefreshListener {
             loadReports()

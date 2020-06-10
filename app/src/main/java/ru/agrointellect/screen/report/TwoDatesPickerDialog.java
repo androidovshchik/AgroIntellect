@@ -1,6 +1,5 @@
 package ru.agrointellect.screen.report;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.res.Resources;
@@ -25,7 +24,9 @@ import com.borax12.materialdaterangepicker.HapticFeedbackController;
 import com.borax12.materialdaterangepicker.R;
 import com.borax12.materialdaterangepicker.TypefaceHelper;
 import com.borax12.materialdaterangepicker.Utils;
+import com.borax12.materialdaterangepicker.date.AccessibleDateAnimator;
 import com.borax12.materialdaterangepicker.date.DatePickerController;
+import com.borax12.materialdaterangepicker.date.DatePickerDialog;
 import com.borax12.materialdaterangepicker.date.DayPickerView;
 import com.borax12.materialdaterangepicker.date.MonthAdapter;
 import com.borax12.materialdaterangepicker.date.SimpleDayPickerView;
@@ -91,6 +92,8 @@ public class TwoDatesPickerDialog extends DialogFragment implements
     private DialogInterface.OnCancelListener mOnCancelListener;
     private DialogInterface.OnDismissListener mOnDismissListener;
 
+    private AccessibleDateAnimator mAnimator;
+
     private TextView mDayOfWeekView;
     private LinearLayout mMonthAndDayView;
     private TextView mSelectedMonthTextView;
@@ -138,6 +141,7 @@ public class TwoDatesPickerDialog extends DialogFragment implements
     private TextView mYearViewEnd;
     private SimpleDayPickerView mDayPickerViewEnd;
     private YearPickerView mYearPickerViewEnd;
+    private AccessibleDateAnimator mAnimatorEnd;
     private int tabTag = 1;
     private String startTitle;
     private String endTitle;
@@ -372,6 +376,17 @@ public class TwoDatesPickerDialog extends DialogFragment implements
         int bgColorResource = mThemeDark ? R.color.range_date_picker_view_animator_dark_theme : R.color.range_date_picker_view_animator;
         view.setBackgroundColor(ContextCompat.getColor(activity, bgColorResource));
 
+        mAnimator = view.findViewById(R.id.range_animator);
+        mAnimatorEnd = view.findViewById(R.id.range_animator_end);
+
+        mAnimator.addView(mDayPickerView);
+        mAnimator.addView(mYearPickerView);
+        mAnimator.setDateMillis(mCalendar.getTimeInMillis());
+
+        mAnimatorEnd.addView(mDayPickerViewEnd);
+        mAnimatorEnd.addView(mYearPickerViewEnd);
+        mAnimatorEnd.setDateMillis(mCalendarEnd.getTimeInMillis());
+
         Button okButton = (Button) view.findViewById(R.id.range_ok);
         okButton.setOnClickListener(new OnClickListener() {
 
@@ -515,13 +530,7 @@ public class TwoDatesPickerDialog extends DialogFragment implements
 
         switch (viewIndex) {
             case MONTH_AND_DAY_VIEW:
-                ObjectAnimator pulseAnimator = Utils.getPulseAnimator(mMonthAndDayView, 0.9f,
-                        1.05f);
-                ObjectAnimator pulseAnimatorTwo = Utils.getPulseAnimator(mMonthAndDayViewEnd, 0.9f,
-                        1.05f);
                 if (mDelayAnimation) {
-                    pulseAnimator.setStartDelay(ANIMATION_DELAY);
-                    pulseAnimatorTwo.setStartDelay(ANIMATION_DELAY);
                     mDelayAnimation = false;
                 }
                 mDayPickerView.onDateChanged();
@@ -534,8 +543,6 @@ public class TwoDatesPickerDialog extends DialogFragment implements
                     mAnimatorEnd.setDisplayedChild(MONTH_AND_DAY_VIEW);
                     mCurrentView = viewIndex;
                 }
-                pulseAnimator.start();
-                pulseAnimatorTwo.start();
 
                 int flags = DateUtils.FORMAT_SHOW_DATE;
                 String dayString = DateUtils.formatDateTime(getActivity(), millis, flags);
@@ -546,11 +553,7 @@ public class TwoDatesPickerDialog extends DialogFragment implements
                 Utils.tryAccessibilityAnnounce(mAnimatorEnd, mSelectDay);
                 break;
             case YEAR_VIEW:
-                pulseAnimator = Utils.getPulseAnimator(mYearView, 0.85f, 1.1f);
-                pulseAnimatorTwo = Utils.getPulseAnimator(mYearViewEnd, 0.85f, 1.1f);
                 if (mDelayAnimation) {
-                    pulseAnimator.setStartDelay(ANIMATION_DELAY);
-                    pulseAnimatorTwo.setStartDelay(ANIMATION_DELAY);
                     mDelayAnimation = false;
                 }
                 mYearPickerView.onDateChanged();
@@ -566,8 +569,6 @@ public class TwoDatesPickerDialog extends DialogFragment implements
                     mAnimatorEnd.setDisplayedChild(YEAR_VIEW);
                     mCurrentViewEnd = viewIndex;
                 }
-                pulseAnimator.start();
-                pulseAnimatorTwo.start();
 
                 CharSequence yearString = YEAR_FORMAT.format(millis);
                 CharSequence yearStringEnd = YEAR_FORMAT.format(millisEnd);
@@ -938,13 +939,13 @@ public class TwoDatesPickerDialog extends DialogFragment implements
     }
 
     @Override
-    public void registerOnDateChangedListener(OnDateChangedListener listener) {
-        mListeners.add(listener);
+    public void registerOnDateChangedListener(DatePickerDialog.OnDateChangedListener listener) {
+        // todo mListeners.add(listener);
     }
 
     @Override
-    public void unregisterOnDateChangedListener(OnDateChangedListener listener) {
-        mListeners.remove(listener);
+    public void unregisterOnDateChangedListener(DatePickerDialog.OnDateChangedListener listener) {
+        // todo mListeners.remove(listener);
     }
 
     @Override
