@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import io.ktor.client.request.forms.FormDataContent
 import io.ktor.client.request.post
 import io.ktor.client.statement.HttpResponse
@@ -26,6 +27,10 @@ import ru.agrointellect.extension.readObject
 import ru.agrointellect.remote.dto.Table
 
 class ReportFragment : DataFragment() {
+
+    override val reportModel by lazy {
+        ViewModelProvider(requireActivity()).get(ReportModel::class.java)
+    }
 
     private lateinit var adapter: TableAdapter
 
@@ -50,9 +55,9 @@ class ReportFragment : DataFragment() {
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        tv_report.text = reportModel.report.name
+        tv_report.text = reportModel.getDesc().name
         tv_farm.text = reportModel.farm.name
-        ll_dates.isVisible = reportModel.report.datesCount > 0
+        ll_dates.isVisible = reportModel.getDesc().datesCount > 0
         ll_dates.setOnClickListener {
             context?.activityCallback<DateActivity> {
                 showDateDialog()
@@ -82,8 +87,8 @@ class ReportFragment : DataFragment() {
 
     private fun loadReport() {
         val farmId = reportModel.farm.id
-        val reportId = reportModel.report.id
-        val reportUid = reportModel.report.uid
+        val reportId = reportModel.getDesc().id
+        val reportUid = reportModel.getDesc().uid
         job.cancelChildren()
         tv_dates.updateDates()
         waitDialog.show()
@@ -98,7 +103,7 @@ class ReportFragment : DataFragment() {
                             append("report_date_from", apiFormatter.format(it))
                         }
                         reportModel.dateTo?.let {
-                            if (reportModel.report.datesCount == 1) {
+                            if (reportModel.getDesc().datesCount == 1) {
                                 set("report_date_from", apiFormatter.format(it))
                             }
                             append("report_date_to", apiFormatter.format(it))
