@@ -23,10 +23,11 @@ class LineFragment : GraphFragment() {
     override fun setData(data: GraphData) {
         (data as LineData).apply {
             dataSets.forEachIndexed { i, dataSet ->
-                val graphColor = graphColors[i]
+                val graphColor = getGraphColor(i)
                 (dataSet as LineDataSet).apply {
                     mode = LineDataSet.Mode.HORIZONTAL_BEZIER
                     setDrawCircles(false)
+                    lineWidth = 1.5f
                     color = graphColor
                 }
             }

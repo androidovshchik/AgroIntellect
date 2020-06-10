@@ -23,7 +23,7 @@ class BarFragment : GraphFragment() {
     override fun setData(data: GraphData) {
         (data as BarData).apply {
             dataSets.forEachIndexed { i, dataSet ->
-                val graphColor = graphColors[i]
+                val graphColor = getGraphColor(i)
                 (dataSet as BarDataSet).apply {
                     barWidth = 20f
                     color = graphColor
