@@ -33,6 +33,7 @@ import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.extension.readArray
 import ru.agrointellect.extension.setAll
 import ru.agrointellect.local.Preferences
+import ru.agrointellect.remote.dto.ChtDesc
 import ru.agrointellect.remote.dto.Report
 import ru.agrointellect.remote.dto.RptDesc
 import ru.agrointellect.screen.base.BaseFragment
@@ -56,6 +57,8 @@ open class ReportsFragment : BaseFragment() {
     }
 
     private val dataSource = dataSourceTypedOf<RptDesc>()
+
+    private var grayColor = 0
 
     @Suppress("SpellCheckingInspection")
     protected open val defaultList: List<RptDesc>
@@ -84,6 +87,7 @@ open class ReportsFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainModel = ViewModelProvider(requireActivity()).get(MainModel::class.java)
+        grayColor = ContextCompat.getColor(requireContext(), R.color.colorRowGray)
     }
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
@@ -102,29 +106,31 @@ open class ReportsFragment : BaseFragment() {
         rv_reports.apply {
             setup {
                 withDataSource(dataSource)
-                withItem<RptDesc, ReportHolder>(R.layout.item_report) {
-                    onBind(::ReportHolder) { i, item ->
-                        itemView.setBackgroundColor(if (i % 2 != 0) grayColor else Color.TRANSPARENT)
-                        button.setChecked(item.isSelected, false)
-                        button.text = item.name
-                    }
-                    onClick { i ->
-                        dataSource.toList().forEachIndexed { j, report ->
-                            if (i == j) {
-                                report.isSelected = true
-                                dataSource.invalidateAt(i)
-                            } else if (report.isSelected) {
-                                report.isSelected = false
-                                dataSource.invalidateAt(j)
-                            }
+                if (thisClass == ReportsFragment::class.java) {
+                    withItem<RptDesc, ReportHolder>(R.layout.item_report) {
+                        onBind(::ReportHolder) { i, item ->
+                            bindDesc(i, item)
                         }
-                        navController.navigate(
-                            if (thisClass == ReportsFragment::class.java) {
-                                R.id.reportActivity
-                            } else {
-                                R.id.chartActivity
-                            }, bundleOf("farm" to mainModel.farm, "desc" to item)
-                        )
+                        onClick { i ->
+                            notifyItemSelected(i)
+                            navController.navigate(
+                                R.id.reportActivity,
+                                bundleOf("farm" to mainModel.farm, "desc" to item)
+                            )
+                        }
+                    }
+                } else {
+                    withItem<ChtDesc, ReportHolder>(R.layout.item_report) {
+                        onBind(::ReportHolder) { i, item ->
+                            bindDesc(i, item)
+                        }
+                        onClick { i ->
+                            notifyItemSelected(i)
+                            navController.navigate(
+                                R.id.chartActivity,
+                                bundleOf("farm" to mainModel.farm, "desc" to item)
+                            )
+                        }
                     }
                 }
             }
@@ -135,6 +141,24 @@ open class ReportsFragment : BaseFragment() {
         } else {
             waitDialog.show()
             loadReports()
+        }
+    }
+
+    private fun ReportHolder.bindDesc(i: Int, item: RptDesc) {
+        itemView.setBackgroundColor(if (i % 2 != 0) grayColor else Color.TRANSPARENT)
+        button.setCheckedManually(item.isSelected)
+        button.text = item.name
+    }
+
+    private fun notifyItemSelected(i: Int) {
+        dataSource.toList().forEachIndexed { j, report ->
+            if (i == j) {
+                report.isSelected = true
+                dataSource.invalidateAt(i)
+            } else if (report.isSelected) {
+                report.isSelected = false
+                dataSource.invalidateAt(j)
+            }
         }
     }
 
