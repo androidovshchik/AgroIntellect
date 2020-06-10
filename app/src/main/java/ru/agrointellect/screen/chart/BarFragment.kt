@@ -8,6 +8,7 @@ import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import org.jetbrains.anko.matchParent
+import ru.agrointellect.remote.dto.ChtDesc
 import ru.agrointellect.remote.dto.GraphData
 
 class BarFragment : GraphFragment() {
@@ -35,9 +36,10 @@ class BarFragment : GraphFragment() {
 
     companion object {
 
-        fun newInstance(): BarFragment {
+        fun newInstance(desc: ChtDesc): BarFragment {
             return BarFragment().apply {
                 arguments = Bundle().apply {
+                    putSerializable("desc", desc)
                 }
             }
         }

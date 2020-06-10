@@ -8,6 +8,7 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import org.jetbrains.anko.matchParent
+import ru.agrointellect.remote.dto.ChtDesc
 import ru.agrointellect.remote.dto.GraphData
 
 class LineFragment : GraphFragment() {
@@ -37,9 +38,10 @@ class LineFragment : GraphFragment() {
 
     companion object {
 
-        fun newInstance(): LineFragment {
+        fun newInstance(desc: ChtDesc): LineFragment {
             return LineFragment().apply {
                 arguments = Bundle().apply {
+                    putSerializable("desc", desc)
                 }
             }
         }

@@ -1,12 +1,14 @@
 package ru.agrointellect.screen.chart
 
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import com.github.mikephil.charting.charts.BarLineChartBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.formatter.ValueFormatter
+import ru.agrointellect.remote.dto.ChtDesc
 import ru.agrointellect.remote.dto.GraphData
 import ru.agrointellect.screen.base.BaseFragment
 import java.text.SimpleDateFormat
@@ -47,19 +49,31 @@ abstract class GraphFragment : BaseFragment() {
 
     protected lateinit var chart: BarLineChartBase<*>
 
+    protected lateinit var desc: ChtDesc
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        desc = args.getSerializable("desc") as ChtDesc
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val lineColor = Color.parseColor("#67C3C6CD")
+        val font = Typeface.createFromAsset(requireContext().assets, "font/Ubuntu-Light.ttf")
         chart.apply {
             axisLeft.apply {
                 gridColor = lineColor
                 gridLineWidth = 1f
                 setDrawAxisLine(false)
+                textSize = 10f
+                typeface = font
             }
             axisRight.isEnabled = false
             xAxis.apply {
                 setDrawGridLines(false)
                 position = XAxis.XAxisPosition.BOTTOM
                 axisLineColor = lineColor
+                textSize = 10f
+                typeface = font
             }
             legend.isEnabled = false
             description.isEnabled = false

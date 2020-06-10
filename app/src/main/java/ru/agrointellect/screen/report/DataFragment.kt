@@ -43,6 +43,6 @@ abstract class DataFragment : BaseFragment() {
 
         val apiFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
 
-        val userFormatter = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
+        private val userFormatter = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
     }
 }

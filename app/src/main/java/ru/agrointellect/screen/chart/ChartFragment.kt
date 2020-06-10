@@ -63,9 +63,9 @@ class ChartFragment : DataFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         graphFragment = if (reportModel.getDesc().isLineChart) {
-            LineFragment.newInstance()
+            LineFragment.newInstance(reportModel.getDesc())
         } else {
-            BarFragment.newInstance()
+            BarFragment.newInstance(reportModel.getDesc())
         }
         isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     }

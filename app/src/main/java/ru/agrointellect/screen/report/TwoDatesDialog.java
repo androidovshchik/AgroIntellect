@@ -173,43 +173,8 @@ public class TwoDatesDialog extends DialogFragment implements
         void onDateChanged();
     }
 
-
     public TwoDatesDialog() {
         // Empty constructor required for dialog fragment.
-    }
-
-    /**
-     * @param callBack    How the parent is notified that the date is set.
-     * @param year        The initial year of the dialog.
-     * @param monthOfYear The initial month of the dialog.
-     * @param dayOfMonth  The initial day of the dialog.
-     */
-    public static TwoDatesDialog newInstance(OnDateSetListener callBack, int year,
-                                             int monthOfYear,
-                                             int dayOfMonth) {
-        TwoDatesDialog ret = new TwoDatesDialog();
-        ret.initialize(callBack, year, monthOfYear, dayOfMonth);
-        return ret;
-    }
-
-    /**
-     * @param callBack      How the parent is notified that the date is set.
-     * @param year          The initial year of the dialog.
-     * @param monthOfYear   The initial month of the dialog.
-     * @param dayOfMonth    The initial day of the dialog.
-     * @param yearEnd       The end year of the dialog.
-     * @param montOfYearEnd The end month of the dialog.
-     * @param dayOfMonthEnd The end day of the dialog.
-     */
-    public static TwoDatesDialog newInstance(OnDateSetListener callBack, int year,
-                                             int monthOfYear,
-                                             int dayOfMonth,
-                                             int yearEnd,
-                                             int montOfYearEnd,
-                                             int dayOfMonthEnd) {
-        TwoDatesDialog ret = new TwoDatesDialog();
-        ret.initialize(callBack, year, monthOfYear, dayOfMonth, yearEnd, montOfYearEnd, dayOfMonthEnd);
-        return ret;
     }
 
     public void initialize(OnDateSetListener callBack, int year, int monthOfYear, int dayOfMonth) {
