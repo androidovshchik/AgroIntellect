@@ -18,7 +18,7 @@ class ChartActivity : DateActivity() {
 
     fun emitToggle(position: Int, isChecked: Boolean) {
         val sign = if (isChecked) 1 else -1
-        val value = if (position == 0) Option.MAX_INDEX else position
-        reportModel.toggleChanged.value = sign * value
+        val index = if (position == 0) Option.MAX_INDEX else position
+        reportModel.toggleChanged.value = sign * index
     }
 }

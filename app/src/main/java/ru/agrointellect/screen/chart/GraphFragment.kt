@@ -104,9 +104,8 @@ abstract class GraphFragment : BaseFragment() {
             }
         }
         reportModel.toggleChanged.observe(viewLifecycleOwner, Observer {
-            val i = abs(it)
-            chart.data.getDataSetByIndex(if (i == Option.MAX_INDEX) 0 else i)?.isVisible =
-                it.sign > 0
+            val index = if (abs(it) == Option.MAX_INDEX) 0 else abs(it)
+            chart.data.getDataSetByIndex(index)?.isVisible = it.sign > 0
             chart.invalidate()
         })
     }
