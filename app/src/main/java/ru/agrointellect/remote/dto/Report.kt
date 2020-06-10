@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection")
+
 package ru.agrointellect.remote.dto
 
 import androidx.annotation.Keep
@@ -33,34 +35,33 @@ class Report {
     @SerializedName("report_date_need")
     @Expose
     lateinit var dateNeed: String
+}
 
-    val hasChart: Boolean
-        get() = type == "1" || type == "2"
+@Keep
+open class RptDesc(
+    val id: String,
+    val name: String,
+    val datesCount: Int,
+    val uid: String = id
+) : Serializable {
 
-    val hasTable: Boolean
-        get() = type == "0" || type == "2"
+    var isSelected = false
+}
 
-    val isDateNeeded: Boolean
-        get() = dateNeed == "1"
+@Keep
+class ChrtDesc(
+    id: String,
+    name: String,
+    datesCount: Int,
+    uid: String = id
+) : RptDesc(id, name, datesCount, uid) {
 
-    @Keep
-    @Suppress("SpellCheckingInspection")
-    class Default(
-        val id: String,
-        val name: String,
-        val datesCount: Int,
-        val uid: String = id
-    ) : Serializable {
+    val isLineChart
+        get() = uid == "rpt_farm_summary_history" || uid == "rpt_milk_events_kpi" || uid == "rpt_herd_lactation_graph"
 
-        val hasLineChart
-            get() = uid == "rpt_farm_summary_history" || uid == "rpt_milk_events_kpi" || uid == "rpt_herd_lactation_graph"
+    val isBarChart
+        get() = !isLineChart && !isGroupedBarChart
 
-        val hasBarChart
-            get() = !hasLineChart && !hasGroupedBarChart
-
-        val hasGroupedBarChart
-            get() = uid == "chrt_farm_summary_history2" || uid == "rpt_herd_distribution"
-
-        var isSelected = false
-    }
+    val isGroupedBarChart
+        get() = uid == "chrt_farm_summary_history2" || uid == "rpt_herd_distribution"
 }

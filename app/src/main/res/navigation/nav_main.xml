@@ -25,7 +25,7 @@
             app:argType="ru.agrointellect.remote.dto.Farm" />
         <argument
             android:name="report"
-            app:argType="ru.agrointellect.remote.dto.Report$Default" />
+            app:argType="ru.agrointellect.remote.dto.RptDesc" />
     </activity>
     <activity
         android:id="@+id/chartActivity"
@@ -36,6 +36,6 @@
             app:argType="ru.agrointellect.remote.dto.Farm" />
         <argument
             android:name="report"
-            app:argType="ru.agrointellect.remote.dto.Report$Default" />
+            app:argType="ru.agrointellect.remote.dto.ChrtDesc" />
     </activity>
 </navigation>

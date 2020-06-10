@@ -42,7 +42,7 @@ class LactationGraphDeserializer : JsonDeserializer<RptHerdLactationGraph> {
                     it.value.asNullableString
                 "lactation_over_2_daily_milk" -> rptObject.lactationOver2DailyMilk =
                     it.value.asNullableString
-                else -> rptObject.sampleLactations.put(it.key, it.value.asNullableString)
+                else -> rptObject.sampleLactations[it.key] = it.value.asNullableString
             }
         }
         return rptObject
