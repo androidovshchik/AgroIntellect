@@ -1,6 +1,7 @@
 package ru.agrointellect.screen.report;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
@@ -38,6 +40,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Locale;
+
+import ru.agrointellect.screen.base.BaseDialog;
 
 public class TwoDatesPickerDialog extends DialogFragment implements
         OnClickListener, DatePickerController {
@@ -227,6 +231,12 @@ public class TwoDatesPickerDialog extends DialogFragment implements
         mAccentColor = -1;
         mVibrate = true;
         mDismissOnPause = false;
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        return new BaseDialog(requireActivity());
     }
 
     @Override

@@ -6,35 +6,25 @@ import android.app.Dialog
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import kotlinx.android.synthetic.main.include_toolbar.*
 import ru.agrointellect.extension.getDate
 import ru.agrointellect.extension.transact
-import ru.agrointellect.extension.transactLegacy
 import ru.agrointellect.remote.dto.Farm
 import ru.agrointellect.remote.dto.RptDesc
 import ru.agrointellect.screen.base.BaseActivity
 import ru.agrointellect.screen.base.BaseDialog
 import java.util.*
 
-private typealias OneDateSetListener = com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener
-
-private typealias TwoDatesSetListener = com.borax12.materialdaterangepicker.date.DatePickerDialog.OnDateSetListener
-
-class OneDatePickerDialog : com.wdullaer.materialdatetimepicker.date.DatePickerDialog() {
+class OneDatePickerDialog : DatePickerDialog() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return BaseDialog(requireActivity())
     }
 }
 
-class TwoDatesPickerDialog : com.borax12.materialdaterangepicker.date.DatePickerDialog() {
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return BaseDialog(activity)
-    }
-}
-
-abstract class DateActivity : BaseActivity(), OneDateSetListener, TwoDatesSetListener {
+abstract class DateActivity : BaseActivity(), DatePickerDialog.OnDateSetListener,
+    TwoDatesPickerDialog.OnDateSetListener {
 
     abstract val reportModel: ReportModel
 
@@ -98,19 +88,14 @@ abstract class DateActivity : BaseActivity(), OneDateSetListener, TwoDatesSetLis
             }
         } else {
             if (!twoDatesDialog.isAdded) {
-                fragmentManager.transactLegacy(false) {
+                supportFragmentManager.transact(false) {
                     twoDatesDialog.show(this, DIALOG_TAG)
                 }
             }
         }
     }
 
-    override fun onDateSet(
-        view: com.wdullaer.materialdatetimepicker.date.DatePickerDialog?,
-        year: Int,
-        monthOfYear: Int,
-        dayOfMonth: Int
-    ) {
+    override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         reportModel.apply {
             dateTo = getDate(year, monthOfYear, dayOfMonth)
             datesChanged.value = true
@@ -118,7 +103,7 @@ abstract class DateActivity : BaseActivity(), OneDateSetListener, TwoDatesSetLis
     }
 
     override fun onDateSet(
-        view: com.borax12.materialdaterangepicker.date.DatePickerDialog?,
+        view: TwoDatesPickerDialog?,
         year: Int,
         monthOfYear: Int,
         dayOfMonth: Int,
