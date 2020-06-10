@@ -35,9 +35,18 @@ import ru.agrointellect.extension.readObject
 import ru.agrointellect.extension.setAll
 import ru.agrointellect.extension.transact
 import ru.agrointellect.remote.dto.Graph
-import ru.agrointellect.remote.dto.Option
 import ru.agrointellect.screen.report.DataFragment
 import ru.agrointellect.screen.report.DateActivity
+
+class Option(val name: String) {
+
+    var isActive = true
+
+    companion object {
+
+        const val MAX_INDEX = 9999
+    }
+}
 
 class LegendHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val circle: CircleView = itemView.iv_circle
@@ -45,8 +54,20 @@ class LegendHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 }
 
 class OptionHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
     val caption: TextView = itemView.tv_caption
     val switch: SwitchButton = itemView.sm_item
+
+    init {
+        switch.setOnCheckedChangeListener { v, isChecked ->
+            val position = adapterPosition
+            if (!switch.isCheckedProgrammatically) {
+                v.context.activityCallback<ChartActivity> {
+                    emitToggle(position, isChecked)
+                }
+            }
+        }
+    }
 }
 
 class ChartFragment : DataFragment() {
@@ -176,7 +197,11 @@ class ChartFragment : DataFragment() {
             val graphData = data.data
             if (graphData.entryCount > 0) {
                 graphFragment.setData(graphData)
-                dataSource.setAll(data.legends)
+                if (!reportModel.getDesc().isGroupedBarChart) {
+                    dataSource.setAll(data.legends.map { Option(it) })
+                } else {
+                    dataSource.setAll(data.legends)
+                }
                 dataSource.invalidateAll()
                 sl_info.isVisible = true
                 nsv_graph.post {

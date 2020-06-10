@@ -5,6 +5,7 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.charts.BarLineChartBase
 import com.github.mikephil.charting.components.XAxis
@@ -13,6 +14,8 @@ import ru.agrointellect.remote.dto.GraphData
 import ru.agrointellect.screen.base.BaseFragment
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.abs
+import kotlin.math.sign
 
 private val graphColors = listOf(
     Color.parseColor("#5899da"),
@@ -100,6 +103,12 @@ abstract class GraphFragment : BaseFragment() {
                 false
             }
         }
+        reportModel.toggleChanged.observe(viewLifecycleOwner, Observer {
+            val i = abs(it)
+            chart.data.getDataSetByIndex(if (i == Option.MAX_INDEX) 0 else i)?.isVisible =
+                it.sign > 0
+            chart.invalidate()
+        })
     }
 
     open fun setData(data: GraphData) {
