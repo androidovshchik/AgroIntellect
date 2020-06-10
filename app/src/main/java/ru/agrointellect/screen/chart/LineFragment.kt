@@ -16,7 +16,6 @@ class LineFragment : GraphFragment() {
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
         chart = LineChart(requireContext()).apply {
             layoutParams = ViewGroup.LayoutParams(matchParent, matchParent)
-            xAxis.valueFormatter = DateFormatter()
         }
         return chart
     }

@@ -71,4 +71,7 @@ class ChtDesc(
             "rpt_herd_lactation_graph" -> LineDataSet.Mode.CUBIC_BEZIER
             else -> LineDataSet.Mode.HORIZONTAL_BEZIER
         }
+
+    val useDateFormatter: Boolean
+        get() = uid != "rpt_herd_lactation_graph"
 }

@@ -74,6 +74,10 @@ abstract class GraphFragment : BaseFragment() {
                 axisLineColor = lineColor
                 textSize = 10f
                 typeface = font
+                if (desc.useDateFormatter) {
+                    valueFormatter = DateFormatter()
+                    granularity = 86400f
+                }
             }
             legend.isEnabled = false
             description.isEnabled = false
@@ -100,6 +104,7 @@ abstract class GraphFragment : BaseFragment() {
             setDrawValues(false)
             isHighlightEnabled = false
         }
+        chart.fitScreen()
         chart.invalidate()
     }
 
