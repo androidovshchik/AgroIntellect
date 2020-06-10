@@ -8,7 +8,6 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import org.jetbrains.anko.matchParent
-import ru.agrointellect.remote.dto.ChtDesc
 import ru.agrointellect.remote.dto.GraphData
 
 class LineFragment : GraphFragment() {
@@ -25,7 +24,7 @@ class LineFragment : GraphFragment() {
             dataSets.forEachIndexed { i, dataSet ->
                 val graphColor = getGraphColor(i)
                 (dataSet as LineDataSet).apply {
-                    mode = desc.lineMode
+                    mode = reportModel.getDesc().lineMode
                     setDrawCircles(false)
                     lineWidth = 1.5f
                     color = graphColor
@@ -37,10 +36,9 @@ class LineFragment : GraphFragment() {
 
     companion object {
 
-        fun newInstance(desc: ChtDesc): LineFragment {
+        fun newInstance(): LineFragment {
             return LineFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable("desc", desc)
                 }
             }
         }

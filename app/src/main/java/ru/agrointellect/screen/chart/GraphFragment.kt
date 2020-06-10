@@ -5,10 +5,10 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.charts.BarLineChartBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.formatter.ValueFormatter
-import ru.agrointellect.remote.dto.ChtDesc
 import ru.agrointellect.remote.dto.GraphData
 import ru.agrointellect.screen.base.BaseFragment
 import java.text.SimpleDateFormat
@@ -47,13 +47,13 @@ class DateFormatter : ValueFormatter() {
 
 abstract class GraphFragment : BaseFragment() {
 
-    protected lateinit var chart: BarLineChartBase<*>
+    protected lateinit var reportModel: ChartModel
 
-    protected lateinit var desc: ChtDesc
+    protected lateinit var chart: BarLineChartBase<*>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        desc = args.getSerializable("desc") as ChtDesc
+        reportModel = ViewModelProvider(requireActivity()).get(ChartModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -77,7 +77,7 @@ abstract class GraphFragment : BaseFragment() {
                 textSize = 10f
                 textColor = colorText
                 typeface = font
-                if (desc.useDateFormatter) {
+                if (reportModel.getDesc().useDateFormatter) {
                     valueFormatter = DateFormatter()
                     granularity = 86400f
                 }

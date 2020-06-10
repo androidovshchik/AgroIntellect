@@ -1,5 +1,6 @@
 package ru.agrointellect.screen.chart
 
+import androidx.lifecycle.MutableLiveData
 import ru.agrointellect.remote.dto.ChtDesc
 import ru.agrointellect.remote.dto.RptDesc
 import ru.agrointellect.screen.report.ReportModel
@@ -13,4 +14,6 @@ class ChartModel : ReportModel() {
     }
 
     override fun getDesc() = chtDesc
+
+    val toggleChanged = MutableLiveData<Int>()
 }

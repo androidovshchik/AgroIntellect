@@ -13,7 +13,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.recyclical.datasource.dataSourceTypedOf
+import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import io.ktor.client.request.forms.FormDataContent
@@ -35,6 +35,7 @@ import ru.agrointellect.extension.readObject
 import ru.agrointellect.extension.setAll
 import ru.agrointellect.extension.transact
 import ru.agrointellect.remote.dto.Graph
+import ru.agrointellect.remote.dto.Option
 import ru.agrointellect.screen.report.DataFragment
 import ru.agrointellect.screen.report.DateActivity
 
@@ -56,16 +57,16 @@ class ChartFragment : DataFragment() {
 
     private lateinit var graphFragment: GraphFragment
 
-    private val dataSource = dataSourceTypedOf<String>()
+    private val dataSource = dataSourceOf()
 
     private var isLandscape = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         graphFragment = if (reportModel.getDesc().isLineChart) {
-            LineFragment.newInstance(reportModel.getDesc())
+            LineFragment.newInstance()
         } else {
-            BarFragment.newInstance(reportModel.getDesc())
+            BarFragment.newInstance()
         }
         isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     }
@@ -111,12 +112,12 @@ class ChartFragment : DataFragment() {
                         }
                     }
                 } else {
-                    withItem<String, OptionHolder>(R.layout.item_option) {
+                    withItem<Option, OptionHolder>(R.layout.item_option) {
                         onBind(::OptionHolder) { i, item ->
                             itemView.setBackgroundColor(if (i % 2 == 0) grayColor else Color.TRANSPARENT)
-                            caption.text = item
+                            caption.text = item.name
                             switch.color = getGraphColor(i)
-                            switch.isCheckedProgrammatically = true
+                            switch.isCheckedProgrammatically = item.isActive
                         }
                     }
                 }
