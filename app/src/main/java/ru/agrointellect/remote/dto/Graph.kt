@@ -19,7 +19,7 @@ fun newBarEntry(date: String, value: String?): BarEntry? {
     return BarEntry(parseDate(date) ?: return null, value.asFloat)
 }
 
-fun newGroupBarEntry(date: String, array: FloatArray): BarEntry? {
+fun newBarEntry(date: String, array: FloatArray): BarEntry? {
     return BarEntry(parseDate(date) ?: return null, array)
 }
 

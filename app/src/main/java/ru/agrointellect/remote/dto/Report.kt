@@ -58,13 +58,13 @@ class ChtDesc(
 ) : RptDesc(id, name, datesCount, uid) {
 
     val isLineChart
-        get() = uid == "rpt_farm_summary_history" || uid == "rpt_milk_events_kpi" || uid == "rpt_herd_lactation_graph"
+        get() = uid == "rpt_herd_lactation_graph" || uid == "rpt_milk_events_kpi" || uid == "rpt_farm_summary_history"
 
-    val isBarChart
-        get() = !isLineChart && !isGroupedBarChart
+    val isStackedBarChart
+        get() = uid == "rpt_herd_distribution" || uid == "cht_farm_summary_history2"
 
     val isGroupedBarChart
-        get() = uid == "cht_farm_summary_history2" || uid == "rpt_herd_distribution"
+        get() = !isLineChart && !isStackedBarChart
 
     val lineMode: LineDataSet.Mode
         get() = when (uid) {
