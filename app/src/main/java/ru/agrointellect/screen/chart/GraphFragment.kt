@@ -15,36 +15,15 @@ import ru.agrointellect.screen.base.BaseFragment
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
+import kotlin.math.roundToLong
 import kotlin.math.sign
-
-private val graphColors = listOf(
-    Color.parseColor("#5899da"),
-    Color.parseColor("#e8743b"),
-    Color.parseColor("#19a979"),
-    Color.parseColor("#ed4a7b"),
-    Color.parseColor("#945ecf"),
-    Color.parseColor("#13a4b4"),
-    Color.parseColor("#525df4"),
-    Color.parseColor("#bf399e"),
-    Color.parseColor("#6c8893"),
-    Color.parseColor("#ee6868"),
-    Color.parseColor("#2f6497")
-)
-
-fun getGraphColor(index: Int): Int {
-    var i = index
-    while (i >= graphColors.size) {
-        i -= graphColors.size
-    }
-    return graphColors[i]
-}
 
 class DateFormatter : ValueFormatter() {
 
     private val formatter = SimpleDateFormat("dd.MM", Locale.ENGLISH)
 
     override fun getFormattedValue(value: Float): String {
-        return formatter.format(value.toLong() * 1000)
+        return formatter.format(value.roundToLong() * 1000)
     }
 }
 
@@ -72,7 +51,14 @@ abstract class GraphFragment : BaseFragment() {
                 textColor = colorText
                 typeface = font
             }
-            axisRight.isEnabled = false
+            axisRight.apply {
+                setDrawGridLines(false)
+                setDrawAxisLine(false)
+                textSize = 10f
+                textColor = colorText
+                typeface = font
+                isEnabled = false
+            }
             xAxis.apply {
                 setDrawGridLines(false)
                 position = XAxis.XAxisPosition.BOTTOM
@@ -80,6 +66,7 @@ abstract class GraphFragment : BaseFragment() {
                 textSize = 10f
                 textColor = colorText
                 typeface = font
+                labelCount = 7
                 if (reportModel.getDesc().useDateFormatter) {
                     valueFormatter = DateFormatter()
                     granularity = 86400f
@@ -111,12 +98,14 @@ abstract class GraphFragment : BaseFragment() {
     }
 
     open fun setData(data: GraphData) {
-        chart.data = data.apply {
-            setDrawValues(false)
-            isHighlightEnabled = false
+        chart.apply {
+            this.data = data.apply {
+                setDrawValues(false)
+                isHighlightEnabled = false
+            }
+            fitScreen()
+            invalidate()
         }
-        chart.fitScreen()
-        chart.invalidate()
     }
 
     fun clearData() {

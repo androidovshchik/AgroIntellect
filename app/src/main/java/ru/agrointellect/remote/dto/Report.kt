@@ -74,4 +74,10 @@ class ChtDesc(
 
     val useDateFormatter: Boolean
         get() = uid != "rpt_herd_lactation_graph"
+
+    val rightAxisLines: List<Int>
+        get() = when (uid) {
+            "rpt_farm_summary_history" -> listOf(1)
+            else -> emptyList()
+        }
 }
