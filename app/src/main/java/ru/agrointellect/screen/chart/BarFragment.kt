@@ -26,8 +26,9 @@ class BarFragment : GraphFragment() {
                 (dataSet as BarDataSet).apply {
                     if (reportModel.getDesc().isStackedBarChart) {
                         if (entryCount > 0) {
-                            barWidth = 86400f / entryCount
-                            colors = pickColors(getEntryForIndex(0).yVals.size)
+                            val count = getEntryForIndex(0).yVals.size
+                            barWidth = 86400f / (count + 1)
+                            colors = pickColors(count)
                         }
                     } else {
                         barWidth = 86400f / dataSetCount
