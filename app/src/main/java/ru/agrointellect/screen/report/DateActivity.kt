@@ -143,6 +143,6 @@ abstract class DateActivity : BaseActivity(), DatePickerDialog.OnDateSetListener
 
     companion object {
 
-        const val DIALOG_TAG = "date_picker"
+        private const val DIALOG_TAG = "date_picker"
     }
 }

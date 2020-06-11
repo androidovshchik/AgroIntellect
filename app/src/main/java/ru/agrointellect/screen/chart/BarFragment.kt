@@ -15,6 +15,7 @@ class BarFragment : GraphFragment() {
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
         chart = BarChart(requireContext()).apply {
             layoutParams = ViewGroup.LayoutParams(matchParent, matchParent)
+            setFitBars(true)
         }
         return chart
     }
@@ -22,10 +23,16 @@ class BarFragment : GraphFragment() {
     override fun setData(data: GraphData) {
         (data as BarData).apply {
             dataSets.forEachIndexed { i, dataSet ->
-                val graphColor = getGraphColor(i)
                 (dataSet as BarDataSet).apply {
-                    barWidth = 20f
-                    color = graphColor
+                    if (reportModel.getDesc().isStackedBarChart) {
+                        if (entryCount > 0) {
+                            barWidth = 86400f / entryCount
+                            colors = pickColors(getEntryForIndex(0).yVals.size)
+                        }
+                    } else {
+                        barWidth = 86400f / dataSetCount
+                        color = pickColor(i)
+                    }
                 }
             }
         }
