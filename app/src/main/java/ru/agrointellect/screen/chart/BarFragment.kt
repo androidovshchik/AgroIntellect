@@ -16,6 +16,12 @@ class BarFragment : GraphFragment() {
         chart = BarChart(requireContext()).apply {
             layoutParams = ViewGroup.LayoutParams(matchParent, matchParent)
             setFitBars(true)
+            if (reportModel.getDesc().isStackedBarChart) {
+                xAxis.apply {
+                    spaceMin = 86400f * 3 / 4
+                    spaceMax = 86400f * 3 / 4
+                }
+            }
         }
         return chart
     }
@@ -26,9 +32,8 @@ class BarFragment : GraphFragment() {
                 (dataSet as BarDataSet).apply {
                     if (reportModel.getDesc().isStackedBarChart) {
                         if (entryCount > 0) {
-                            val count = getEntryForIndex(0).yVals.size
-                            barWidth = 86400f / (count + 1)
-                            colors = pickColors(count)
+                            barWidth = 86400f / 4
+                            colors = pickColors(getEntryForIndex(0).yVals.size)
                         }
                     } else {
                         barWidth = 86400f / dataSetCount
