@@ -18,8 +18,8 @@ class BarFragment : GraphFragment() {
             setFitBars(true)
             if (reportModel.getDesc().isStackedBarChart) {
                 xAxis.apply {
-                    spaceMin = 86400f * 3 / 4
-                    spaceMax = 86400f * 3 / 4
+                    spaceMin = 86400f * 7 / 8
+                    spaceMax = 86400f * 7 / 8
                 }
             }
         }
@@ -31,8 +31,8 @@ class BarFragment : GraphFragment() {
             dataSets.forEachIndexed { i, dataSet ->
                 (dataSet as BarDataSet).apply {
                     if (reportModel.getDesc().isStackedBarChart) {
+                        barWidth = 86400f / 4
                         if (entryCount > 0) {
-                            barWidth = 86400f / 4
                             colors = pickColors(getEntryForIndex(0).yVals.size)
                         }
                     } else {

@@ -17,6 +17,7 @@ class ChartsFragment : ReportsFragment() {
             ChtDesc("rpt_herd_distribution", "Поголовье: фуражное, дойное, стельное", 2),
             ChtDesc("rpt_herd_lactation_graph", "График лактации поголовья", 0),
             ChtDesc("rpt_milk_events_kpi", "Надой, события, кормление", 2),
+            ChtDesc("rpt_fresh_disease", "Послеотельные заболевания", 2),
             ChtDesc("rpt_farm_summary_history", "Валовой надой + KPI", 2),
             ChtDesc(
                 "rpt_farm_summary_history",
