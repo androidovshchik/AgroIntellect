@@ -125,10 +125,10 @@ class ChartFragment : DataFragment() {
         rv_info.apply {
             setup {
                 withDataSource(dataSource)
-                if (reportModel.getDesc().isGroupedBarChart) {
+                if (reportModel.getDesc().isStackedBarChart) {
                     withItem<String, LegendHolder>(R.layout.item_legend) {
                         onBind(::LegendHolder) { i, item ->
-                            circle.color = getGraphColor(i)
+                            circle.color = pickColor(i)
                             legend.text = item
                         }
                     }
@@ -137,7 +137,7 @@ class ChartFragment : DataFragment() {
                         onBind(::OptionHolder) { i, item ->
                             itemView.setBackgroundColor(if (i % 2 == 0) grayColor else Color.TRANSPARENT)
                             caption.text = item.name
-                            switch.color = getGraphColor(i)
+                            switch.color = pickColor(i)
                             switch.isCheckedProgrammatically = item.isActive
                         }
                     }
@@ -197,11 +197,11 @@ class ChartFragment : DataFragment() {
             val graphData = data.data
             if (graphData.entryCount > 0) {
                 graphFragment.setData(graphData)
-                if (!reportModel.getDesc().isGroupedBarChart) {
-                    dataSource.setAll(data.legends.map { Option(it) })
+                dataSource.setAll(if (!reportModel.getDesc().isStackedBarChart) {
+                    data.legends.map { Option(it) }
                 } else {
-                    dataSource.setAll(data.legends)
-                }
+                    data.legends
+                })
                 dataSource.invalidateAll()
                 sl_info.isVisible = true
                 nsv_graph.post {

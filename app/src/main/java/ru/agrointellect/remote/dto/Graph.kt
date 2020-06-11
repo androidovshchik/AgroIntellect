@@ -9,7 +9,9 @@ import java.util.*
 
 typealias GraphData = BarLineScatterCandleBubbleData<*>
 
-private val dateFormatter = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
+private val dateFormatter = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH).apply {
+    timeZone = TimeZone.getTimeZone("UTC")
+}
 
 fun newEntry(date: String, value: String?): Entry? {
     return Entry(parseDate(date) ?: return null, value.asFloat)
