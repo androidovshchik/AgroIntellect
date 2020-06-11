@@ -21,11 +21,20 @@ class BarFragment : GraphFragment() {
                     spaceMin = 86400f * 7 / 8
                     spaceMax = 86400f * 7 / 8
                 }
+            } else if (reportModel.getDesc().isGroupedBarChart) {
+                xAxis.setCenterAxisLabels(true)
             }
         }
         return chart
     }
 
+    /**
+     * https://weeklycoding.com/mpandroidchart-documentation/setting-data
+     * 86400 = (w + s) * n + S <=> x * n + x
+     * 86400 = x * (n + 1) => x = 86400 / (n + 1)
+     * w + s = S = 86400 / (n + 1)
+     * w = s = S / 2 = 86400 / (n + 1) / 2
+     */
     override fun setData(data: GraphData) {
         (data as BarData).apply {
             dataSets.forEachIndexed { i, dataSet ->
@@ -36,9 +45,14 @@ class BarFragment : GraphFragment() {
                             colors = pickColors(getEntryForIndex(0).yVals.size)
                         }
                     } else {
-                        barWidth = 86400f / dataSetCount
+                        barWidth = 86400f / (dataSetCount + 1) / 2
                         color = pickColor(i)
                     }
+                }
+            }
+            if (reportModel.getDesc().isGroupedBarChart) {
+                if (dataSetCount > 1) {
+                    groupBars(xMin - barWidth * 3 / 2, barWidth * 3 / 2, barWidth)
                 }
             }
         }
