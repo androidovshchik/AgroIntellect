@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.CombinedData
 import org.jetbrains.anko.matchParent
 import ru.agrointellect.remote.dto.GraphData
+import ru.agrointellect.remote.dto.newBarEntry
 
 class BarFragment : GraphFragment() {
 
@@ -16,13 +18,17 @@ class BarFragment : GraphFragment() {
         chart = BarChart(requireContext()).apply {
             layoutParams = ViewGroup.LayoutParams(matchParent, matchParent)
             setFitBars(true)
-            if (reportModel.getDesc().isStackedBarChart) {
-                xAxis.apply {
-                    spaceMin = 86400f * 7 / 8
-                    spaceMax = 86400f * 7 / 8
+            when {
+                reportModel.getDesc().isStackedBarChart -> {
+                    xAxis.apply {
+                        spaceMin = 86400f * 7 / 8
+                        spaceMax = 86400f * 7 / 8
+                    }
                 }
-            } else if (reportModel.getDesc().isGroupedBarChart) {
-                xAxis.setCenterAxisLabels(true)
+                reportModel.getDesc().isGroupedBarChart -> {
+                    xAxis.setCenterAxisLabels(true)
+                    xAxis.setLabelCount(7, true)
+                }
             }
         }
         return chart
@@ -30,10 +36,10 @@ class BarFragment : GraphFragment() {
 
     /**
      * https://weeklycoding.com/mpandroidchart-documentation/setting-data
-     * 86400 = (w + s) * n + S <=> x * n + x
-     * 86400 = x * (n + 1) => x = 86400 / (n + 1)
-     * w + s = S = 86400 / (n + 1)
-     * w = s = S / 2 = 86400 / (n + 1) / 2
+     * 86400 = (w + s) * n + S <=> x * n + 0.75 * x
+     * 86400 = x * (n + 0.75) => x = 86400 / (n + 0.75)
+     * w + s = S / 0.75 = 86400 / (n + 0.75)
+     * w = s = S / 1.5 = 86400 / (n + 0.75) / 2
      */
     override fun setData(data: GraphData) {
         (data as BarData).apply {
@@ -45,7 +51,7 @@ class BarFragment : GraphFragment() {
                             colors = pickColors(getEntryForIndex(0).yVals.size)
                         }
                     } else {
-                        barWidth = 86400f / (dataSetCount + 1) / 2
+                        barWidth = 86400f / (dataSetCount + 0.75f) / 2
                         color = pickColor(i)
                     }
                 }
@@ -56,7 +62,22 @@ class BarFragment : GraphFragment() {
                 }
             }
         }
-        super.setData(data)
+        val combinedData = CombinedData().apply {
+            setData(
+                BarData(
+                    BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtCalvTotal) }, null),
+                    BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtRetPlacTotal) }, null),
+                    BarDataSet(items.mapNotNull { newBarEntry(it.date, it.evtParesTotal) }, null)
+                )
+            )
+            setData(data)
+        }
+        super.setData(combinedData)
+        chart.apply {
+            //getXAxis().setAxisMinimum(data.xMin);
+            getXAxis().setAxisMaximum(data.xMin + data.dataSetCount * 86400f);
+            setVisibleXRange(7f * 86400, 7f * 86400)
+        }
     }
 
     companion object {
