@@ -5,13 +5,13 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
-import com.github.mikephil.charting.charts.CombinedChart
+import com.github.mikephil.charting.charts.BarChart
 
 class BackBarChart @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : CombinedChart(context, attrs, defStyleAttr) {
+) : BarChart(context, attrs, defStyleAttr) {
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
