@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import com.github.mikephil.charting.charts.BarChart
+import kotlin.math.roundToInt
 
 class BackBarChart @JvmOverloads constructor(
     context: Context,
@@ -22,18 +23,19 @@ class BackBarChart @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         if (drawBackground) {
-            var x = xChartMin + GraphFragment.DAY
-            while (x < xChartMax) {
-                val bl = mLeftAxisTransformer.getPixelForValues(x, yMin)
-                val tr = mLeftAxisTransformer.getPixelForValues(x + GraphFragment.DAY, yMax)
-                canvas.drawRect(
-                    bl.x.toFloat(),
-                    tr.y.toFloat(),
-                    tr.x.toFloat(),
-                    bl.y.toFloat(),
-                    paint
-                )
-                x += GraphFragment.DAY * 2
+            val min = mLeftAxisTransformer.getPixelForValues(xChartMin, yMin)
+            val max = mLeftAxisTransformer.getPixelForValues(xChartMin + GraphFragment.DAY, yMax)
+            val width = (max.x - min.x).toFloat()
+            (0 until ((xChartMax - xChartMin) / GraphFragment.DAY).roundToInt()).forEach {
+                if (it % 2 != 0) {
+                    canvas.drawRect(
+                        min.x.toFloat() + it * width,
+                        min.y.toFloat(),
+                        min.x.toFloat() + width * (it + 1),
+                        max.y.toFloat(),
+                        paint
+                    )
+                }
             }
         }
         super.onDraw(canvas)
