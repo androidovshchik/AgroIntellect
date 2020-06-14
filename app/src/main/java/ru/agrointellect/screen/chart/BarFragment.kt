@@ -8,25 +8,19 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import org.jetbrains.anko.matchParent
 import ru.agrointellect.remote.dto.GraphData
-import timber.log.Timber
+import kotlin.math.max
 
 class BarFragment : GraphFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
         chart = BackBarChart(requireContext()).apply {
             layoutParams = ViewGroup.LayoutParams(matchParent, matchParent)
-            //setFitBars(true)
-            when {
-                reportModel.getDesc().isStackedBarChart -> {
-                    xAxis.apply {
-                        // 3/4 + 1/8
-                        spaceMin = DAY * 7 / 8
-                        spaceMax = DAY * 7 / 8
-                    }
-                }
-                reportModel.getDesc().isGroupedBarChart -> {
-                    //setScaleEnabled(false)
-                    //xAxis.setCenterAxisLabels(true)
+            if (reportModel.getDesc().isStackedBarChart) {
+                setFitBars(true)
+                xAxis.apply {
+                    // 3/4 + 1/8
+                    spaceMin = DAY * 7 / 8
+                    spaceMax = DAY * 7 / 8
                 }
             }
         }
@@ -39,13 +33,11 @@ class BarFragment : GraphFragment() {
      * 86400 = 2x * (n + 1) => x = 86400 / (n + 1) / 2
      */
     override fun setData(data: GraphData) {
+        var count = 0
         (data as BarData).apply {
             dataSets.forEachIndexed { i, dataSet ->
                 (dataSet as BarDataSet).apply {
-                    (0 until entryCount).forEach {
-                        val e = getEntryForIndex(it)
-                        Timber.e("e $it ${e.x.toLong()} ${e.y.toLong()}")
-                    }
+                    count = max(count, entryCount)
                     when {
                         reportModel.getDesc().isStackedBarChart -> {
                             barWidth = DAY / 4
@@ -64,18 +56,20 @@ class BarFragment : GraphFragment() {
                 if (dataSetCount > 1) {
                     groupBars(xMin - barWidth * 3 / 2, barWidth * 2, barWidth)
                 }
-                //chart.xAxis.axisMinimum = xMin + barWidth
-                Timber.e("xmin $xMin barWidth $barWidth")
-                Timber.e("= ${barWidth * 2 * (5 + 1)}")
             }
         }
-        (chart as BackBarChart).drawBackground = reportModel.getDesc().isGroupedBarChart
-        chart.apply {
-            xAxis.axisMinimum = data.xMin
+        (chart as BackBarChart).apply {
+            if (reportModel.getDesc().isGroupedBarChart) {
+                drawBackground = true
+                xAxis.axisMaximum = data.xMin
+                xAxis.axisMaximum = data.xMin + count * DAY
+            }
         }
         super.setData(data)
         chart.apply {
-            setVisibleXRangeMaximum(WEEK)
+            if (reportModel.getDesc().isGroupedBarChart) {
+                setVisibleXRangeMaximum(WEEK)
+            }
         }
     }
 
