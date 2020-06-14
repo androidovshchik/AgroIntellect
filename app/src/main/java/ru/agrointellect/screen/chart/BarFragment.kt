@@ -16,7 +16,6 @@ class BarFragment : GraphFragment() {
         chart = BackBarChart(requireContext()).apply {
             layoutParams = ViewGroup.LayoutParams(matchParent, matchParent)
             if (reportModel.getDesc().isStackedBarChart) {
-                setFitBars(true)
                 xAxis.apply {
                     spaceMin = STACK_OFFSET
                     spaceMax = STACK_OFFSET
@@ -60,25 +59,26 @@ class BarFragment : GraphFragment() {
             }
         }
         (chart as BackBarChart).apply {
-            if (reportModel.getDesc().isGroupedBarChart) {
-                drawBackground = true
-                xAxis.axisMaximum = data.xMin
-                xAxis.axisMaximum = data.xMin + maxCount * DAY
+            xAxis.axisMaximum = data.xMin
+            when {
+                reportModel.getDesc().isGroupedBarChart -> {
+                    drawBackground = true
+                    xAxis.axisMaximum = data.xMin + maxCount * DAY
+                }
+                reportModel.getDesc().isStackedBarChart -> {
+                    xAxis.axisMaximum = data.xMin + maxCount * DAY - STACK_OFFSET
+                }
             }
         }
         super.setData(data)
         chart.apply {
             setVisibleXRangeMaximum(WEEK)
-            if (reportModel.getDesc().isStackedBarChart) {
-                moveViewToX(xChartMin + STACK_OFFSET / 2)
-            }
         }
     }
 
     companion object {
 
-        // 3/4 + 1/8
-        private const val STACK_OFFSET = DAY * 7 / 8
+        private const val STACK_OFFSET = DAY * 1 / 2
 
         fun newInstance(): BarFragment {
             return BarFragment().apply {
