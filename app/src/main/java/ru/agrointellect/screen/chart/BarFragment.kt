@@ -1,5 +1,6 @@
 package ru.agrointellect.screen.chart
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ class BarFragment : GraphFragment() {
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
         chart = BackBarChart(requireContext()).apply {
             layoutParams = ViewGroup.LayoutParams(matchParent, matchParent)
+            setDateLabels(true)
             when {
                 reportModel.getDesc().isStackedBarChart -> {
                     xAxis.apply {
@@ -46,6 +48,9 @@ class BarFragment : GraphFragment() {
                             barWidth = DAY / 4
                             if (entryCount > 0) {
                                 colors = pickColors(getEntryForIndex(0).yVals.size)
+                                if (entryCount > 1) {
+                                    colors[1] = Color.parseColor("#DCE0E6")
+                                }
                             }
                         }
                         reportModel.getDesc().isGroupedBarChart -> {

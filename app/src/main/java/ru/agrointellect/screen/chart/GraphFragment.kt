@@ -67,7 +67,8 @@ abstract class GraphFragment : BaseFragment() {
                 textColor = colorText
                 typeface = font
                 if (reportModel.getDesc().useDateFormatter) {
-                    setDateLabels()
+                    labelCount = 7
+                    granularity = DAY
                     valueFormatter = DateFormatter()
                 }
             }

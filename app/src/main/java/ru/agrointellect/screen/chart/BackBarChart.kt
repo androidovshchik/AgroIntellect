@@ -12,28 +12,35 @@ import com.github.mikephil.charting.renderer.XAxisRenderer
 import com.github.mikephil.charting.utils.Transformer
 import com.github.mikephil.charting.utils.ViewPortHandler
 
-fun BarLineChartBase<*>.setDateLabels() {
+fun BarLineChartBase<*>.setDateLabels(centerLabels: Boolean) {
     setXAxisRenderer(
-        DateLabelsXAxisRenderer(viewPortHandler, xAxis, getTransformer(axisLeft.axisDependency))
+        DateLabelsXAxisRenderer(
+            viewPortHandler,
+            xAxis,
+            getTransformer(axisLeft.axisDependency),
+            centerLabels
+        )
     )
 }
 
 private class DateLabelsXAxisRenderer(
     viewPortHandler: ViewPortHandler,
     xAxis: XAxis,
-    transformer: Transformer
+    transformer: Transformer,
+    var centerLabels: Boolean
 ) : XAxisRenderer(viewPortHandler, xAxis, transformer) {
 
     override fun computeAxisValues(min: Float, max: Float) {
         with(mAxis) {
             val count = (mAxisRange / DAY).toInt()
+            val extra = if (centerLabels) 0.5f else 0f
             if (mEntries.size != count) {
                 mEntries = FloatArray((mAxisRange / DAY).toInt()) {
-                    mAxisMinimum + (it + 0.5f) * DAY
+                    mAxisMinimum + (it + extra) * DAY
                 }
             } else {
                 mEntries.indices.forEach {
-                    mEntries[it] = mAxisMinimum + (it + 0.5f) * DAY
+                    mEntries[it] = mAxisMinimum + (it + extra) * DAY
                 }
             }
             mEntryCount = mEntries.size
