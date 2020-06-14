@@ -15,13 +15,17 @@ class BarFragment : GraphFragment() {
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
         chart = BackBarChart(requireContext()).apply {
             layoutParams = ViewGroup.LayoutParams(matchParent, matchParent)
-            if (reportModel.getDesc().isStackedBarChart) {
-                xAxis.apply {
-                    spaceMin = STACK_OFFSET
-                    spaceMax = STACK_OFFSET
+            setSpecificLabels()
+            when {
+                reportModel.getDesc().isStackedBarChart -> {
+                    xAxis.apply {
+                        spaceMin = STACK_OFFSET
+                        spaceMax = STACK_OFFSET
+                    }
+                }
+                reportModel.getDesc().isGroupedBarChart -> {
                 }
             }
-            isScaleXEnabled = false
             axisLeft.axisMinimum = 0f
         }
         return chart
@@ -61,12 +65,12 @@ class BarFragment : GraphFragment() {
         (chart as BackBarChart).apply {
             xAxis.axisMaximum = data.xMin
             when {
+                reportModel.getDesc().isStackedBarChart -> {
+                    xAxis.axisMaximum = data.xMin + maxCount * DAY - STACK_OFFSET
+                }
                 reportModel.getDesc().isGroupedBarChart -> {
                     drawBackground = true
                     xAxis.axisMaximum = data.xMin + maxCount * DAY
-                }
-                reportModel.getDesc().isStackedBarChart -> {
-                    xAxis.axisMaximum = data.xMin + maxCount * DAY - STACK_OFFSET
                 }
             }
         }
