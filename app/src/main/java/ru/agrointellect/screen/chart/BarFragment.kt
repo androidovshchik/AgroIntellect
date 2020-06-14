@@ -15,7 +15,7 @@ class BarFragment : GraphFragment() {
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
         chart = BackBarChart(requireContext()).apply {
             layoutParams = ViewGroup.LayoutParams(matchParent, matchParent)
-            setFitBars(true)
+            //setFitBars(true)
             when {
                 reportModel.getDesc().isStackedBarChart -> {
                     xAxis.apply {
@@ -26,7 +26,7 @@ class BarFragment : GraphFragment() {
                 }
                 reportModel.getDesc().isGroupedBarChart -> {
                     //setScaleEnabled(false)
-                    xAxis.setCenterAxisLabels(true)
+                    //xAxis.setCenterAxisLabels(true)
                 }
             }
         }
@@ -40,9 +40,12 @@ class BarFragment : GraphFragment() {
      */
     override fun setData(data: GraphData) {
         (data as BarData).apply {
-            val count = getDataSetByIndex(0)?.entryCount ?: 0
             dataSets.forEachIndexed { i, dataSet ->
                 (dataSet as BarDataSet).apply {
+                    (0 until entryCount).forEach {
+                        val e = getEntryForIndex(it)
+                        Timber.e("e $it ${e.x.toLong()} ${e.y.toLong()}")
+                    }
                     when {
                         reportModel.getDesc().isStackedBarChart -> {
                             barWidth = DAY / 4
@@ -51,27 +54,28 @@ class BarFragment : GraphFragment() {
                             }
                         }
                         reportModel.getDesc().isGroupedBarChart -> {
-                            barWidth = DAY / (count + 1) / 2
+                            barWidth = DAY / (dataSetCount + 1) / 2
                             color = pickColor(i)
                         }
                     }
                 }
             }
             if (reportModel.getDesc().isGroupedBarChart) {
-                if (count > 1) {
-                    groupBars(xMin, barWidth * 2, barWidth)
+                if (dataSetCount > 1) {
+                    groupBars(xMin - barWidth * 3 / 2, barWidth * 2, barWidth)
                 }
                 //chart.xAxis.axisMinimum = xMin + barWidth
                 Timber.e("xmin $xMin barWidth $barWidth")
-                Timber.e("= ${barWidth * 2 * (count + 1)}")
+                Timber.e("= ${barWidth * 2 * (5 + 1)}")
             }
         }
         (chart as BackBarChart).drawBackground = reportModel.getDesc().isGroupedBarChart
+        chart.apply {
+            xAxis.axisMinimum = data.xMin
+        }
         super.setData(data)
         chart.apply {
             setVisibleXRangeMaximum(WEEK)
-            //getXAxis().setAxisMinimum(data.xMin);
-            //getXAxis().setAxisMaximum(data.xMin + data.dataSetCount * 86400f);
         }
     }
 
