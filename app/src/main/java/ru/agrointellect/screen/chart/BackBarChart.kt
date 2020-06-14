@@ -21,12 +21,10 @@ class BackBarChart @JvmOverloads constructor(
     var drawBackground = false
 
     override fun onDraw(canvas: Canvas) {
-        val count = data?.getDataSetByIndex(0)?.entryCount ?: 0
-        if (drawBackground && count > 0) {
-            val x = mLeftAxisTransformer.getPixelForValues(xChartMin, 0f).x.toFloat()
-            val width = mLeftAxisTransformer.getPixelForValues(xChartMin + xRange / count, 0f)
-                .x.toFloat() - x
-            (0 until ((xChartMax - xChartMin) / GraphFragment.DAY).toInt() + 1).forEach {
+        if (drawBackground) {
+            val x = toPixels(xChartMin)
+            val width = toPixels(xChartMin + GraphFragment.DAY) - x
+            (0 until (xRange / GraphFragment.DAY).toInt() + 1).forEach {
                 if (it % 2 != 0) {
                     canvas.drawRect(
                         x + it * width,
@@ -39,5 +37,9 @@ class BackBarChart @JvmOverloads constructor(
             }
         }
         super.onDraw(canvas)
+    }
+
+    private fun toPixels(x: Float): Float {
+        return mLeftAxisTransformer.getPixelForValues(x, 0f).x.toFloat()
     }
 }
