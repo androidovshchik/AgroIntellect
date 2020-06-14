@@ -29,13 +29,13 @@ class RptsMilkEventsKpi : Table, Graph {
                 Column("Валовой надой", rowsByField("mlkMilkSumYield")),
                 Column(legends[0], rowsByField("mlkMilkPerCow")),
                 Column("Надой 1 д/к", rowsByField("mlkMilkPerLactCow")),
-                Column(legends[2], rowsByField("evtInsemCows")),
-                Column(legends[3], rowsByField("evtPregCheckCows")),
-                Column(legends[4], rowsByField("evtDryCows")),
-                Column(legends[5], rowsByField("evtMoveCows")),
-                Column(legends[6], rowsByField("evtVaccCows")),
-                Column(legends[7], rowsByField("evtFootrimCows")),
-                Column(legends[8], rowsByField("feedKpi"))
+                Column(legends[1], rowsByField("evtInsemCows")),
+                Column(legends[2], rowsByField("evtPregCheckCows")),
+                Column(legends[3], rowsByField("evtDryCows")),
+                Column(legends[4], rowsByField("evtMoveCows")),
+                Column(legends[5], rowsByField("evtVaccCows")),
+                Column(legends[6], rowsByField("evtFootrimCows")),
+                Column(legends[7], rowsByField("feedKpi"))
             )
         }
 

@@ -23,12 +23,10 @@ class LineFragment : GraphFragment() {
     }
 
     override fun setData(data: GraphData) {
-        var maxCount = 0
         val lines = reportModel.getDesc().rightAxisLines
         (data as LineData).apply {
             dataSets.forEachIndexed { i, dataSet ->
                 (dataSet as LineDataSet).apply {
-                    maxCount = max(maxCount, entryCount)
                     mode = reportModel.getDesc().lineMode
                     setDrawCircles(false)
                     lineWidth = 1.5f
@@ -47,12 +45,6 @@ class LineFragment : GraphFragment() {
         }
         chart.apply {
             axisRight.isEnabled = lines.isNotEmpty()
-            if (maxCount > 0) {
-                xAxis.apply {
-                    axisMaximum = data.xMin
-                    axisMaximum = data.xMin + (maxCount - 1) * DAY
-                }
-            }
         }
         super.setData(data)
     }
