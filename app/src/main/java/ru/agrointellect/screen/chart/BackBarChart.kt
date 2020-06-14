@@ -6,6 +6,54 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.BarLineChartBase
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.renderer.XAxisRenderer
+import com.github.mikephil.charting.utils.Transformer
+import com.github.mikephil.charting.utils.ViewPortHandler
+import timber.log.Timber
+
+fun BarLineChartBase<*>.setSpecificLabels(adjustCountToWidth: Boolean) {
+    setXAxisRenderer(
+        SpecificLabelsXAxisRenderer(
+            viewPortHandler,
+            xAxis,
+            getTransformer(axisLeft.axisDependency),
+            adjustCountToWidth
+        )
+    )
+}
+
+private class SpecificLabelsXAxisRenderer(
+    viewPortHandler: ViewPortHandler,
+    xAxis: XAxis,
+    transformer: Transformer,
+    private val adjustCountToWidth: Boolean
+) : XAxisRenderer(viewPortHandler, xAxis, transformer) {
+
+    override fun computeAxisValues(min: Float, max: Float) {
+        Timber.e("min $min max $max")
+        mAxis.apply {
+            mEntries = FloatArray(((max - min) / GraphFragment.DAY).toInt()) {
+                min + it * GraphFragment.DAY
+            }
+            mEntryCount = mEntries.size
+            setCenterAxisLabels(false)
+        }
+
+        computeSize()
+
+        /*if (adjustCountToWidth) {
+            val width = mXAxis.mLabelRotatedWidth
+
+            while (width * mAxis.mEntryCount > mViewPortHandler.chartWidth / 2f) {
+                mAxis.mEntries =
+                    mAxis.mEntries.filterIndexed { index, _ -> index % 2 == 0 }.toFloatArray()
+                mAxis.mEntryCount = mAxis.mEntries.size
+            }
+        }*/
+    }
+}
 
 class BackBarChart @JvmOverloads constructor(
     context: Context,
