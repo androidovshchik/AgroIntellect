@@ -13,7 +13,6 @@ class RptsMilkEventsKpi : Table, Graph {
     override val legends: List<String>
         get() = listOf(
             "Надой 1 ф/к",
-            "Надой 1 д/к",
             "Осеменений коров",
             "Выявлено стельных коров",
             "Запущено коров",
@@ -29,9 +28,9 @@ class RptsMilkEventsKpi : Table, Graph {
             return listOf(
                 Column("Валовой надой", rowsByField("mlkMilkSumYield")),
                 Column(legends[0], rowsByField("mlkMilkPerCow")),
-                Column(legends[1], rowsByField("mlkMilkPerLactCow")),
+                Column("Надой 1 д/к", rowsByField("mlkMilkPerLactCow")),
                 Column(legends[2], rowsByField("evtInsemCows")),
-                Column(legends[3], rowsByField("evtGotPregCows")),
+                Column(legends[3], rowsByField("evtPregCheckCows")),
                 Column(legends[4], rowsByField("evtDryCows")),
                 Column(legends[5], rowsByField("evtMoveCows")),
                 Column(legends[6], rowsByField("evtVaccCows")),
@@ -44,9 +43,8 @@ class RptsMilkEventsKpi : Table, Graph {
         get() = LineData(
             mutableListOf<ILineDataSet>(
                 LineDataSet(entriesByField("mlkMilkPerCow"), null),
-                LineDataSet(entriesByField("mlkMilkPerLactCow"), null),
                 LineDataSet(entriesByField("evtInsemCows"), null),
-                LineDataSet(entriesByField("evtGotPregCows"), null),
+                LineDataSet(entriesByField("evtPregCheckCows"), null),
                 LineDataSet(entriesByField("evtDryCows"), null),
                 LineDataSet(entriesByField("evtMoveCows"), null),
                 LineDataSet(entriesByField("evtVaccCows"), null),

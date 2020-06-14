@@ -33,10 +33,10 @@ class RptMilkEventsKpi {
     @JvmField
     var evtInsemCows: String? = null
 
-    @SerializedName("evt_got_preg_cows")
+    @SerializedName("evt_preg_check_cows")
     @Expose
     @JvmField
-    var evtGotPregCows: String? = null
+    var evtPregCheckCows: String? = null
 
     @SerializedName("evt_dry_cows")
     @Expose
