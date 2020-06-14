@@ -26,8 +26,15 @@ private class SpecificLabelsXAxisRenderer(
 
     override fun computeAxisValues(min: Float, max: Float) {
         with(mAxis) {
-            mEntries = FloatArray((mAxisRange / GraphFragment.DAY).toInt()) {
-                mAxisMinimum + (it + 0.5f) * GraphFragment.DAY
+            val count = (mAxisRange / DAY).toInt()
+            if (mEntries.size != count) {
+                mEntries = FloatArray((mAxisRange / DAY).toInt()) {
+                    mAxisMinimum + (it + 0.5f) * DAY
+                }
+            } else {
+                mEntries.indices.forEach {
+                    mEntries[it] = mAxisMinimum + (it + 0.5f) * DAY
+                }
             }
             mEntryCount = mEntries.size
             computeSize()
@@ -51,8 +58,8 @@ class BackBarChart @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         if (drawBackground) {
             val x = toPixels(xChartMin)
-            val width = toPixels(xChartMin + GraphFragment.DAY) - x
-            (0 until (xRange / GraphFragment.DAY).toInt()).forEach {
+            val width = toPixels(xChartMin + DAY) - x
+            (0 until (xRange / DAY).toInt()).forEach {
                 if (it % 2 != 0) {
                     canvas.drawRect(
                         x + it * width,

@@ -113,11 +113,4 @@ abstract class GraphFragment : BaseFragment() {
     fun clearData() {
         chart.clearValues()
     }
-
-    companion object {
-
-        const val DAY = 86400f
-
-        const val WEEK = 7 * DAY
-    }
 }
