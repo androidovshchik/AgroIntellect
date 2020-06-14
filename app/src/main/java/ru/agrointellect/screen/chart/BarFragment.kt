@@ -18,11 +18,12 @@ class BarFragment : GraphFragment() {
             if (reportModel.getDesc().isStackedBarChart) {
                 setFitBars(true)
                 xAxis.apply {
-                    // 3/4 + 1/8
-                    spaceMin = DAY * 7 / 8
-                    spaceMax = DAY * 7 / 8
+                    spaceMin = STACK_OFFSET
+                    spaceMax = STACK_OFFSET
                 }
             }
+            isScaleXEnabled = false
+            axisLeft.axisMinimum = 0f
         }
         return chart
     }
@@ -33,11 +34,11 @@ class BarFragment : GraphFragment() {
      * 86400 = 2x * (n + 1) => x = 86400 / (n + 1) / 2
      */
     override fun setData(data: GraphData) {
-        var count = 0
+        var maxCount = 0
         (data as BarData).apply {
             dataSets.forEachIndexed { i, dataSet ->
                 (dataSet as BarDataSet).apply {
-                    count = max(count, entryCount)
+                    maxCount = max(maxCount, entryCount)
                     when {
                         reportModel.getDesc().isStackedBarChart -> {
                             barWidth = DAY / 4
@@ -62,18 +63,22 @@ class BarFragment : GraphFragment() {
             if (reportModel.getDesc().isGroupedBarChart) {
                 drawBackground = true
                 xAxis.axisMaximum = data.xMin
-                xAxis.axisMaximum = data.xMin + count * DAY
+                xAxis.axisMaximum = data.xMin + maxCount * DAY
             }
         }
         super.setData(data)
         chart.apply {
-            if (reportModel.getDesc().isGroupedBarChart) {
-                setVisibleXRangeMaximum(WEEK)
+            setVisibleXRangeMaximum(WEEK)
+            if (reportModel.getDesc().isStackedBarChart) {
+                moveViewToX(xChartMin + STACK_OFFSET / 2)
             }
         }
     }
 
     companion object {
+
+        // 3/4 + 1/8
+        private const val STACK_OFFSET = DAY * 7 / 8
 
         fun newInstance(): BarFragment {
             return BarFragment().apply {
