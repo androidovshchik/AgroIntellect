@@ -69,7 +69,7 @@ abstract class GraphFragment : BaseFragment() {
                 labelCount = 7
                 if (reportModel.getDesc().useDateFormatter) {
                     valueFormatter = DateFormatter()
-                    granularity = 86400f
+                    granularity = DAY
                 }
             }
             legend.isEnabled = false
@@ -92,8 +92,10 @@ abstract class GraphFragment : BaseFragment() {
         }
         reportModel.toggleChanged.observe(viewLifecycleOwner, Observer {
             val index = if (abs(it) == Option.MAX_INDEX) 0 else abs(it)
-            chart.data.getDataSetByIndex(index)?.isVisible = it.sign > 0
-            chart.invalidate()
+            chart.apply {
+                data?.getDataSetByIndex(index)?.isVisible = it.sign > 0
+                invalidate()
+            }
         })
     }
 
@@ -110,5 +112,12 @@ abstract class GraphFragment : BaseFragment() {
 
     fun clearData() {
         chart.clearValues()
+    }
+
+    companion object {
+
+        const val DAY = 86400f
+
+        const val WEEK = 7 * DAY
     }
 }
