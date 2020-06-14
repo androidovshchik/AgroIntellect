@@ -15,7 +15,6 @@ class BarFragment : GraphFragment() {
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
         chart = BackBarChart(requireContext()).apply {
             layoutParams = ViewGroup.LayoutParams(matchParent, matchParent)
-            setSpecificLabels()
             when {
                 reportModel.getDesc().isStackedBarChart -> {
                     xAxis.apply {

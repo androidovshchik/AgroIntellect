@@ -12,13 +12,13 @@ import com.github.mikephil.charting.renderer.XAxisRenderer
 import com.github.mikephil.charting.utils.Transformer
 import com.github.mikephil.charting.utils.ViewPortHandler
 
-fun BarLineChartBase<*>.setSpecificLabels() {
+fun BarLineChartBase<*>.setDateLabels() {
     setXAxisRenderer(
-        SpecificLabelsXAxisRenderer(viewPortHandler, xAxis, getTransformer(axisLeft.axisDependency))
+        DateLabelsXAxisRenderer(viewPortHandler, xAxis, getTransformer(axisLeft.axisDependency))
     )
 }
 
-private class SpecificLabelsXAxisRenderer(
+private class DateLabelsXAxisRenderer(
     viewPortHandler: ViewPortHandler,
     xAxis: XAxis,
     transformer: Transformer
@@ -57,14 +57,14 @@ class BackBarChart @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         if (drawBackground) {
-            val x = toPixels(xChartMin)
-            val width = toPixels(xChartMin + DAY) - x
+            val xPx = xAxisToPixels(xChartMin)
+            val width = xAxisToPixels(xChartMin + DAY) - xPx
             (0 until (xRange / DAY).toInt()).forEach {
                 if (it % 2 != 0) {
                     canvas.drawRect(
-                        x + it * width,
+                        xPx + it * width,
                         contentRect.top,
-                        x + (it + 1) * width,
+                        xPx + (it + 1) * width,
                         contentRect.bottom,
                         backgroundPaint
                     )
@@ -74,7 +74,7 @@ class BackBarChart @JvmOverloads constructor(
         super.onDraw(canvas)
     }
 
-    private fun toPixels(x: Float): Float {
+    private fun xAxisToPixels(x: Float): Float {
         return mLeftAxisTransformer.getPixelForValues(x, 0f).x.toFloat()
     }
 }

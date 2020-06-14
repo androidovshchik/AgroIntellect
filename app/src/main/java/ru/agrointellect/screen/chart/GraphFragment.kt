@@ -66,10 +66,9 @@ abstract class GraphFragment : BaseFragment() {
                 textSize = 10f
                 textColor = colorText
                 typeface = font
-                labelCount = 7
                 if (reportModel.getDesc().useDateFormatter) {
+                    setDateLabels()
                     valueFormatter = DateFormatter()
-                    granularity = DAY
                 }
             }
             legend.isEnabled = false
