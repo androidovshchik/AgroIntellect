@@ -12,6 +12,10 @@ import com.github.mikephil.charting.renderer.XAxisRenderer
 import com.github.mikephil.charting.utils.Transformer
 import com.github.mikephil.charting.utils.ViewPortHandler
 
+const val DAY = 86400f
+
+const val WEEK = 7 * DAY
+
 fun BarLineChartBase<*>.setDateLabels(centerLabels: Boolean) {
     setXAxisRenderer(
         DateLabelsXAxisRenderer(

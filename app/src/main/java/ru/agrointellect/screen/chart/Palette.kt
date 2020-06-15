@@ -2,10 +2,6 @@ package ru.agrointellect.screen.chart
 
 import android.graphics.Color
 
-const val DAY = 86400f
-
-const val WEEK = 7 * DAY
-
 private val palette = listOf(
     Color.parseColor("#5899da"),
     Color.parseColor("#e8743b"),

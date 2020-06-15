@@ -19,10 +19,7 @@ class BarFragment : GraphFragment() {
             setDateLabels(true)
             when {
                 reportModel.getDesc().isStackedBarChart -> {
-                    xAxis.apply {
-                        spaceMin = STACK_OFFSET
-                        spaceMax = STACK_OFFSET
-                    }
+                    xAxis.spaceMin = STACK_OFFSET
                 }
                 reportModel.getDesc().isGroupedBarChart -> {
                 }
@@ -70,7 +67,8 @@ class BarFragment : GraphFragment() {
             xAxis.axisMaximum = data.xMin
             when {
                 reportModel.getDesc().isStackedBarChart -> {
-                    xAxis.axisMaximum = data.xMin + maxCount * DAY - STACK_OFFSET
+                    xAxis.axisMaximum =
+                        data.xMin + maxCount * DAY - STACK_OFFSET * 0.99f /* small fix */
                 }
                 reportModel.getDesc().isGroupedBarChart -> {
                     drawBackground = true
