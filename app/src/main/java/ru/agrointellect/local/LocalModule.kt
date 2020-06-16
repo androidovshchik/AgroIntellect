@@ -10,4 +10,8 @@ val localModule = Kodein.Module("local") {
     bind<Preferences>() with provider {
         Preferences(instance())
     }
+
+    bind<FileManager>() with provider {
+        FileManager(instance())
+    }
 }
