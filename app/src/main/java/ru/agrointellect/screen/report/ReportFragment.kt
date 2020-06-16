@@ -76,12 +76,14 @@ class ReportFragment : DataFragment() {
             it.adapter = adapter
         }
         mb_export.setOnClickListener {
+            val farmId = reportModel.farm.id
+            val reportId = reportModel.getDesc().id
             waitDialog.show()
             launch {
                 val columns = adapter.groups as MutableList<Column>
                 val isExported = withContext(Dispatchers.IO) {
                     val workbook = XSSFWorkbook()
-                    with(workbook.createSheet(reportModel.getDesc().id)) {
+                    with(workbook.createSheet(reportId)) {
                         setCellValue(0, 0, "Название строки отчета")
                         columns.forEachIndexed { i, column ->
                             setCellValue(i + 1, 0, column.title)
@@ -90,18 +92,20 @@ class ReportFragment : DataFragment() {
                             }
                         }
                     }
-                    writeFile(fileManager.excelFile) {
+                    writeFile(fileManager.getExcelFile("$farmId-$reportId")) {
                         workbook.write(it)
                     }
                 }
                 waitDialog.dismiss()
                 if (isExported) {
-                    getView()?.longSnackbar("Экспортировано")
+                    getView()?.longSnackbar("Экспортировано в excel")
                 }
             }
         }
         mb_send.setOnClickListener {
-            shareFile(fileManager.excelFile)
+            val farmId = reportModel.farm.id
+            val reportId = reportModel.getDesc().id
+            shareFile(fileManager.getExcelFile("$farmId-$reportId"))
         }
         reportModel.datesChanged.observe(viewLifecycleOwner, Observer {
             loadReport()
