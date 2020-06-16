@@ -152,14 +152,14 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/mb_export"
+        android:id="@+id/mb_save"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         fontPath="font/Ubuntu-Medium.ttf"
         android:layout_width="wrap_content"
         android:layout_height="58dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:text="Экспорт Excel"
+        android:text="Сохранить"
         android:textAllCaps="false"
         android:textColor="#1CB3C4"
         android:textSize="15sp"
@@ -190,6 +190,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/mb_export" />
+        app:layout_constraintStart_toEndOf="@+id/mb_save" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

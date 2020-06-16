@@ -69,10 +69,14 @@ class RptsHerdLactationGraph : Table, Graph {
             val reader = CsvReader()
             val csv = reader.read(StringReader(text.toString()))
             val days = csv.getRow(0)
-            return LineData((0 until map.size).map {
-                LineDataSet(csv.getRow(it + 1).fields.mapIndexed { j, value ->
-                    Entry(days.getField(j).asFloat, value.asFloat)
-                }, null)
+            return LineData((0 until map.size).mapNotNull {
+                try {
+                    LineDataSet(csv.getRow(it + 1).fields.mapIndexed { j, value ->
+                        Entry(days.getField(j).asFloat, value.asFloat)
+                    }, null)
+                } catch (ignored: Throwable) {
+                    null
+                }
             })
         }
 

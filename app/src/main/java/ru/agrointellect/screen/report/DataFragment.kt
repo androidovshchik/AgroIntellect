@@ -1,12 +1,17 @@
 package ru.agrointellect.screen.report
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
+import androidx.core.app.ShareCompat
+import androidx.core.content.FileProvider
 import com.google.gson.Gson
 import io.ktor.client.HttpClient
 import org.kodein.di.generic.instance
+import ru.agrointellect.local.FileManager
 import ru.agrointellect.local.Preferences
 import ru.agrointellect.screen.base.BaseFragment
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -18,6 +23,8 @@ abstract class DataFragment : BaseFragment() {
 
     protected val gson by instance<Gson>()
 
+    protected val fileManager by instance<FileManager>()
+
     protected abstract val reportModel: ReportModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +34,24 @@ abstract class DataFragment : BaseFragment() {
                 add(Calendar.DAY_OF_MONTH, -1)
             }.time
         }
+    }
+
+    protected fun shareFile(file: File) = activity?.run {
+        ShareCompat.IntentBuilder
+            .from(this)
+            .setType("image/*")
+            .addStream(
+                FileProvider.getUriForFile(
+                    applicationContext,
+                    "$packageName.file_provider",
+                    file
+                )
+            )
+            .apply {
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+            .setChooserTitle("Поделиться файлом")
+            .startChooser()
     }
 
     protected fun TextView.updateDates() {

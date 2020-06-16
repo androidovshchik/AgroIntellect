@@ -3,7 +3,6 @@
 package ru.agrointellect.extension
 
 import android.graphics.Bitmap
-import timber.log.Timber
 
 inline fun <T> Bitmap.use(block: Bitmap.() -> T): T {
     try {
@@ -11,8 +10,7 @@ inline fun <T> Bitmap.use(block: Bitmap.() -> T): T {
     } finally {
         try {
             recycle()
-        } catch (e: Throwable) {
-            Timber.e(e)
+        } catch (ignored: Throwable) {
         }
     }
 }
