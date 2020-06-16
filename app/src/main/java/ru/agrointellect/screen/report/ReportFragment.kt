@@ -19,11 +19,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import org.jetbrains.anko.design.longSnackbar
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.exception.NoDataException
 import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.extension.readObject
+import ru.agrointellect.extension.setCellValue
+import ru.agrointellect.local.writeFile
+import ru.agrointellect.remote.dto.Column
 import ru.agrointellect.remote.dto.Table
 
 class ReportFragment : DataFragment() {
@@ -53,6 +58,7 @@ class ReportFragment : DataFragment() {
         return inflater.inflate(R.layout.fragment_report, root, false)
     }
 
+    @Suppress("UNCHECKED_CAST")
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         tv_report.text = reportModel.getDesc().name
@@ -68,6 +74,34 @@ class ReportFragment : DataFragment() {
         }
         rv_data.also {
             it.adapter = adapter
+        }
+        mb_export.setOnClickListener {
+            waitDialog.show()
+            launch {
+                val columns = adapter.groups as MutableList<Column>
+                val isExported = withContext(Dispatchers.IO) {
+                    val workbook = XSSFWorkbook()
+                    with(workbook.createSheet(reportModel.getDesc().id)) {
+                        setCellValue(0, 0, "Название строки отчета")
+                        columns.forEachIndexed { i, column ->
+                            setCellValue(i + 1, 0, column.title)
+                            column.items.forEachIndexed { j, row ->
+                                setCellValue(i, j + 1, if (j == 0) row.key else row.value)
+                            }
+                        }
+                    }
+                    writeFile(fileManager.excelFile) {
+                        workbook.write(it)
+                    }
+                }
+                waitDialog.dismiss()
+                if (isExported) {
+                    getView()?.longSnackbar("Экспортировано")
+                }
+            }
+        }
+        mb_send.setOnClickListener {
+            shareFile(fileManager.excelFile)
         }
         reportModel.datesChanged.observe(viewLifecycleOwner, Observer {
             loadReport()
