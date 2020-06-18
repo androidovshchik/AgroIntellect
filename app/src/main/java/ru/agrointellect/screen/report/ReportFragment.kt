@@ -24,7 +24,7 @@ import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.exception.NoDataException
 import ru.agrointellect.extension.activityCallback
-import ru.agrointellect.extension.adjustSizes
+import ru.agrointellect.extension.adjustWidth
 import ru.agrointellect.extension.readObject
 import ru.agrointellect.extension.setCellValue
 import ru.agrointellect.local.writeFile
@@ -82,9 +82,10 @@ class ReportFragment : DataFragment() {
             launch {
                 val columns = adapter.groups as MutableList<Column>
                 val isExported = withContext(Dispatchers.IO) {
-                    var fillVertically = true
                     val workbook = XSSFWorkbook()
                     with(workbook.createSheet(reportId)) {
+                        setCellValue(0, 0, "")
+                        var fillVertically = true
                         columns.forEachIndexed { i, column ->
                             if (i == 0) {
                                 fillVertically = columns.size <= column.items.size
@@ -109,7 +110,7 @@ class ReportFragment : DataFragment() {
                                 }
                             }
                         }
-                        adjustSizes()
+                        adjustWidth()
                     }
                     writeFile(fileManager.getExcelFile("$farmId-$reportId")) {
                         workbook.write(it)

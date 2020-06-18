@@ -11,14 +11,14 @@ fun XSSFSheet.setCellValue(x: Int, y: Int, value: String?) {
     cell.setCellValue(value.orEmpty())
 }
 
-fun XSSFSheet.adjustSizes() {
+fun XSSFSheet.adjustWidth() {
     var x = 0
     while (true) {
         var y = 0
         var row: XSSFRow? = getRow(y) ?: break
         var count = 0
         do {
-            val cell = row!!.getCell(x)
+            val cell = row?.getCell(x)
             if (cell != null) {
                 count = max(count, cell.toString().length)
             } else {
