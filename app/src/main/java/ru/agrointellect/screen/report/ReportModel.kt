@@ -12,6 +12,9 @@ open class ReportModel : ViewModel() {
 
     private var rptDesc: RptDesc? = null
 
+    val farmReportIds: String
+        get() = "${farm.id}-${getDesc().id}"
+
     open fun setDesc(desc: RptDesc) {
         rptDesc = desc
     }

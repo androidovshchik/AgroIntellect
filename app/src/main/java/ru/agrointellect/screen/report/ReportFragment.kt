@@ -77,14 +77,10 @@ class ReportFragment : DataFragment() {
             if (!checkPermissions()) {
                 return@setOnClickListener
             }
-            val farmId = reportModel.farm.id
-            val reportId = reportModel.getDesc().id
-            saveExcel(fileManager.getImageStorageFile("$farmId-$reportId"), false)
+            saveExcel(fileManager.getExcelStorageFile(reportModel.farmReportIds), false)
         }
         mb_send.setOnClickListener {
-            val farmId = reportModel.farm.id
-            val reportId = reportModel.getDesc().id
-            saveExcel(fileManager.getImageExternalFile("$farmId-$reportId"), true)
+            saveExcel(fileManager.getExcelExternalFile(reportModel.farmReportIds), true)
         }
         reportModel.datesChanged.observe(viewLifecycleOwner, Observer {
             loadReport()
@@ -188,6 +184,16 @@ class ReportFragment : DataFragment() {
             }
             waitDialog.dismiss()
             sl_data.isRefreshing = false
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == REQUEST_WRITE) {
+            mb_export?.performClick()
         }
     }
 }

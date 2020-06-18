@@ -148,14 +148,10 @@ class ChartFragment : DataFragment() {
             if (!checkPermissions()) {
                 return@setOnClickListener
             }
-            val farmId = reportModel.farm.id
-            val reportId = reportModel.getDesc().id
-            saveImage(fileManager.getImageStorageFile("$farmId-$reportId"), false)
+            saveImage(fileManager.getImageStorageFile(reportModel.farmReportIds), false)
         }
         mb_send.setOnClickListener {
-            val farmId = reportModel.farm.id
-            val reportId = reportModel.getDesc().id
-            saveImage(fileManager.getImageExternalFile("$farmId-$reportId"), true)
+            saveImage(fileManager.getImageExternalFile(reportModel.farmReportIds), true)
         }
         reportModel.datesChanged.observe(viewLifecycleOwner, Observer {
             loadReport()
