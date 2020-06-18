@@ -3,6 +3,7 @@ package ru.agrointellect.extension
 import org.apache.poi.xssf.usermodel.XSSFRow
 import org.apache.poi.xssf.usermodel.XSSFSheet
 import kotlin.math.max
+import kotlin.math.min
 
 fun XSSFSheet.setCellValue(x: Int, y: Int, value: String?) {
     val row = getRow(y) ?: createRow(y)
@@ -28,7 +29,7 @@ fun XSSFSheet.adjustSizes() {
             row = getRow(y)
         } while (row != null)
         if (count > 0) {
-            setColumnWidth(x, count * 256)
+            setColumnWidth(x, min(255, count) * 256)
         } else if (count < 0) {
             break
         }

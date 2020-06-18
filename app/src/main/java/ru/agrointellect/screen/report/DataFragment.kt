@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.core.app.ShareCompat
 import androidx.core.content.FileProvider
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import io.ktor.client.HttpClient
+import org.jetbrains.anko.dip
 import org.kodein.di.generic.instance
 import ru.agrointellect.local.FileManager
 import ru.agrointellect.local.Preferences
@@ -39,7 +41,12 @@ abstract class DataFragment : BaseFragment() {
     protected fun shareFile(file: File) = activity?.run {
         ShareCompat.IntentBuilder
             .from(this)
-            .setType("image/*")
+            .setType(
+                when (file.extension) {
+                    "png", "jpg" -> "image/*"
+                    else -> "application/vnd.ms-excel"
+                }
+            )
             .addStream(
                 FileProvider.getUriForFile(
                     applicationContext,
@@ -52,6 +59,13 @@ abstract class DataFragment : BaseFragment() {
             }
             .setChooserTitle("Поделиться файлом")
             .startChooser()
+    }
+
+    protected fun showMessage(message: String) {
+        Snackbar.make(view ?: return, message, Snackbar.LENGTH_SHORT).apply {
+            view.translationY = -context.dip(76f).toFloat()
+            show()
+        }
     }
 
     protected fun TextView.updateDates() {
