@@ -3,6 +3,7 @@ package ru.agrointellect.screen.chart
 import android.app.Activity
 import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -161,7 +162,13 @@ class ChartFragment : DataFragment() {
 
     private fun saveImage(file: File, share: Boolean) {
         launch {
-            val bitmap = nsv_graph.getBitmap()
+            val width = nsv_graph.width
+            val height = nsv_graph.getChildAt(0).height
+            val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)
+            with(Canvas(bitmap)) {
+                drawColor(Color.WHITE)
+                nsv_graph.draw(this)
+            }
             val isSaved = withContext(Dispatchers.IO) {
                 bitmap.use {
                     writeFile(file) {
