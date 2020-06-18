@@ -28,6 +28,7 @@ import ru.agrointellect.extension.navigateExclusive
 import ru.agrointellect.extension.setAll
 import ru.agrointellect.local.FileManager
 import ru.agrointellect.local.Preferences
+import ru.agrointellect.local.deleteFile
 import ru.agrointellect.remote.dto.Farm
 import ru.agrointellect.screen.LoginActivity
 import ru.agrointellect.screen.base.BaseActivity
@@ -57,7 +58,7 @@ class MainActivity : BaseActivity() {
         doAsync {
             fileManager.externalDir?.listFiles()?.forEach {
                 if (it.isFile && now > it.lastModified()) {
-                    ru.agrointellect.local.deleteFile(it)
+                    deleteFile(it)
                 }
             }
         }
