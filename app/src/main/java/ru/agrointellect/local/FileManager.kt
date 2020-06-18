@@ -3,20 +3,28 @@
 package ru.agrointellect.local
 
 import android.content.Context
+import android.os.Environment
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 
-@Suppress("MemberVisibilityCanBePrivate")
+@Suppress("MemberVisibilityCanBePrivate", "DEPRECATION")
 class FileManager(context: Context) {
 
     val externalDir: File? = context.getExternalFilesDir(null)?.apply { mkdirs() }
 
     val internalDir: File = context.filesDir
 
-    fun getImageFile(name: String) = File(externalDir, "$name.jpg")
+    val storageDir: File
+        get() = File(Environment.getExternalStorageDirectory(), "Агроинтеллект").apply { mkdirs() }
 
-    fun getExcelFile(name: String) = File(externalDir, "$name.xlsx")
+    fun getImageExternalFile(name: String) = File(externalDir, "$name.jpg")
+
+    fun getImageStorageFile(name: String) = File(storageDir, "$name.jpg")
+
+    fun getExcelExternalFile(name: String) = File(externalDir, "$name.xlsx")
+
+    fun getExcelStorageFile(name: String) = File(storageDir, "$name.xlsx")
 }
 
 fun deleteFile(file: File?) {

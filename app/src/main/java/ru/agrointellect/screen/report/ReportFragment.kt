@@ -1,6 +1,5 @@
 package ru.agrointellect.screen.report
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.res.Configuration
 import android.os.Bundle
@@ -30,6 +29,7 @@ import ru.agrointellect.extension.setCellValue
 import ru.agrointellect.local.writeFile
 import ru.agrointellect.remote.dto.Column
 import ru.agrointellect.remote.dto.Table
+import java.io.File
 
 class ReportFragment : DataFragment() {
 
@@ -58,8 +58,6 @@ class ReportFragment : DataFragment() {
         return inflater.inflate(R.layout.fragment_report, root, false)
     }
 
-    @Suppress("UNCHECKED_CAST")
-    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         tv_report.text = reportModel.getDesc().name
         tv_farm.text = reportModel.farm.name
@@ -76,61 +74,72 @@ class ReportFragment : DataFragment() {
             it.adapter = adapter
         }
         mb_export.setOnClickListener {
+            if (!checkPermissions()) {
+                return@setOnClickListener
+            }
             val farmId = reportModel.farm.id
             val reportId = reportModel.getDesc().id
-            waitDialog.show()
-            launch {
-                val columns = adapter.groups as MutableList<Column>
-                val isExported = withContext(Dispatchers.IO) {
-                    val workbook = XSSFWorkbook()
-                    with(workbook.createSheet(reportId)) {
-                        setCellValue(0, 0, "")
-                        var fillVertically = true
-                        columns.forEachIndexed { i, column ->
-                            if (i == 0) {
-                                fillVertically = columns.size <= column.items.size
-                            }
-                            if (fillVertically) {
-                                setCellValue(i + 1, 0, column.title)
-                            } else {
-                                setCellValue(0, i + 1, column.title)
-                            }
-                            column.items.forEachIndexed { j, row ->
-                                if (i == 0) {
-                                    if (fillVertically) {
-                                        setCellValue(0, j + 1, row.key)
-                                    } else {
-                                        setCellValue(j + 1, 0, row.key)
-                                    }
-                                }
-                                if (fillVertically) {
-                                    setCellValue(i + 1, j + 1, row.value)
-                                } else {
-                                    setCellValue(j + 1, i + 1, row.value)
-                                }
-                            }
-                        }
-                        adjustWidth()
-                    }
-                    writeFile(fileManager.getExcelFile("$farmId-$reportId")) {
-                        workbook.write(it)
-                    }
-                }
-                waitDialog.dismiss()
-                if (isExported) {
-                    showMessage("Экспортировано в Excel")
-                }
-            }
+            saveExcel(fileManager.getImageStorageFile("$farmId-$reportId"), false)
         }
         mb_send.setOnClickListener {
             val farmId = reportModel.farm.id
             val reportId = reportModel.getDesc().id
-            shareFile(fileManager.getExcelFile("$farmId-$reportId"))
+            saveExcel(fileManager.getImageExternalFile("$farmId-$reportId"), true)
         }
         reportModel.datesChanged.observe(viewLifecycleOwner, Observer {
             loadReport()
         })
         loadReport()
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    private fun saveExcel(file: File, share: Boolean) {
+        waitDialog.show()
+        launch {
+            val reportId = reportModel.getDesc().id
+            val columns = adapter.groups as MutableList<Column>
+            val isExported = withContext(Dispatchers.IO) {
+                val workbook = XSSFWorkbook()
+                with(workbook.createSheet(reportId)) {
+                    setCellValue(0, 0, "")
+                    var fillVertically = true
+                    columns.forEachIndexed { i, column ->
+                        if (i == 0) {
+                            fillVertically = columns.size <= column.items.size
+                        }
+                        if (fillVertically) {
+                            setCellValue(i + 1, 0, column.title)
+                        } else {
+                            setCellValue(0, i + 1, column.title)
+                        }
+                        column.items.forEachIndexed { j, row ->
+                            if (i == 0) {
+                                if (fillVertically) {
+                                    setCellValue(0, j + 1, row.key)
+                                } else {
+                                    setCellValue(j + 1, 0, row.key)
+                                }
+                            }
+                            if (fillVertically) {
+                                setCellValue(i + 1, j + 1, row.value)
+                            } else {
+                                setCellValue(j + 1, i + 1, row.value)
+                            }
+                        }
+                    }
+                    adjustWidth()
+                }
+                writeFile(file) {
+                    workbook.write(it)
+                }
+            }
+            waitDialog.dismiss()
+            if (share) {
+                shareFile(file)
+            } else if (isExported) {
+                showMessage("Экспортировано в Excel")
+            }
+        }
     }
 
     override fun showError(e: Throwable) {

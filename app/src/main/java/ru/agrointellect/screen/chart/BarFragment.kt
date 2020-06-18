@@ -14,7 +14,7 @@ import kotlin.math.max
 class BarFragment : GraphFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
-        chart = BackBarChart(requireContext()).apply {
+        chart = BarGraph(requireContext()).apply {
             layoutParams = ViewGroup.LayoutParams(matchParent, matchParent)
             setDateLabels(true)
             when {
@@ -64,7 +64,7 @@ class BarFragment : GraphFragment() {
                 }
             }
         }
-        (chart as BackBarChart).apply {
+        (chart as BarGraph).apply {
             xAxis.axisMaximum = data.xMin
             when {
                 reportModel.getDesc().isStackedBarChart -> {

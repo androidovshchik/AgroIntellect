@@ -1,5 +1,6 @@
 package ru.agrointellect.screen.report
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
@@ -10,6 +11,7 @@ import com.google.gson.Gson
 import io.ktor.client.HttpClient
 import org.jetbrains.anko.dip
 import org.kodein.di.generic.instance
+import ru.agrointellect.extension.areGranted
 import ru.agrointellect.local.FileManager
 import ru.agrointellect.local.Preferences
 import ru.agrointellect.screen.base.BaseFragment
@@ -36,6 +38,16 @@ abstract class DataFragment : BaseFragment() {
                 add(Calendar.DAY_OF_MONTH, -1)
             }.time
         }
+    }
+
+    protected fun checkPermissions(): Boolean {
+        if (context?.areGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE) == false) {
+            requestPermissions(
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_WRITE
+            )
+            return false
+        }
+        return true
     }
 
     protected fun shareFile(file: File) = activity?.run {
@@ -83,6 +95,8 @@ abstract class DataFragment : BaseFragment() {
     }
 
     companion object {
+
+        const val REQUEST_WRITE = 120
 
         val apiFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
 

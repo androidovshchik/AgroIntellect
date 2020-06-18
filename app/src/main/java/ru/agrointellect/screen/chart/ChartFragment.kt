@@ -36,6 +36,7 @@ import ru.agrointellect.local.writeFile
 import ru.agrointellect.remote.dto.Graph
 import ru.agrointellect.screen.report.DataFragment
 import ru.agrointellect.screen.report.DateActivity
+import java.io.File
 
 class Option(val name: String) {
 
@@ -144,31 +145,40 @@ class ChartFragment : DataFragment() {
             }
         }
         mb_save.setOnClickListener {
+            if (!checkPermissions()) {
+                return@setOnClickListener
+            }
             val farmId = reportModel.farm.id
             val reportId = reportModel.getDesc().id
-            launch {
-                val bitmap = nsv_graph.getBitmap()
-                val isSaved = withContext(Dispatchers.IO) {
-                    bitmap.use {
-                        writeFile(fileManager.getImageFile("$farmId-$reportId")) {
-                            compress(Bitmap.CompressFormat.JPEG, 90, it)
-                        }
-                    }
-                }
-                if (isSaved) {
-                    showMessage("Сохранено")
-                }
-            }
+            saveImage(fileManager.getImageStorageFile("$farmId-$reportId"), false)
         }
         mb_send.setOnClickListener {
             val farmId = reportModel.farm.id
             val reportId = reportModel.getDesc().id
-            shareFile(fileManager.getImageFile("$farmId-$reportId"))
+            saveImage(fileManager.getImageExternalFile("$farmId-$reportId"), true)
         }
         reportModel.datesChanged.observe(viewLifecycleOwner, Observer {
             loadReport()
         })
         loadReport()
+    }
+
+    private fun saveImage(file: File, share: Boolean) {
+        launch {
+            val bitmap = nsv_graph.getBitmap()
+            val isSaved = withContext(Dispatchers.IO) {
+                bitmap.use {
+                    writeFile(file) {
+                        compress(Bitmap.CompressFormat.JPEG, 90, it)
+                    }
+                }
+            }
+            if (share) {
+                shareFile(file)
+            } else if (isSaved) {
+                showMessage("Сохранено")
+            }
+        }
     }
 
     fun toggleScroll(disallow: Boolean) {
@@ -231,6 +241,16 @@ class ChartFragment : DataFragment() {
             }
             waitDialog.dismiss()
             sl_info.isRefreshing = false
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == REQUEST_WRITE) {
+            mb_save?.performClick()
         }
     }
 }

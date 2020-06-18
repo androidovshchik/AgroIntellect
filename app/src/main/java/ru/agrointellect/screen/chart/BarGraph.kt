@@ -53,7 +53,7 @@ private class DateLabelsXAxisRenderer(
     }
 }
 
-class BackBarChart @JvmOverloads constructor(
+class BarGraph @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
