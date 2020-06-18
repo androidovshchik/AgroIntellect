@@ -20,11 +20,11 @@ import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import org.jetbrains.anko.design.longSnackbar
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.exception.NoDataException
 import ru.agrointellect.extension.activityCallback
+import ru.agrointellect.extension.adjustSizes
 import ru.agrointellect.extension.readObject
 import ru.agrointellect.extension.setCellValue
 import ru.agrointellect.local.writeFile
@@ -82,15 +82,34 @@ class ReportFragment : DataFragment() {
             launch {
                 val columns = adapter.groups as MutableList<Column>
                 val isExported = withContext(Dispatchers.IO) {
+                    var fillVertically = true
                     val workbook = XSSFWorkbook()
                     with(workbook.createSheet(reportId)) {
-                        setCellValue(0, 0, "Название строки отчета")
                         columns.forEachIndexed { i, column ->
-                            setCellValue(i + 1, 0, column.title)
+                            if (i == 0) {
+                                fillVertically = columns.size <= column.items.size
+                            }
+                            if (fillVertically) {
+                                setCellValue(i + 1, 0, column.title)
+                            } else {
+                                setCellValue(0, i + 1, column.title)
+                            }
                             column.items.forEachIndexed { j, row ->
-                                setCellValue(i, j + 1, if (j == 0) row.key else row.value)
+                                if (i == 0) {
+                                    if (fillVertically) {
+                                        setCellValue(0, j + 1, row.key)
+                                    } else {
+                                        setCellValue(j + 1, 0, row.key)
+                                    }
+                                }
+                                if (fillVertically) {
+                                    setCellValue(i + 1, j + 1, row.value)
+                                } else {
+                                    setCellValue(j + 1, i + 1, row.value)
+                                }
                             }
                         }
+                        adjustSizes()
                     }
                     writeFile(fileManager.getExcelFile("$farmId-$reportId")) {
                         workbook.write(it)
@@ -98,7 +117,7 @@ class ReportFragment : DataFragment() {
                 }
                 waitDialog.dismiss()
                 if (isExported) {
-                    getView()?.longSnackbar("Экспортировано в excel")
+                    showMessage("Экспортировано в excel")
                 }
             }
         }

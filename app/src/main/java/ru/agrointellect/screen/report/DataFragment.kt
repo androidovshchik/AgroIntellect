@@ -39,6 +39,10 @@ abstract class DataFragment : BaseFragment() {
     }
 
     protected fun shareFile(file: File) = activity?.run {
+        if (!file.exists()) {
+            showMessage("Файл не найден")
+            return@run
+        }
         ShareCompat.IntentBuilder
             .from(this)
             .setType(
@@ -62,7 +66,7 @@ abstract class DataFragment : BaseFragment() {
     }
 
     protected fun showMessage(message: String) {
-        Snackbar.make(view ?: return, message, Snackbar.LENGTH_SHORT).apply {
+        Snackbar.make(view ?: return, message, Snackbar.LENGTH_LONG).apply {
             view.translationY = -context.dip(76f).toFloat()
             show()
         }
