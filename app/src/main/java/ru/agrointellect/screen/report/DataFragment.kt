@@ -67,7 +67,7 @@ abstract class DataFragment : BaseFragment() {
 
     protected fun showMessage(message: String) {
         Snackbar.make(view ?: return, message, Snackbar.LENGTH_LONG).apply {
-            view.translationY = -context.dip(76f).toFloat()
+            view.translationY = -context.dip(70f).toFloat()
             show()
         }
     }

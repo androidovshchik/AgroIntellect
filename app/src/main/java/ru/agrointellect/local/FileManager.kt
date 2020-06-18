@@ -3,8 +3,6 @@
 package ru.agrointellect.local
 
 import android.content.Context
-import android.graphics.Bitmap
-import ru.agrointellect.extension.use
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
@@ -19,14 +17,6 @@ class FileManager(context: Context) {
     fun getImageFile(name: String) = File(externalDir, "$name.jpg")
 
     fun getExcelFile(name: String) = File(externalDir, "$name.xlsx")
-
-    fun saveImage(name: String, image: Bitmap): Boolean {
-        return image.use {
-            writeFile(getImageFile(name)) {
-                compress(Bitmap.CompressFormat.JPEG, 90, it)
-            }
-        }
-    }
 }
 
 fun deleteFile(file: File?) {

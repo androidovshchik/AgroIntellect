@@ -2,6 +2,7 @@ package ru.agrointellect.screen.chart
 
 import android.app.Activity
 import android.content.res.Configuration
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -30,10 +31,8 @@ import kotlinx.coroutines.withContext
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.exception.NoDataException
-import ru.agrointellect.extension.activityCallback
-import ru.agrointellect.extension.readObject
-import ru.agrointellect.extension.setAll
-import ru.agrointellect.extension.transact
+import ru.agrointellect.extension.*
+import ru.agrointellect.local.writeFile
 import ru.agrointellect.remote.dto.Graph
 import ru.agrointellect.screen.report.DataFragment
 import ru.agrointellect.screen.report.DateActivity
@@ -143,6 +142,28 @@ class ChartFragment : DataFragment() {
                     }
                 }
             }
+        }
+        mb_save.setOnClickListener {
+            val farmId = reportModel.farm.id
+            val reportId = reportModel.getDesc().id
+            launch {
+                val bitmap = nsv_graph.bitmap
+                val isSaved = withContext(Dispatchers.IO) {
+                    bitmap.use {
+                        writeFile(fileManager.getImageFile("$farmId-$reportId")) {
+                            compress(Bitmap.CompressFormat.JPEG, 90, it)
+                        }
+                    }
+                }
+                if (isSaved) {
+                    showMessage("Сохранено")
+                }
+            }
+        }
+        mb_send.setOnClickListener {
+            val farmId = reportModel.farm.id
+            val reportId = reportModel.getDesc().id
+            shareFile(fileManager.getImageFile("$farmId-$reportId"))
         }
         reportModel.datesChanged.observe(viewLifecycleOwner, Observer {
             loadReport()
