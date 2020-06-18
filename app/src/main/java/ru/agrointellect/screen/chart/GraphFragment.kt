@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.MotionEvent
 import android.view.View
 import androidx.lifecycle.Observer
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.charts.BarLineChartBase
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
@@ -39,7 +41,10 @@ class GraphMarker(context: Context, private val useDate: Boolean) :
     @SuppressLint("SetTextI18n")
     override fun refreshContent(e: Entry, highlight: Highlight?) {
         val x = if (useDate) formatDate(e.x) else e.x.toString()
-        tv_marker.text = "$x: ${e.y}"
+        tv_marker.text = when {
+            e is BarEntry && e.isStacked -> "$x: ${TextUtils.join(",", e.yVals.toList())}"
+            else -> "$x: ${e.y}"
+        }
         super.refreshContent(e, highlight)
     }
 
