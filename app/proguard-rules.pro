@@ -12,7 +12,9 @@
 -keepnames class * extends androidx.fragment.app.Fragment
 
 # https://github.com/centic9/poi-on-android/blob/master/poitest/proguard-rules.pro
--keep class org.apache.** { *; }
+-keep class org.apache.poi.** { *; }
+-keep class org.apache.xmlbeans.** { *; }
+-keep class schemaorg_apache_xmlbeans.system.*.TypeSystemHolder { public final static *** typeSystem; }
 -keep class com.fasterxml.aalto.stax.InputFactoryImpl
 -keep class com.fasterxml.aalto.stax.OutputFactoryImpl
 -keep class com.fasterxml.aalto.stax.EventFactoryImpl
@@ -128,5 +130,15 @@
 -keep class org.openxmlformats.schemas.officeDocument.x2006.extendedProperties.impl.PropertiesDocumentImpl { *; }
 -keep class org.openxmlformats.schemas.drawingml.x2006.spreadsheetDrawing.impl.CTDrawingImpl { *; }
 -keep class org.openxmlformats.schemas.drawingml.x2006.spreadsheetDrawing.impl.CTMarkerImpl { *; }
--keep class schemaorg_apache_xmlbeans.system.*.TypeSystemHolder { public final static *** typeSystem; }
+-keep class com.microsoft.schemas.office.office.impl.CTIdMapImpl { *; }
+-keep class com.microsoft.schemas.office.office.impl.CTShapeLayoutImpl { *; }
+-keep class com.microsoft.schemas.vml.impl.CTShadowImpl { *; }
+-keep class com.microsoft.schemas.vml.impl.CTFillImpl { *; }
+-keep class com.microsoft.schemas.vml.impl.CTPathImpl { *; }
+-keep class com.microsoft.schemas.vml.impl.CTShapeImpl { *; }
+-keep class com.microsoft.schemas.vml.impl.CTShapetypeImpl { *; }
+-keep class com.microsoft.schemas.vml.impl.CTStrokeImpl { *; }
+-keep class com.microsoft.schemas.vml.impl.CTTextboxImpl { *; }
+-keep class com.microsoft.schemas.office.excel.impl.CTClientDataImpl { *; }
+-keep class com.microsoft.schemas.office.excel.impl.STTrueFalseBlankImpl { *; }
 -dontwarn

@@ -147,7 +147,7 @@ class ChartFragment : DataFragment() {
             val farmId = reportModel.farm.id
             val reportId = reportModel.getDesc().id
             launch {
-                val bitmap = nsv_graph.bitmap
+                val bitmap = nsv_graph.getBitmap()
                 val isSaved = withContext(Dispatchers.IO) {
                     bitmap.use {
                         writeFile(fileManager.getImageFile("$farmId-$reportId")) {
