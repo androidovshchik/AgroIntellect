@@ -20,15 +20,13 @@ import io.github.inflationx.calligraphy3.CalligraphyUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_header.view.*
-import org.jetbrains.anko.clearTask
-import org.jetbrains.anko.contentView
+import org.jetbrains.anko.*
 import org.jetbrains.anko.design.longSnackbar
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.newTask
 import org.kodein.di.generic.instance
 import ru.agrointellect.R
 import ru.agrointellect.extension.navigateExclusive
 import ru.agrointellect.extension.setAll
+import ru.agrointellect.local.FileManager
 import ru.agrointellect.local.Preferences
 import ru.agrointellect.remote.dto.Farm
 import ru.agrointellect.screen.LoginActivity
@@ -37,6 +35,8 @@ import ru.agrointellect.screen.base.BaseActivity
 class MainActivity : BaseActivity() {
 
     private val preferences by instance<Preferences>()
+
+    private val fileManager by instance<FileManager>()
 
     private lateinit var mainModel: MainModel
 
@@ -53,6 +53,14 @@ class MainActivity : BaseActivity() {
         navController = findNavController(R.id.f_host)
         setupToolbar()
         setupNavigation()
+        val now = System.currentTimeMillis()
+        doAsync {
+            fileManager.externalDir?.listFiles()?.forEach {
+                if (it.isFile && now > it.lastModified()) {
+                    ru.agrointellect.local.deleteFile(it)
+                }
+            }
+        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
