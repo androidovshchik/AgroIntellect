@@ -8,10 +8,14 @@ import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
 import io.github.inflationx.viewpump.ViewPump
 import okhttp3.OkHttpClient
+import org.jetbrains.anko.doAsync
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.bind
+import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
+import ru.agrointellect.local.FileManager
+import ru.agrointellect.local.deleteFile
 import ru.agrointellect.local.localModule
 import ru.agrointellect.remote.remoteModule
 import timber.log.Timber
@@ -29,6 +33,8 @@ class MainApp : Application(), KodeinAware {
 
         import(remoteModule)
     }
+
+    private val fileManager by instance<FileManager>()
 
     override fun onCreate() {
         super.onCreate()
@@ -70,5 +76,13 @@ class MainApp : Application(), KodeinAware {
                 )
                 .build()
         )
+        val now = System.currentTimeMillis()
+        doAsync {
+            fileManager.externalDir?.listFiles()?.forEach {
+                if (it.isFile && now > it.lastModified()) {
+                    deleteFile(it)
+                }
+            }
+        }
     }
 }

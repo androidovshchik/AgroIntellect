@@ -22,10 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.exception.NoDataException
-import ru.agrointellect.extension.activityCallback
-import ru.agrointellect.extension.adjustWidth
-import ru.agrointellect.extension.readObject
-import ru.agrointellect.extension.setCellValue
+import ru.agrointellect.extension.*
 import ru.agrointellect.local.writeFile
 import ru.agrointellect.remote.dto.Column
 import ru.agrointellect.remote.dto.Table
@@ -133,6 +130,7 @@ class ReportFragment : DataFragment() {
             if (share) {
                 shareFile(file)
             } else if (isExported) {
+                context?.scanFile(file.path)
                 showMessage("Экспортировано в Excel")
             }
         }

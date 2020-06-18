@@ -5,7 +5,10 @@ package ru.agrointellect.extension
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.MediaScannerConnection
+import android.net.Uri
 
 inline fun <reified T> Context.activityCallback(action: T.() -> Unit) {
     activity()?.let {
@@ -27,4 +30,12 @@ fun Context.areGranted(vararg permissions: String): Boolean {
         }
     }
     return true
+}
+
+@Suppress("DEPRECATION")
+fun Context.scanFile(path: String) {
+    sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).apply {
+        data = Uri.parse("file://$path")
+    })
+    MediaScannerConnection.scanFile(applicationContext, arrayOf(path), null, null)
 }

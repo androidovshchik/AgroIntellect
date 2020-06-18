@@ -162,9 +162,8 @@ class ChartFragment : DataFragment() {
 
     private fun saveImage(file: File, share: Boolean) {
         launch {
-            val width = nsv_graph.width
-            val height = nsv_graph.getChildAt(0).height
-            val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)
+            val layout = nsv_graph.getChildAt(0)
+            val bitmap = Bitmap.createBitmap(layout.width, layout.height, Bitmap.Config.RGB_565)
             with(Canvas(bitmap)) {
                 drawColor(Color.WHITE)
                 nsv_graph.draw(this)
@@ -179,6 +178,7 @@ class ChartFragment : DataFragment() {
             if (share) {
                 shareFile(file)
             } else if (isSaved) {
+                context?.scanFile(file.path)
                 showMessage("Сохранено")
             }
         }
