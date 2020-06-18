@@ -16,14 +16,14 @@ class FileManager(context: Context) {
 
     val internalDir: File = context.filesDir
 
-    val imageFile = File(externalDir, "image.png")
+    fun getImageFile(name: String) = File(externalDir, "$name.jpg")
 
     fun getExcelFile(name: String) = File(externalDir, "$name.xlsx")
 
-    fun saveImage(image: Bitmap): Boolean {
+    fun saveImage(name: String, image: Bitmap): Boolean {
         return image.use {
-            writeFile(imageFile) {
-                compress(Bitmap.CompressFormat.JPEG, 80, it)
+            writeFile(getImageFile(name)) {
+                compress(Bitmap.CompressFormat.JPEG, 90, it)
             }
         }
     }
