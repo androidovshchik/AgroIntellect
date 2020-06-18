@@ -40,6 +40,7 @@ class BarFragment : GraphFragment() {
             dataSets.forEachIndexed { i, dataSet ->
                 (dataSet as BarDataSet).apply {
                     maxCount = max(maxCount, entryCount)
+                    highLightColor = highlightColor
                     when {
                         reportModel.getDesc().isStackedBarChart -> {
                             barWidth = DAY / 4

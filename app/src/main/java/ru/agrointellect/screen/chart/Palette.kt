@@ -2,6 +2,8 @@ package ru.agrointellect.screen.chart
 
 import android.graphics.Color
 
+val highlightColor = Color.parseColor("#2EC0D1")
+
 private val palette = listOf(
     Color.parseColor("#5899da"),
     Color.parseColor("#e8743b"),

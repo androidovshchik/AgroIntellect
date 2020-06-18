@@ -1,17 +1,34 @@
 package ru.agrointellect.screen.chart
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.utils.MPPointF
+import kotlinx.android.synthetic.main.item_marker.view.*
 import org.jetbrains.anko.matchParent
+import ru.agrointellect.R
 import ru.agrointellect.remote.dto.GraphData
 import kotlin.math.max
 import kotlin.math.min
+
+class LineValMarker(context: Context) : MarkerView(context, R.layout.item_marker) {
+
+    override fun refreshContent(e: Entry, highlight: Highlight?) {
+        tv_marker.text = e.x.toString()
+        super.refreshContent(e, highlight)
+    }
+
+    override fun getOffset() = MPPointF(-width.toFloat() / 2, -height.toFloat())
+}
 
 class LineFragment : GraphFragment() {
 
@@ -31,6 +48,7 @@ class LineFragment : GraphFragment() {
                     setDrawCircles(false)
                     lineWidth = 1.5f
                     color = pickColor(i)
+                    highLightColor = highlightColor
                     if (i in lines) {
                         axisDependency = YAxis.AxisDependency.RIGHT
                         chart.axisRight.apply {
