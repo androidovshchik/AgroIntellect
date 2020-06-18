@@ -118,7 +118,7 @@ class ReportFragment : DataFragment() {
                 }
                 waitDialog.dismiss()
                 if (isExported) {
-                    showMessage("Экспортировано в excel")
+                    showMessage("Экспортировано в Excel")
                 }
             }
         }

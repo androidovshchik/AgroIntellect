@@ -1,5 +1,7 @@
 package ru.agrointellect.screen.chart
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -8,8 +10,14 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.charts.BarLineChartBase
+import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.utils.MPPointF
+import kotlinx.android.synthetic.main.item_marker.view.*
+import ru.agrointellect.R
 import ru.agrointellect.remote.dto.GraphData
 import ru.agrointellect.screen.base.BaseFragment
 import java.text.SimpleDateFormat
@@ -18,12 +26,30 @@ import kotlin.math.abs
 import kotlin.math.roundToLong
 import kotlin.math.sign
 
+private val formatter = SimpleDateFormat("dd.MM", Locale.ENGLISH)
+
+private fun formatDate(value: Float): String {
+    return formatter.format(value.roundToLong() * 1000)
+}
+
+@SuppressLint("ViewConstructor")
+class GraphMarker(context: Context, private val useDate: Boolean) :
+    MarkerView(context, R.layout.item_marker) {
+
+    @SuppressLint("SetTextI18n")
+    override fun refreshContent(e: Entry, highlight: Highlight?) {
+        val x = if (useDate) formatDate(e.x) else e.x.toString()
+        tv_marker.text = "$x: ${e.y}"
+        super.refreshContent(e, highlight)
+    }
+
+    override fun getOffset() = MPPointF(-width.toFloat() / 2, -height.toFloat())
+}
+
 class DateFormatter : ValueFormatter() {
 
-    private val formatter = SimpleDateFormat("dd.MM", Locale.ENGLISH)
-
     override fun getFormattedValue(value: Float): String {
-        return formatter.format(value.roundToLong() * 1000)
+        return formatDate(value)
     }
 }
 
@@ -72,6 +98,8 @@ abstract class GraphFragment : BaseFragment() {
                     valueFormatter = DateFormatter()
                 }
             }
+            setDrawMarkers(true)
+            marker = GraphMarker(context, reportModel.getDesc().useDateFormatter)
             legend.isEnabled = false
             description.isEnabled = false
             setOnTouchListener { _, event ->
@@ -103,10 +131,9 @@ abstract class GraphFragment : BaseFragment() {
         chart.apply {
             this.data = data.apply {
                 setDrawValues(false)
-                isHighlightEnabled = false
             }
+            highlightValue(null)
             fitScreen()
-            invalidate()
         }
     }
 
