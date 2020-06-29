@@ -14,6 +14,7 @@ import com.afollestad.recyclical.datasource.dataSourceTypedOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.google.gson.Gson
+import com.thekhaeng.recyclerviewmargin.LayoutMarginDecoration
 import io.ktor.client.HttpClient
 import io.ktor.client.request.forms.FormDataContent
 import io.ktor.client.request.post
@@ -25,6 +26,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.jetbrains.anko.dip
 import org.kodein.di.generic.instance
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
@@ -32,7 +34,6 @@ import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.extension.readArray
 import ru.agrointellect.extension.setAll
 import ru.agrointellect.local.Preferences
-import ru.agrointellect.remote.dto.RptDesc
 import ru.agrointellect.remote.dto.RptMonitor
 import ru.agrointellect.screen.base.BaseFragment
 
@@ -54,11 +55,11 @@ class MonitorFragment : BaseFragment() {
 
     private lateinit var mainModel: MainModel
 
+    private val dataSource = dataSourceTypedOf<RptMonitor>()
+
     private val navController by lazy {
         findNavController()
     }
-
-    private val dataSource = dataSourceTypedOf<RptDesc>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,27 +74,29 @@ class MonitorFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val context = requireContext()
+        val space = context.dip(20)
         tv_farm.text = mainModel.farm?.name.toString()
         sl_monitor.setOnRefreshListener {
-            loadReports()
+            loadMonitor()
         }
         rv_monitor.apply {
+            addItemDecoration(LayoutMarginDecoration(space).also {
+                it.setPadding(this, space)
+            })
             setup {
                 withDataSource(dataSource)
-                withItem<RptDesc, ReportHolder>(R.layout.item_monitor) {
-                    onBind(::ReportHolder) { i, item ->
-
+                withItem<RptMonitor, MonitorHolder>(R.layout.item_monitor) {
+                    onBind(::MonitorHolder) { _, item ->
+                        value.text = item.parameterValue
+                        valueUp.text = item.valueUp
+                        valueDown.text = item.valueDown
                     }
                 }
             }
         }
-        if (mainModel.reports.isNotEmpty()) {
-            dataSource.setAll(defaultList.filter { item -> mainModel.reports.any { item.id == it.id } })
-            dataSource.invalidateAll()
-        } else {
-            waitDialog.show()
-            loadReports()
-        }
+        waitDialog.show()
+        loadMonitor()
     }
 
     override fun showError(e: Throwable) {
@@ -101,7 +104,7 @@ class MonitorFragment : BaseFragment() {
         sl_monitor.isRefreshing = false
     }
 
-    private fun loadReports() {
+    private fun loadMonitor() {
         val farmId = mainModel.farm?.id.toString()
         job.cancelChildren()
         launch {
@@ -113,10 +116,9 @@ class MonitorFragment : BaseFragment() {
                         append("report_id", "rpt_monitor")
                     })
                 }
-                response.readArray<RptMonitor>(gson, farmId, "reports")
+                response.readArray<RptMonitor>(gson, farmId, "rpt_monitor")
             }
-            mainModel.reports.setAll(data)
-            dataSource.setAll(defaultList.filter { item -> data.any { item.id == it.id } })
+            dataSource.setAll(data)
             dataSource.invalidateAll()
             waitDialog.dismiss()
             sl_monitor.isRefreshing = false
