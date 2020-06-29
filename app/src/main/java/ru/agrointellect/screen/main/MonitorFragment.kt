@@ -1,14 +1,12 @@
 package ru.agrointellect.screen.main
 
 import android.app.Activity
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -21,7 +19,7 @@ import io.ktor.client.request.forms.FormDataContent
 import io.ktor.client.request.post
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.Parameters
-import kotlinx.android.synthetic.main.fragment_reports.*
+import kotlinx.android.synthetic.main.fragment_monitor.*
 import kotlinx.android.synthetic.main.item_monitor.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancelChildren
@@ -34,8 +32,8 @@ import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.extension.readArray
 import ru.agrointellect.extension.setAll
 import ru.agrointellect.local.Preferences
-import ru.agrointellect.remote.dto.Report
 import ru.agrointellect.remote.dto.RptDesc
+import ru.agrointellect.remote.dto.RptMonitor
 import ru.agrointellect.screen.base.BaseFragment
 
 class MonitorHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -76,22 +74,15 @@ class MonitorFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         tv_farm.text = mainModel.farm?.name.toString()
-        sl_reports.setOnRefreshListener {
+        sl_monitor.setOnRefreshListener {
             loadReports()
         }
-        rv_reports.apply {
+        rv_monitor.apply {
             setup {
                 withDataSource(dataSource)
                 withItem<RptDesc, ReportHolder>(R.layout.item_monitor) {
                     onBind(::ReportHolder) { i, item ->
-                        bindDesc(i, item)
-                    }
-                    onClick { i ->
-                        notifyItemSelected(i)
-                        navController.navigate(
-                            R.id.reportActivity,
-                            bundleOf("farm" to mainModel.farm, "desc" to item)
-                        )
+
                     }
                 }
             }
@@ -105,27 +96,9 @@ class MonitorFragment : BaseFragment() {
         }
     }
 
-    private fun ReportHolder.bindDesc(i: Int, item: RptDesc) {
-        itemView.setBackgroundColor(if (i % 2 != 0) grayColor else Color.TRANSPARENT)
-        button.setCheckedManually(item.isSelected)
-        button.text = item.name
-    }
-
-    private fun notifyItemSelected(i: Int) {
-        dataSource.toList().forEachIndexed { j, report ->
-            if (i == j) {
-                report.isSelected = true
-                dataSource.invalidateAt(i)
-            } else if (report.isSelected) {
-                report.isSelected = false
-                dataSource.invalidateAt(j)
-            }
-        }
-    }
-
     override fun showError(e: Throwable) {
         super.showError(e)
-        sl_reports.isRefreshing = false
+        sl_monitor.isRefreshing = false
     }
 
     private fun loadReports() {
@@ -140,13 +113,13 @@ class MonitorFragment : BaseFragment() {
                         append("report_id", "rpt_monitor")
                     })
                 }
-                response.readArray<Report>(gson, farmId, "reports")
+                response.readArray<RptMonitor>(gson, farmId, "reports")
             }
             mainModel.reports.setAll(data)
             dataSource.setAll(defaultList.filter { item -> data.any { item.id == it.id } })
             dataSource.invalidateAll()
             waitDialog.dismiss()
-            sl_reports.isRefreshing = false
+            sl_monitor.isRefreshing = false
         }
     }
 }
