@@ -9,6 +9,10 @@
         android:name="ru.agrointellect.screen.main.FarmsFragment"
         tools:layout="@layout/fragment_farms" />
     <fragment
+        android:id="@+id/monitorFragment"
+        android:name="ru.agrointellect.screen.main.MonitorFragment"
+        tools:layout="@layout/fragment_monitor" />
+    <fragment
         android:id="@+id/reportsFragment"
         android:name="ru.agrointellect.screen.main.ReportsFragment"
         tools:layout="@layout/fragment_reports" />
