@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     app:cardBackgroundColor="#F7F7F8"
     app:cardCornerRadius="8dp"
-    app:cardElevation="0dp">
+    app:cardElevation="0dp"
+    tools:ignore="MissingPrefix">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,6 +16,7 @@
 
         <TextView
             android:id="@+id/tv_about"
+            fontPath="font/Ubuntu-Regular.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
@@ -28,6 +30,7 @@
 
         <TextView
             android:id="@+id/tv_value"
+            fontPath="font/Ubuntu-Regular.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
@@ -71,6 +74,7 @@
 
         <TextView
             android:id="@+id/tv_value_down"
+            fontPath="font/Ubuntu-Regular.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
