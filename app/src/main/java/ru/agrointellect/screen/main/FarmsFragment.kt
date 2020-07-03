@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceTypedOf
 import com.afollestad.recyclical.setup
@@ -33,6 +34,7 @@ import org.kodein.di.generic.instance
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
+import ru.agrointellect.extension.navigateExclusive
 import ru.agrointellect.extension.readArray
 import ru.agrointellect.extension.setAll
 import ru.agrointellect.local.Preferences
@@ -55,6 +57,10 @@ class FarmsFragment : BaseFragment() {
     private lateinit var mainModel: MainModel
 
     private val dataSource = dataSourceTypedOf<Farm>()
+
+    private val navController by lazy {
+        findNavController()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,6 +118,7 @@ class FarmsFragment : BaseFragment() {
                                 dataSource.invalidateAt(j)
                             }
                         }
+                        navController.navigateExclusive(R.id.monitorFragment)
                     }
                 }
             }
