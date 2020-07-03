@@ -8,14 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceTypedOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
-import com.google.gson.Gson
-import io.ktor.client.HttpClient
 import io.ktor.client.request.forms.FormDataContent
 import io.ktor.client.request.post
 import io.ktor.client.statement.HttpResponse
@@ -26,67 +22,27 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.kodein.di.generic.instance
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.extension.readArray
 import ru.agrointellect.extension.setAll
-import ru.agrointellect.local.Preferences
 import ru.agrointellect.remote.dto.ChtDesc
 import ru.agrointellect.remote.dto.Report
 import ru.agrointellect.remote.dto.RptDesc
-import ru.agrointellect.screen.base.BaseFragment
 
 class ReportHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val button: RadioButton = itemView.rb_report
 }
 
-open class ReportsFragment : BaseFragment() {
-
-    private val client by instance<HttpClient>()
-
-    private val preferences by instance<Preferences>()
-
-    private val gson by instance<Gson>()
-
-    private lateinit var mainModel: MainModel
-
-    private val navController by lazy {
-        findNavController()
-    }
+open class ReportsFragment : MainFragment() {
 
     private val dataSource = dataSourceTypedOf<RptDesc>()
 
     private var grayColor = 0
 
-    @Suppress("SpellCheckingInspection")
-    protected open val defaultList: List<RptDesc>
-        get() = listOf(
-            RptDesc("rpt_herd_distribution", "Поголовье: фуражное, дойное, стельное", 2),
-            RptDesc(
-                "rpt_herd_alignment_now",
-                "Распределение поголовья по группам на текущий момент",
-                0
-            ),
-            RptDesc("rpt_herd_alignment_history", "История распределения поголовья по группам", 1),
-            RptDesc("rpt_herd_lactation_graph", "График лактации поголовья", 0),
-            RptDesc("rpt_milk_events_kpi", "Надой, события, кормление", 2),
-            RptDesc("rpt_breed_effectivity", "Воспроизводство", 2),
-            RptDesc("rpt_fresh_disease", "Послеотельные заболевания", 2),
-            RptDesc("rpt_farm_summary_history", "Сводный отчет", 2),
-            RptDesc("rpt_herd_forecast", "Прогноз", 0),
-            RptDesc("rpt_sold_animals", "Продажа", 2),
-            RptDesc("rpt_died_animals", "Падеж", 2),
-            RptDesc("rpt_last_updates", "Даты актуальности данных", 0)
-        )
-
-    private val thisClass
-        get() = javaClass
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainModel = ViewModelProvider(requireActivity()).get(MainModel::class.java)
         grayColor = ContextCompat.getColor(requireContext(), R.color.colorRowGray)
     }
 
