@@ -5,8 +5,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import io.ktor.client.HttpClient
+import io.ktor.client.request.forms.FormDataContent
+import io.ktor.client.request.post
+import io.ktor.client.statement.HttpResponse
+import io.ktor.http.Parameters
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.kodein.di.generic.instance
+import ru.agrointellect.BuildConfig
+import ru.agrointellect.extension.readArray
 import ru.agrointellect.local.Preferences
+import ru.agrointellect.remote.dto.Report
 import ru.agrointellect.remote.dto.RptDesc
 import ru.agrointellect.screen.base.BaseFragment
 
@@ -45,11 +54,20 @@ abstract class MainFragment : BaseFragment() {
             RptDesc("rpt_last_updates", "Даты актуальности данных", 0)
         )
 
-    protected val thisClass
-        get() = javaClass
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainModel = ViewModelProvider(requireActivity()).get(MainModel::class.java)
+    }
+
+    protected suspend fun loadReports(farmId: String): List<Report> {
+        return withContext(Dispatchers.IO) {
+            val response = client.post<HttpResponse>(BuildConfig.API_URL) {
+                body = FormDataContent(Parameters.build {
+                    append("uid", preferences.getHash().toString())
+                    append("farm_id", farmId)
+                })
+            }
+            response.readArray<Report>(gson, farmId, "reports")
+        }
     }
 }

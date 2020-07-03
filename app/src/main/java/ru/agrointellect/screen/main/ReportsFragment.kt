@@ -12,23 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceTypedOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
-import io.ktor.client.request.forms.FormDataContent
-import io.ktor.client.request.post
-import io.ktor.client.statement.HttpResponse
-import io.ktor.http.Parameters
 import kotlinx.android.synthetic.main.fragment_reports.*
 import kotlinx.android.synthetic.main.item_report.view.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
-import ru.agrointellect.extension.readArray
 import ru.agrointellect.extension.setAll
 import ru.agrointellect.remote.dto.ChtDesc
-import ru.agrointellect.remote.dto.Report
 import ru.agrointellect.remote.dto.RptDesc
 
 class ReportHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -40,6 +31,9 @@ open class ReportsFragment : MainFragment() {
     private val dataSource = dataSourceTypedOf<RptDesc>()
 
     private var grayColor = 0
+
+    private val thisClass
+        get() = javaClass
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,15 +120,7 @@ open class ReportsFragment : MainFragment() {
         val farmId = mainModel.farm?.id.toString()
         job.cancelChildren()
         launch {
-            val data = withContext(Dispatchers.IO) {
-                val response = client.post<HttpResponse>(BuildConfig.API_URL) {
-                    body = FormDataContent(Parameters.build {
-                        append("uid", preferences.getHash().toString())
-                        append("farm_id", farmId)
-                    })
-                }
-                response.readArray<Report>(gson, farmId, "reports")
-            }
+            val data = loadReports(farmId)
             mainModel.reports.setAll(data)
             dataSource.setAll(defaultList.filter { item -> data.any { item.id == it.id } })
             dataSource.invalidateAll()

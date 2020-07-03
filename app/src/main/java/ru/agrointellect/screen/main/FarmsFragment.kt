@@ -9,16 +9,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.updateLayoutParams
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceTypedOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
-import com.google.gson.Gson
 import com.thekhaeng.recyclerviewmargin.LayoutMarginDecoration
 import io.github.inflationx.calligraphy3.CalligraphyUtils
-import io.ktor.client.HttpClient
 import io.ktor.client.request.forms.FormDataContent
 import io.ktor.client.request.post
 import io.ktor.client.statement.HttpResponse
@@ -30,42 +26,22 @@ import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.jetbrains.anko.dip
-import org.kodein.di.generic.instance
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.extension.navigateExclusive
 import ru.agrointellect.extension.readArray
 import ru.agrointellect.extension.setAll
-import ru.agrointellect.local.Preferences
 import ru.agrointellect.remote.dto.Farm
-import ru.agrointellect.screen.base.BaseFragment
 
 class FarmHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val circle: ImageView = itemView.iv_circle
     val name: TextView = itemView.tv_name
 }
 
-class FarmsFragment : BaseFragment() {
-
-    private val client by instance<HttpClient>()
-
-    private val preferences by instance<Preferences>()
-
-    private val gson by instance<Gson>()
-
-    private lateinit var mainModel: MainModel
+class FarmsFragment : MainFragment() {
 
     private val dataSource = dataSourceTypedOf<Farm>()
-
-    private val navController by lazy {
-        findNavController()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mainModel = ViewModelProvider(requireActivity()).get(MainModel::class.java)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
         context?.activityCallback<Activity> {
