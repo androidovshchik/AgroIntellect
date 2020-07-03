@@ -95,6 +95,8 @@ class MonitorFragment : MainFragment() {
         val farmId = mainModel.farm?.id.toString()
         job.cancelChildren()
         launch {
+            val reports = loadReports(farmId)
+            mainModel.reports.setAll(reports)
             val data = withContext(Dispatchers.IO) {
                 val response = client.post<HttpResponse>(BuildConfig.API_URL) {
                     body = FormDataContent(Parameters.build {
@@ -105,7 +107,8 @@ class MonitorFragment : MainFragment() {
                 }
                 response.readArray<RptMonitor>(gson, farmId, "rpt_monitor")
             }
-            dataSource.setAll(data)
+            val list = defaultList.filter { item -> reports.any { it.id == item.id } }
+            dataSource.setAll(data.filter { item -> list.any { it.id == item.parameterReport } })
             dataSource.invalidateAll()
             waitDialog.dismiss()
             sl_monitor.isRefreshing = false

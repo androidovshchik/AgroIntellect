@@ -85,7 +85,7 @@ open class ReportsFragment : MainFragment() {
             }
         }
         if (mainModel.reports.isNotEmpty()) {
-            dataSource.setAll(defaultList.filter { item -> mainModel.reports.any { item.id == it.id } })
+            dataSource.setAll(defaultList.filter { item -> mainModel.reports.any { it.id == item.id } })
             dataSource.invalidateAll()
         } else {
             waitDialog.show()
@@ -122,7 +122,7 @@ open class ReportsFragment : MainFragment() {
         launch {
             val data = loadReports(farmId)
             mainModel.reports.setAll(data)
-            dataSource.setAll(defaultList.filter { item -> data.any { item.id == it.id } })
+            dataSource.setAll(defaultList.filter { item -> data.any { it.id == item.id } })
             dataSource.invalidateAll()
             waitDialog.dismiss()
             sl_reports.isRefreshing = false
