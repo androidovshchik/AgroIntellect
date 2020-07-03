@@ -25,7 +25,9 @@ abstract class BaseFragment : Fragment(), KodeinAware, CoroutineScope {
         get() = arguments ?: Bundle()
 
     protected open fun showError(e: Throwable) {
-        waitDialog.dismiss()
+        if (waitDelegate.isInitialized()) {
+            waitDialog.dismiss()
+        }
         view?.longSnackbar(e.message ?: e.toString())
     }
 

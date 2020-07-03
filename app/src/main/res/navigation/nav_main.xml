@@ -22,8 +22,7 @@
         tools:layout="@layout/fragment_reports" />
     <activity
         android:id="@+id/reportActivity"
-        android:name="ru.agrointellect.screen.report.ReportActivity"
-        android:label="ReportActivity">
+        android:name="ru.agrointellect.screen.report.ReportActivity">
         <argument
             android:name="farm"
             app:argType="ru.agrointellect.remote.dto.Farm" />
@@ -33,8 +32,7 @@
     </activity>
     <activity
         android:id="@+id/chartActivity"
-        android:name="ru.agrointellect.screen.chart.ChartActivity"
-        android:label="ChartActivity">
+        android:name="ru.agrointellect.screen.chart.ChartActivity">
         <argument
             android:name="farm"
             app:argType="ru.agrointellect.remote.dto.Farm" />
