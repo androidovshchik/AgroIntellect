@@ -7,15 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceTypedOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
-import com.google.gson.Gson
 import com.thekhaeng.recyclerviewmargin.LayoutMarginDecoration
-import io.ktor.client.HttpClient
 import io.ktor.client.request.forms.FormDataContent
 import io.ktor.client.request.post
 import io.ktor.client.statement.HttpResponse
@@ -27,15 +24,12 @@ import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.jetbrains.anko.dip
-import org.kodein.di.generic.instance
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.extension.readArray
 import ru.agrointellect.extension.setAll
-import ru.agrointellect.local.Preferences
 import ru.agrointellect.remote.dto.RptMonitor
-import ru.agrointellect.screen.base.BaseFragment
 
 class MonitorHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val about: TextView = itemView.tv_about
@@ -45,26 +39,10 @@ class MonitorHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val valueDown: TextView = itemView.tv_value_down
 }
 
-class MonitorFragment : BaseFragment() {
-
-    private val client by instance<HttpClient>()
-
-    private val preferences by instance<Preferences>()
-
-    private val gson by instance<Gson>()
-
-    private lateinit var mainModel: MainModel
+@Suppress("SpellCheckingInspection")
+class MonitorFragment : MainFragment() {
 
     private val dataSource = dataSourceTypedOf<RptMonitor>()
-
-    private val navController by lazy {
-        findNavController()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mainModel = ViewModelProvider(requireActivity()).get(MainModel::class.java)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, root: ViewGroup?, bundle: Bundle?): View {
         context?.activityCallback<Activity> {
@@ -89,8 +67,17 @@ class MonitorFragment : BaseFragment() {
                 withItem<RptMonitor, MonitorHolder>(R.layout.item_monitor) {
                     onBind(::MonitorHolder) { _, item ->
                         value.text = item.parameterValue
+                        arrow.setImageResource(item.signIcon)
                         valueUp.text = item.valueUp
                         valueDown.text = item.valueDown
+                    }
+                    onClick { _ ->
+                        defaultList.firstOrNull { it.id == item.parameterReport }?.let {
+                            navController.navigate(
+                                R.id.reportActivity,
+                                bundleOf("farm" to mainModel.farm, "desc" to it)
+                            )
+                        }
                     }
                 }
             }
