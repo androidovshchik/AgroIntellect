@@ -106,8 +106,10 @@ class RptMonitor {
         }
 
     val valueUp: String
-        get() = "${formatDate(compare1Interval)}: $compare1Value ($compare1Diff : $compare1DiffPcnt%)"
+        get() = "${formatDateZero(compare1Interval)}: $compare1Value ($compare1Diff : $compare1DiffPcnt%)"
+            .replace("-", "")
 
     val valueDown: String
-        get() = "${formatDate(compare2Interval)}: $compare2Value ($compare2Diff : $compare2DiffPcnt%)"
+        get() = "${formatDateZero(compare2Interval)}: $compare2Value ($compare2Diff : $compare2DiffPcnt%)"
+            .replace("-", "")
 }

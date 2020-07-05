@@ -66,7 +66,9 @@ class MonitorFragment : MainFragment() {
                 withDataSource(dataSource)
                 withItem<RptMonitor, MonitorHolder>(R.layout.item_monitor) {
                     onBind(::MonitorHolder) { _, item ->
+                        about.text = item.title
                         value.text = item.parameterValue
+                        value.setTextColor(item.signColor)
                         arrow.setImageResource(item.signIcon)
                         valueUp.text = item.valueUp
                         valueDown.text = item.valueDown
