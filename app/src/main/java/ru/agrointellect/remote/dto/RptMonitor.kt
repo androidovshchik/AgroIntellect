@@ -1,9 +1,11 @@
 package ru.agrointellect.remote.dto
 
+import android.graphics.Color
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import ru.agrointellect.R
 
+@Suppress("SpellCheckingInspection")
 class RptMonitor {
 
     @SerializedName("parameter_name")
@@ -62,14 +64,45 @@ class RptMonitor {
     @Expose
     lateinit var compare2DiffSign: String
 
-    val signIcon: Int
+    val title: String
         get() {
-            val avgRating = getRating(compare1DiffSign) - 3 + getRating(compare2DiffSign) - 3
-            return when {
-                avgRating > 0 -> R.drawable.ic_arrow_green
-                avgRating < 0 -> R.drawable.ic_arrow_red
-                else -> R.drawable.ic_minus
+            val date = formatDateZero(parameterInterval)
+            return when (parameterName) {
+                "mlk_milk_sum_yield" -> "Валовой надой за $date"
+                "mlk_milk_per_cow" -> "Надой 1 ф/к за $date"
+                "mlk_milk_per_lact_cow" -> "Надой 1 д/к за $date"
+                "hrd_cows_all" -> "Фуражных коров за $date"
+                "hrd_cows_lact_all" -> "Дойных коров всего за $date"
+                "hrd_pheifers_all" -> "Нетелей всего за $date"
+                "avg_days_in_milk" -> "День доения за $date"
+                "avg_open_days" -> "Сервис-период за $date"
+                "hrd_cows_preg_pcnt" -> "% стельных в стаде за $date"
+                "brd_preg_rate_cow" -> "Индекс стельности коров за $date"
+                "brd_preg_rate_heif" -> "Индекс стельности телок за $date"
+                "evt_calv_total" -> "Отелов всего за $date"
+                "evt_calv_alive_heifers_all_pcnt" -> "% рождаемости телок за $date"
+                "evt_calv_dead_all_pcnt" -> "% мертворожденности за $date"
+                "evt_ret_plac_total_pcnt" -> "% задержаний последа за $date"
+                "evt_mast_for_month_cows" -> "Мастит голов за месяц коров за $date"
+                "evt_lame_for_month_cows" -> "Хромота голов за месяц коров за $date"
+                "evt_out_cows_total" -> "Выбытие коров всего за $date"
+                "evt_out_pheifers" -> "Выбытие нетелей за $date"
+                else -> date
             }
+        }
+
+    val signColor: Int
+        get() = when {
+            compare1DiffSign.contains("+") -> Color.parseColor("#2ED1AA")
+            compare1DiffSign.contains("-") -> Color.parseColor("#FD5D5D")
+            else -> Color.parseColor("#506482")
+        }
+
+    val signIcon: Int
+        get() = when {
+            compare1DiffSign.contains("+") -> R.drawable.ic_arrow_green
+            compare1DiffSign.contains("-") -> R.drawable.ic_arrow_red
+            else -> R.drawable.ic_minus
         }
 
     val valueUp: String
@@ -77,17 +110,4 @@ class RptMonitor {
 
     val valueDown: String
         get() = "${formatDate(compare2Interval)}: $compare2Value ($compare2Diff : $compare2DiffPcnt%)"
-
-    companion object {
-
-        fun getRating(symbols: String): Int {
-            return when (symbols) {
-                "--" -> 1
-                "-" -> 2
-                "+" -> 4
-                "++" -> 5
-                else -> 3
-            }
-        }
-    }
 }

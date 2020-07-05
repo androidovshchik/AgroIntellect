@@ -20,6 +20,10 @@ fun formatDate(date: String): String {
     return date
 }
 
+fun formatDateZero(date: String): String {
+    return formatDate(date).substringAfterLast("00.")
+}
+
 interface Table {
 
     val columns: List<Column>
