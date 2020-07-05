@@ -36,6 +36,7 @@ class BarFragment : GraphFragment() {
      */
     override fun setData(data: GraphData) {
         var maxCount = 0
+        var groupOffset = 0f
         (data as BarData).apply {
             dataSets.forEachIndexed { i, dataSet ->
                 (dataSet as BarDataSet).apply {
@@ -59,21 +60,23 @@ class BarFragment : GraphFragment() {
                 }
             }
             if (reportModel.getDesc().isGroupedBarChart) {
-                if (dataSetCount > 1) {
+                if (dataSetCount == 1) {
+                    chart.xAxis.axisMinimum = xMin - barWidth / 2
+                    groupOffset = barWidth / 2
+                } else if (dataSetCount > 1) {
                     groupBars(xMin - barWidth * 3 / 2, barWidth * 2, barWidth)
                 }
             }
         }
         (chart as BarGraph).apply {
-            xAxis.axisMaximum = data.xMin
             when {
                 reportModel.getDesc().isStackedBarChart -> {
                     xAxis.axisMaximum =
-                        data.xMin + maxCount * DAY - STACK_OFFSET * 0.99f /* small fix */
+                        data.xMin + maxCount * DAY - STACK_OFFSET * SMALL_FIX
                 }
                 reportModel.getDesc().isGroupedBarChart -> {
                     drawBackground = true
-                    xAxis.axisMaximum = data.xMin + maxCount * DAY
+                    xAxis.axisMaximum = data.xMin + maxCount * DAY - groupOffset * SMALL_FIX
                 }
             }
         }
@@ -85,7 +88,9 @@ class BarFragment : GraphFragment() {
 
     companion object {
 
-        private const val STACK_OFFSET = DAY * 1 / 2
+        private const val STACK_OFFSET = DAY / 2
+
+        private const val SMALL_FIX = 0.99f
 
         fun newInstance(): BarFragment {
             return BarFragment().apply {
