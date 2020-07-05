@@ -69,6 +69,7 @@ abstract class GraphFragment : BaseFragment() {
         reportModel = ViewModelProvider(requireActivity()).get(ChartModel::class.java)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val colorLine = Color.parseColor("#67C3C6CD")
         val colorText = Color.parseColor("#506482")
