@@ -20,8 +20,14 @@ import io.github.inflationx.calligraphy3.CalligraphyUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import kotlinx.android.synthetic.main.layout_header.view.*
-import org.jetbrains.anko.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.jetbrains.anko.clearTask
+import org.jetbrains.anko.contentView
 import org.jetbrains.anko.design.longSnackbar
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.newTask
 import org.kodein.di.generic.instance
 import ru.agrointellect.R
 import ru.agrointellect.extension.navigateExclusive
@@ -55,7 +61,7 @@ class MainActivity : BaseActivity() {
         setupToolbar()
         setupNavigation()
         val now = System.currentTimeMillis()
-        doAsync {
+        GlobalScope.launch(Dispatchers.IO) {
             fileManager.externalDir?.listFiles()?.forEach {
                 if (it.isFile && now > it.lastModified()) {
                     deleteFile(it)

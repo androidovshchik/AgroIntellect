@@ -97,8 +97,11 @@ class MonitorFragment : MainFragment() {
         val farmId = mainModel.farm?.id.toString()
         job.cancelChildren()
         launch {
-            val reports = loadReports(farmId)
-            mainModel.reports.setAll(reports)
+            val reports = mainModel.reports.ifEmpty {
+                val data = loadReports(farmId)
+                mainModel.reports.setAll(data)
+                data
+            }
             val data = withContext(Dispatchers.IO) {
                 val response = client.post<HttpResponse>(BuildConfig.API_URL) {
                     body = FormDataContent(Parameters.build {
