@@ -95,29 +95,13 @@ class ReportFragment : DataFragment() {
                 val workbook = XSSFWorkbook()
                 with(workbook.createSheet(reportId)) {
                     setCellValue(0, 0, "")
-                    var fillVertically = true
                     columns.forEachIndexed { i, column ->
-                        if (i == 0) {
-                            fillVertically = columns.size <= column.items.size
-                        }
-                        if (fillVertically) {
-                            setCellValue(i + 1, 0, column.title)
-                        } else {
-                            setCellValue(0, i + 1, column.title)
-                        }
+                        setCellValue(0, i + 1, column.title)
                         column.items.forEachIndexed { j, row ->
                             if (i == 0) {
-                                if (fillVertically) {
-                                    setCellValue(0, j + 1, row.key)
-                                } else {
-                                    setCellValue(j + 1, 0, row.key)
-                                }
+                                setCellValue(j + 1, 0, row.key)
                             }
-                            if (fillVertically) {
-                                setCellValue(i + 1, j + 1, row.value)
-                            } else {
-                                setCellValue(j + 1, i + 1, row.value)
-                            }
+                            setCellValue(j + 1, i + 1, row.value)
                         }
                     }
                     adjustWidth()
