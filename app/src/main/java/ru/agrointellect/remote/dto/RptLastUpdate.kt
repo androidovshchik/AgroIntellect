@@ -8,33 +8,41 @@ class RptLastUpdate {
 
     @SerializedName("last_herd_file_date")
     @Expose
-    lateinit var lastHerdFileDate: String
+    var lastHerdFileDate: String? = null
+        get() = formatDate(field)
 
     @SerializedName("last_evts_file_date")
     @Expose
-    lateinit var lastEvtsFileDate: String
+    var lastEvtsFileDate: String? = null
+        get() = formatDate(field)
 
     @SerializedName("last_cows_cr_file_date")
     @Expose
-    lateinit var lastCowsCrFileDate: String
+    var lastCowsCrFileDate: String? = null
+        get() = formatDate(field)
 
     @SerializedName("last_cows_pr_file_date")
     @Expose
-    lateinit var lastCowsPrFileDate: String
+    var lastCowsPrFileDate: String? = null
+        get() = formatDate(field)
 
     @SerializedName("last_heif_cr_file_date")
     @Expose
-    lateinit var lastHeifCrFileDate: String
+    var lastHeifCrFileDate: String? = null
+        get() = formatDate(field)
 
     @SerializedName("last_heif_pr_file_date")
     @Expose
-    lateinit var lastHeifPrFileDate: String
+    var lastHeifPrFileDate: String? = null
+        get() = formatDate(field)
 
     @SerializedName("last_milk_sum_file_date")
     @Expose
-    lateinit var lastMilkSumFileDate: String
+    var lastMilkSumFileDate: String? = null
+        get() = formatDate(field)
 
     @SerializedName("last_feed_kpi_file_date")
     @Expose
     var lastFeedKpiFileDate: String? = null
+        get() = formatDate(field)
 }

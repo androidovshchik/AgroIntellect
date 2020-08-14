@@ -8,8 +8,8 @@ import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
  * From YYYY-MM-DD
  * To DD.MM.YYYY
  */
-fun formatDate(date: String): String {
-    val first = date.indexOf("-")
+fun formatDate(date: String?): String {
+    val first = date?.indexOf("-") ?: return "-"
     val second = date.indexOf("-", first + 1)
     if (first > 0 && second > 0) {
         val dd = date.substring(second + 1)
