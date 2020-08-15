@@ -32,7 +32,7 @@ import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.extension.navigateExclusive
 import ru.agrointellect.extension.readArray
 import ru.agrointellect.extension.setAll
-import ru.agrointellect.remote.dto.Farm
+import ru.agrointellect.remote.api.Farm
 
 class FarmHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val circle: ImageView = itemView.iv_circle

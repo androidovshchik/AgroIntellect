@@ -20,7 +20,7 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.utils.MPPointF
 import kotlinx.android.synthetic.main.item_marker.view.*
 import ru.agrointellect.R
-import ru.agrointellect.remote.dto.GraphData
+import ru.agrointellect.remote.api.GraphData
 import ru.agrointellect.screen.base.BaseFragment
 import java.text.SimpleDateFormat
 import java.util.*

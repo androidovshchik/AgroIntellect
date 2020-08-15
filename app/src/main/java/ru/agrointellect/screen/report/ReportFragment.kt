@@ -24,8 +24,8 @@ import ru.agrointellect.R
 import ru.agrointellect.exception.NoDataException
 import ru.agrointellect.extension.*
 import ru.agrointellect.local.writeFile
-import ru.agrointellect.remote.dto.Column
-import ru.agrointellect.remote.dto.Table
+import ru.agrointellect.remote.api.Column
+import ru.agrointellect.remote.api.Table
 import java.io.File
 
 class ReportFragment : DataFragment() {

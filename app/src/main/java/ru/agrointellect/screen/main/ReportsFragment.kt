@@ -19,8 +19,8 @@ import kotlinx.coroutines.launch
 import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.extension.setAll
-import ru.agrointellect.remote.dto.ChtDesc
-import ru.agrointellect.remote.dto.RptDesc
+import ru.agrointellect.remote.api.ChtDesc
+import ru.agrointellect.remote.api.RptDesc
 
 class ReportHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val button: RadioButton = itemView.rb_report

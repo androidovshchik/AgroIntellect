@@ -29,7 +29,7 @@ import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.extension.readArray
 import ru.agrointellect.extension.setAll
-import ru.agrointellect.remote.dto.RptMonitor
+import ru.agrointellect.remote.api.RptMonitor
 
 class MonitorHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val about: TextView = itemView.tv_about

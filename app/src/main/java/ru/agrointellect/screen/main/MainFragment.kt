@@ -15,8 +15,8 @@ import org.kodein.di.generic.instance
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.extension.readArray
 import ru.agrointellect.local.Preferences
-import ru.agrointellect.remote.dto.Report
-import ru.agrointellect.remote.dto.RptDesc
+import ru.agrointellect.remote.api.Report
+import ru.agrointellect.remote.api.RptDesc
 import ru.agrointellect.screen.base.BaseFragment
 
 abstract class MainFragment : BaseFragment() {

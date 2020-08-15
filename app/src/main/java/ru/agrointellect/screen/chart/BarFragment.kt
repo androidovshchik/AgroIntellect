@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import org.jetbrains.anko.matchParent
-import ru.agrointellect.remote.dto.GraphData
+import ru.agrointellect.remote.api.GraphData
 import kotlin.math.max
 
 class BarFragment : GraphFragment() {

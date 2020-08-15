@@ -34,7 +34,7 @@ import ru.agrointellect.R
 import ru.agrointellect.exception.NoDataException
 import ru.agrointellect.extension.*
 import ru.agrointellect.local.writeFile
-import ru.agrointellect.remote.dto.Graph
+import ru.agrointellect.remote.api.Graph
 import ru.agrointellect.screen.report.DataFragment
 import ru.agrointellect.screen.report.DateActivity
 import java.io.File

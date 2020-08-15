@@ -22,7 +22,7 @@ import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.extension.readArray
 import ru.agrointellect.local.Preferences
-import ru.agrointellect.remote.dto.Farm
+import ru.agrointellect.remote.api.Farm
 import ru.agrointellect.screen.base.BaseActivity
 import ru.agrointellect.screen.main.MainActivity
 

@@ -1,4 +1,4 @@
-package ru.agrointellect.remote.dto
+package ru.agrointellect.remote.api
 
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData

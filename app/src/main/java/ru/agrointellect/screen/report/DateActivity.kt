@@ -10,8 +10,8 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import kotlinx.android.synthetic.main.include_toolbar.*
 import ru.agrointellect.extension.getDate
 import ru.agrointellect.extension.transact
-import ru.agrointellect.remote.dto.Farm
-import ru.agrointellect.remote.dto.RptDesc
+import ru.agrointellect.remote.api.Farm
+import ru.agrointellect.remote.api.RptDesc
 import ru.agrointellect.screen.base.BaseActivity
 import ru.agrointellect.screen.base.BaseDialog
 import java.util.*

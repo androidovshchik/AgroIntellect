@@ -35,7 +35,7 @@ import ru.agrointellect.extension.setAll
 import ru.agrointellect.local.FileManager
 import ru.agrointellect.local.Preferences
 import ru.agrointellect.local.deleteFile
-import ru.agrointellect.remote.dto.Farm
+import ru.agrointellect.remote.api.Farm
 import ru.agrointellect.screen.LoginActivity
 import ru.agrointellect.screen.base.BaseActivity
 

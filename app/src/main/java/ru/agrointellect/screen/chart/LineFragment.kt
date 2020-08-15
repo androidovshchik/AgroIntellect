@@ -9,7 +9,7 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import org.jetbrains.anko.matchParent
-import ru.agrointellect.remote.dto.GraphData
+import ru.agrointellect.remote.api.GraphData
 import kotlin.math.max
 import kotlin.math.min
 

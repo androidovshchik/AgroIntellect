@@ -20,8 +20,8 @@ import kotlinx.android.synthetic.main.item_row.view.*
 import org.jetbrains.anko.layoutInflater
 import ru.agrointellect.R
 import ru.agrointellect.extension.setAll
-import ru.agrointellect.remote.dto.Column
-import ru.agrointellect.remote.dto.Row
+import ru.agrointellect.remote.api.Column
+import ru.agrointellect.remote.api.Row
 
 class ColumnHolder(itemView: View) : GroupViewHolder(itemView) {
 

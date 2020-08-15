@@ -1,8 +1,8 @@
 package ru.agrointellect.screen.chart
 
 import androidx.lifecycle.MutableLiveData
-import ru.agrointellect.remote.dto.ChtDesc
-import ru.agrointellect.remote.dto.RptDesc
+import ru.agrointellect.remote.api.ChtDesc
+import ru.agrointellect.remote.api.RptDesc
 import ru.agrointellect.screen.report.ReportModel
 
 class ChartModel : ReportModel() {

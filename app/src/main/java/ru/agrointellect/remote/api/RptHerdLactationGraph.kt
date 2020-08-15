@@ -1,4 +1,4 @@
-package ru.agrointellect.remote.dto
+package ru.agrointellect.remote.api
 
 import androidx.collection.ArrayMap
 

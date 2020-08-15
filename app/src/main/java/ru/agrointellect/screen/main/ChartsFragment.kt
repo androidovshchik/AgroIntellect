@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
-import ru.agrointellect.remote.dto.ChtDesc
+import ru.agrointellect.remote.api.ChtDesc
 
 @Suppress("SpellCheckingInspection")
 class ChartsFragment : ReportsFragment() {

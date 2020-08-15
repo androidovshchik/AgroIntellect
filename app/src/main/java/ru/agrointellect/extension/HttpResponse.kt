@@ -8,7 +8,7 @@ import org.json.JSONObject
 import ru.agrointellect.exception.NoDataException
 import ru.agrointellect.exception.UnknownException
 import ru.agrointellect.exception.WrongUidException
-import ru.agrointellect.remote.dto.*
+import ru.agrointellect.remote.api.*
 
 @Suppress("SpellCheckingInspection")
 suspend inline fun <reified T> HttpResponse.readObject(

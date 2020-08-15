@@ -1,6 +1,6 @@
 @file:Suppress("SpellCheckingInspection")
 
-package ru.agrointellect.remote.dto
+package ru.agrointellect.remote.api
 
 import androidx.annotation.Keep
 import com.github.mikephil.charting.data.LineDataSet

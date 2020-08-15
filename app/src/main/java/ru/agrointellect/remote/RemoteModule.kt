@@ -12,7 +12,7 @@ import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.extension.asNullableString
-import ru.agrointellect.remote.dto.RptHerdLactationGraph
+import ru.agrointellect.remote.api.RptHerdLactationGraph
 import timber.log.Timber
 import java.lang.reflect.Type
 
