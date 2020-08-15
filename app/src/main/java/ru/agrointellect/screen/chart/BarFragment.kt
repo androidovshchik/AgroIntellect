@@ -45,7 +45,7 @@ class BarFragment : GraphFragment() {
                         reportModel.getDesc().isStackedBarChart -> {
                             barWidth = DAY / 4
                             if (entryCount > 0) {
-                                colors = pickColors(getEntryForIndex(0).yVals.size)
+                                colors = pickColors(getEntryForIndex(0).yVals.size).asReversed()
                             }
                         }
                         reportModel.getDesc().isGroupedBarChart -> {

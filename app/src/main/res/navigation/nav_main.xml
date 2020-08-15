@@ -25,19 +25,19 @@
         android:name="ru.agrointellect.screen.report.ReportActivity">
         <argument
             android:name="farm"
-            app:argType="ru.agrointellect.remote.dto.Farm" />
+            app:argType="ru.agrointellect.remote.api.Farm" />
         <argument
             android:name="desc"
-            app:argType="ru.agrointellect.remote.dto.RptDesc" />
+            app:argType="ru.agrointellect.remote.api.RptDesc" />
     </activity>
     <activity
         android:id="@+id/chartActivity"
         android:name="ru.agrointellect.screen.chart.ChartActivity">
         <argument
             android:name="farm"
-            app:argType="ru.agrointellect.remote.dto.Farm" />
+            app:argType="ru.agrointellect.remote.api.Farm" />
         <argument
             android:name="desc"
-            app:argType="ru.agrointellect.remote.dto.ChtDesc" />
+            app:argType="ru.agrointellect.remote.api.ChtDesc" />
     </activity>
 </navigation>
