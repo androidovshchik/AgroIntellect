@@ -129,7 +129,7 @@ class ChartFragment : DataFragment() {
                 if (reportModel.getDesc().isStackedBarChart) {
                     withItem<String, LegendHolder>(R.layout.item_legend) {
                         onBind(::LegendHolder) { i, item ->
-                            circle.color = if (i == 1) Color.parseColor("#DCE0E6") else pickColor(i)
+                            circle.color = pickColor(i)
                             legend.text = item
                         }
                     }

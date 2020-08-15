@@ -5,17 +5,14 @@ import android.graphics.Color
 val highlightColor = Color.parseColor("#2EC0D1")
 
 private val palette = listOf(
-    Color.parseColor("#5899da"),
-    Color.parseColor("#e8743b"),
-    Color.parseColor("#19a979"),
-    Color.parseColor("#ed4a7b"),
-    Color.parseColor("#945ecf"),
-    Color.parseColor("#13a4b4"),
-    Color.parseColor("#525df4"),
-    Color.parseColor("#bf399e"),
-    Color.parseColor("#6c8893"),
-    Color.parseColor("#ee6868"),
-    Color.parseColor("#2f6497")
+    Color.rgb(46, 192, 209),
+    Color.rgb(255, 47, 84),
+    Color.rgb(220, 224, 230),
+    Color.rgb(65, 162, 252),
+    Color.rgb(153, 223, 64),
+    Color.rgb(255, 123, 1),
+    Color.rgb(249, 57, 161),
+    Color.rgb(188, 170, 164)
 )
 
 fun pickColor(index: Int): Int {
