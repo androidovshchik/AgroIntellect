@@ -42,7 +42,22 @@ class GraphMarker(context: Context, private val useDate: Boolean) :
     override fun refreshContent(e: Entry, highlight: Highlight?) {
         val x = if (useDate) formatDate(e.x) else e.x.toString()
         tv_marker.text = when {
-            e is BarEntry && e.isStacked -> "$x: ${TextUtils.join(",", e.yVals.toList())}"
+            e is BarEntry && e.isStacked -> {
+                val list = e.yVals.mapIndexed { i, _ ->
+                    var sum = 0f
+                    var minus = 0f
+                    for (j in 0..(e.yVals.lastIndex - i)) {
+                        if (e.yVals[j] > 0) {
+                            sum += e.yVals[j] + minus
+                        } else {
+                            sum -= e.yVals[j]
+                            minus += e.yVals[j]
+                        }
+                    }
+                    sum
+                }
+                "$x: ${TextUtils.join(",", list)}"
+            }
             else -> "$x: ${e.y}"
         }
         super.refreshContent(e, highlight)
