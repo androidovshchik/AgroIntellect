@@ -2,8 +2,272 @@
 
 package ru.agrointellect.remote.api
 
+import android.annotation.SuppressLint
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlin.reflect.KProperty0
+
+class RptPeriodicalFarmSummaryHistory : Table {
+
+    override val columns: List<Column>
+        get() = listOf(
+            Column("№ лактации стада", rowsByProperty(data::avgLactNum)),
+            Column("День доения", rowsByProperty(data::avgDaysInMilk)),
+            Column("День доения 1 лактации", rowsByProperty(data::avgDaysInMilk1Lact)),
+            Column("День доения 2 лактации", rowsByProperty(data::avgDaysInMilk2Lact)),
+            Column("День доения лактации > 2", rowsByProperty(data::avgDaysInMilkOver2Lact)),
+            Column("Сервис-период", rowsByProperty(data::avgOpenDays)),
+            Column("Сервис-период 1 лактации", rowsByProperty(data::avgOpenDays1Lact)),
+            Column("Сервис-период 2 лактации", rowsByProperty(data::avgOpenDays2Lact)),
+            Column("Сервис-период лактации > 2", rowsByProperty(data::avgOpenDaysOver2Lact)),
+            Column("Кол-во дней в сухостое", rowsByProperty(data::avgDryDays)),
+            Column("День стельности коров", rowsByProperty(data::avgPregnantDaysCows)),
+            Column("День стельности нетелей", rowsByProperty(data::avgPregnantDaysHeifers)),
+            Column("Межотельный интервал", rowsByProperty(data::avgCalvIntDays)),
+            Column("Интервал между осеменениями коров", rowsByProperty(data::avgInsemIntDaysCows)),
+            Column(
+                "Интервал между осеменениями телок",
+                rowsByProperty(data::avgInsemIntDaysHeifers)
+            ),
+            Column("День доения 1-го осеменения коров", rowsByProperty(data::avgFirstInsemDimCows)),
+            Column("Возраст 1-го осеменения телок", rowsByProperty(data::avgFirstInsemAgeHeifers)),
+            Column("Возраст 1-го отела", rowsByProperty(data::avgFirstCalvAge1Lact)),
+            Column("День доения при пике", rowsByProperty(data::avgMilkPeakDays)),
+            Column("День доения при пике 1 лактации", rowsByProperty(data::avgMilkPeakDays1Lact)),
+            Column("День доения при пике 2 лактации", rowsByProperty(data::avgMilkPeakDays2Lact)),
+            Column(
+                "День доения при пике лактации > 2",
+                rowsByProperty(data::avgMilkPeakDaysOver2Lact)
+            ),
+            Column("Фуражных коров", rowsByProperty(data::hrdCowsAll)),
+            Column("Дойных коров всего", rowsByProperty(data::hrdCowsLactAll)),
+            Column("% дойных в стаде", rowsByProperty(data::hrdCowsLactAllPcnt)),
+            Column("Дойных коров 1 лактации", rowsByProperty(data::hrdCowsLact1All)),
+            Column("% 1 лактации в дойных", rowsByProperty(data::hrdCowsLact1Pcnt)),
+            Column("Дойных коров 1 лактации 0-30 ДД", rowsByProperty(data::hrdCowsLact1030)),
+            Column("Дойных коров 1 лактации 31-60 ДД", rowsByProperty(data::hrdCowsLact13160)),
+            Column("Дойных коров 1 лактации 61-120 ДД", rowsByProperty(data::hrdCowsLact161120)),
+            Column("Дойных коров 1 лактации > 120 ДД", rowsByProperty(data::hrdCowsLact1O120)),
+            Column("Дойных коров 2 лактации", rowsByProperty(data::hrdCowsLact2All)),
+            Column("% 2 лактации в дойных", rowsByProperty(data::hrdCowsLact2Pcnt)),
+            Column("Дойных коров 2 лактации 0-30 ДД", rowsByProperty(data::hrdCowsLact2030)),
+            Column("Дойных коров 2 лактации 31-60 ДД", rowsByProperty(data::hrdCowsLact23160)),
+            Column("Дойных коров 2 лактации 61-120 ДД", rowsByProperty(data::hrdCowsLact261120)),
+            Column("Дойных коров 2 лактации > 120 ДД", rowsByProperty(data::hrdCowsLact2O120)),
+            Column("Дойных коров лактации > 2", rowsByProperty(data::hrdCowsLactO2All)),
+            Column("% лактации > 2 в дойных", rowsByProperty(data::hrdCowsLactO2Pcnt)),
+            Column("Дойных коров лактации > 2 0-30 ДД", rowsByProperty(data::hrdCowsLactO2030)),
+            Column("Дойных коров лактации > 2 31-60 ДД", rowsByProperty(data::hrdCowsLactO23160)),
+            Column("Дойных коров лактации > 2 61-120 ДД", rowsByProperty(data::hrdCowsLactO261120)),
+            Column("Дойных коров лактации > 2 > 120 ДД", rowsByProperty(data::hrdCowsLactO2O120)),
+            Column("Стельных коров", rowsByProperty(data::hrdCowsPregAll)),
+            Column("% стельных в стаде", rowsByProperty(data::hrdCowsPregPcnt)),
+            Column("Сухостойных коров всего", rowsByProperty(data::hrdCowsDryAll)),
+            Column("% сухостойных в стаде", rowsByProperty(data::hrdCowsDryPcnt)),
+            Column("Сухостойных коров 1 фазы", rowsByProperty(data::hrdCowsDryF1)),
+            Column("Сухостойных коров 2 фазы", rowsByProperty(data::hrdCowsDryF2)),
+            Column("Телок всего", rowsByProperty(data::hrdHeifersAll)),
+            Column("Телок 0-2 мес", rowsByProperty(data::hrdHeifers02)),
+            Column("Телок 2-6 мес", rowsByProperty(data::hrdHeifers26)),
+            Column("Телок 6-12 мес", rowsByProperty(data::hrdHeifers612)),
+            Column("Телок > 12 мес", rowsByProperty(data::hrdHeifersO12)),
+            Column("Нетелей всего", rowsByProperty(data::hrdPheifersAll)),
+            Column("Нетелей 2 фазы", rowsByProperty(data::hrdPheifersF2)),
+            Column("Быков", rowsByProperty(data::hrdBulls)),
+            Column("Осеменений коров", rowsByProperty(data::evtInsemCows)),
+            Column("Осеменений телок", rowsByProperty(data::evtInsemHeifers)),
+            Column("Проверено на стельность коров", rowsByProperty(data::evtPregCheckCows)),
+            Column("Выявлено стельных коров", rowsByProperty(data::evtGotPregCows)),
+            Column("Проверено на стельность телок", rowsByProperty(data::evtPregCheckHeifers)),
+            Column("Выявлено стельных телок", rowsByProperty(data::evtGotPregHeifers)),
+            Column("Запущено коров", rowsByProperty(data::evtDryCows)),
+            Column("Отелов всего", rowsByProperty(data::evtCalvTotal)),
+            Column("Родилось живых телок", rowsByProperty(data::evtCalvAliveHeifers)),
+            Column("Родилось живых быков", rowsByProperty(data::evtCalvAliveBulls)),
+            Column("Родилось мертвых телок", rowsByProperty(data::evtCalvDeadHeifers)),
+            Column("Родилось мертвых быков", rowsByProperty(data::evtCalvDeadBulls)),
+            Column("% мертворожденности", rowsByProperty(data::evtCalvDeadAllPcnt)),
+            Column("% рождаемости телок", rowsByProperty(data::evtCalvAliveHeifersAllPcnt)),
+            Column("Отелов от нетелей", rowsByProperty(data::evtCalvTotalPheifers)),
+            Column(
+                "От нетелей родилось живых телок",
+                rowsByProperty(data::evtCalvAliveHeifersPheifers)
+            ),
+            Column(
+                "От нетелей родилось живых быков",
+                rowsByProperty(data::evtCalvAliveBullsPheifers)
+            ),
+            Column(
+                "От нетелей родилось мертвых телок",
+                rowsByProperty(data::evtCalvDeadHeifersPheifers)
+            ),
+            Column(
+                "От нетелей родилось мертвых быков",
+                rowsByProperty(data::evtCalvDeadBullsPheifers)
+            ),
+            Column("% мертворожденности от нетелей", rowsByProperty(data::evtCalvDeadPheifersPcnt)),
+            Column(
+                "% рождаемости телок от нетелей",
+                rowsByProperty(data::evtCalvAliveHeifersPheifersPcnt)
+            ),
+            Column("Отелов от коров", rowsByProperty(data::evtCalvTotalCows)),
+            Column("От коров родилось живых телок", rowsByProperty(data::evtCalvAliveHeifersCows)),
+            Column("От коров родилось живых быков", rowsByProperty(data::evtCalvAliveBullsCows)),
+            Column("От коров родилось мертвых телок", rowsByProperty(data::evtCalvDeadHeifersCows)),
+            Column("От коров родилось мертвых быков", rowsByProperty(data::evtCalvDeadBullsCows)),
+            Column("% мертворожденности от коров", rowsByProperty(data::evtCalvDeadCowsPcnt)),
+            Column(
+                "% рождаемости телок от коров",
+                rowsByProperty(data::evtCalvAliveHeifersCowsPcnt)
+            ),
+            Column("Абортировало коров", rowsByProperty(data::evtAbortCows)),
+            Column("Абортировало нетелей", rowsByProperty(data::evtAbortHeifers)),
+            Column("Мастит голов за месяц коров", rowsByProperty(data::evtMastForMonthCows)),
+            Column("Хромота голов за месяц коров", rowsByProperty(data::evtLameForMonthCows)),
+            Column("Хромота голов за месяц телок", rowsByProperty(data::evtLameForMonthHeifers)),
+            Column("Задержаний последа лактация 1", rowsByProperty(data::evtRetPlacLact1)),
+            Column("% задержаний последа у нетелей", rowsByProperty(data::evtRetPlacLact1Pcnt)),
+            Column("Задержаний последа лактация > 1", rowsByProperty(data::evtRetPlacLactO1)),
+            Column("% задержаний последа у коров", rowsByProperty(data::evtRetPlacLactO1Pcnt)),
+            Column("Задержаний последа всего", rowsByProperty(data::evtRetPlacTotal)),
+            Column("% задержаний последа", rowsByProperty(data::evtRetPlacTotalPcnt)),
+            Column("Парезов лактация 1", rowsByProperty(data::evtParesLact1)),
+            Column("% парезов у нетелей", rowsByProperty(data::evtParesLact1Pcnt)),
+            Column("Парезов лактация > 1", rowsByProperty(data::evtParesLactO1)),
+            Column("% парезов у коров", rowsByProperty(data::evtParesLactO1Pcnt)),
+            Column("Парезов всего", rowsByProperty(data::evtParesTotal)),
+            Column("% парезов", rowsByProperty(data::evtParesTotalPcnt)),
+            Column("Кетозов лактация 1", rowsByProperty(data::evtKetosLact1)),
+            Column("% кетозов у нетелей", rowsByProperty(data::evtKetosLact1Pcnt)),
+            Column("Кетозов лактация > 1", rowsByProperty(data::evtKetosLactO1)),
+            Column("% кетозов у коров", rowsByProperty(data::evtKetosLactO1Pcnt)),
+            Column("Кетозов всего", rowsByProperty(data::evtKetosTotal)),
+            Column("% кетозов", rowsByProperty(data::evtKetosTotalPcnt)),
+            Column("Метритов", rowsByProperty(data::evtMetrit)),
+            Column("% метритов", rowsByProperty(data::evtMetritPcnt)),
+            Column("Переводов коров", rowsByProperty(data::evtMoveCows)),
+            Column("Переводов телок", rowsByProperty(data::evtMoveHeifers)),
+            Column("Вакцинация коров", rowsByProperty(data::evtVaccCows)),
+            Column("Вакцинация телок", rowsByProperty(data::evtVaccHeifers)),
+            Column("Расчистка копыт коров", rowsByProperty(data::evtFootrimCows)),
+            Column("Расчистка копыт телок", rowsByProperty(data::evtFootrimHeifers)),
+            Column("Продажа коров лактация 1 0-10 ДД", rowsByProperty(data::evtSoldCowsLact1010)),
+            Column("Продажа коров лактация 1 11-30 ДД", rowsByProperty(data::evtSoldCowsLact11130)),
+            Column("Продажа коров лактация 1 31-60 ДД", rowsByProperty(data::evtSoldCowsLact13160)),
+            Column(
+                "Продажа коров лактация 1 61-120 ДД",
+                rowsByProperty(data::evtSoldCowsLact161120)
+            ),
+            Column("Продажа коров лактация 1 > 120 ДД", rowsByProperty(data::evtSoldCowsLact1O120)),
+            Column("Продажа коров лактация 1 всего", rowsByProperty(data::evtSoldCowsLact1Total)),
+            Column("Продажа коров лактация 2 0-10 ДД", rowsByProperty(data::evtSoldCowsLact2010)),
+            Column("Продажа коров лактация 2 11-30 ДД", rowsByProperty(data::evtSoldCowsLact21130)),
+            Column("Продажа коров лактация 2 31-60 ДД", rowsByProperty(data::evtSoldCowsLact23160)),
+            Column(
+                "Продажа коров лактация 2 61-120 ДД",
+                rowsByProperty(data::evtSoldCowsLact261120)
+            ),
+            Column("Продажа коров лактация 2 > 120 ДД", rowsByProperty(data::evtSoldCowsLact2O120)),
+            Column("Продажа коров лактация 2 всего", rowsByProperty(data::evtSoldCowsLact2Total)),
+            Column(
+                "Продажа коров лактация > 2 0-10 ДД",
+                rowsByProperty(data::evtSoldCowsLactO2010)
+            ),
+            Column(
+                "Продажа коров лактация > 2 11-30 ДД",
+                rowsByProperty(data::evtSoldCowsLactO21130)
+            ),
+            Column(
+                "Продажа коров лактация > 2 31-60 ДД",
+                rowsByProperty(data::evtSoldCowsLactO23160)
+            ),
+            Column(
+                "Продажа коров лактация > 2 61-120 ДД",
+                rowsByProperty(data::evtSoldCowsLactO261120)
+            ),
+            Column(
+                "Продажа коров лактация > 2 > 120 ДД",
+                rowsByProperty(data::evtSoldCowsLactO2O120)
+            ),
+            Column(
+                "Продажа коров лактация > 2 всего",
+                rowsByProperty(data::evtSoldCowsLactO2Total)
+            ),
+            Column("Продажа коров всего", rowsByProperty(data::evtSoldCowsTotal)),
+            Column("Продажа телок 0-2 мес", rowsByProperty(data::evtSoldHeifers02)),
+            Column("Продажа телок 2-6 мес", rowsByProperty(data::evtSoldHeifers26)),
+            Column("Продажа телок 6-12 мес", rowsByProperty(data::evtSoldHeifers612)),
+            Column("Продажа телок > 12 мес", rowsByProperty(data::evtSoldHeifersO12)),
+            Column("Продажа телок всего", rowsByProperty(data::evtSoldHeifersTotal)),
+            Column("Продажа нетелей", rowsByProperty(data::evtSoldPheifers)),
+            Column("Продажа быков", rowsByProperty(data::evtSoldBulls)),
+            Column("Падеж коров лактация 1 0-10 ДД", rowsByProperty(data::evtDeadCowsLact1010)),
+            Column("Падеж коров лактация 1 11-30 ДД", rowsByProperty(data::evtDeadCowsLact11130)),
+            Column("Падеж коров лактация 1 31-60 ДД", rowsByProperty(data::evtDeadCowsLact13160)),
+            Column("Падеж коров лактация 1 61-120 ДД", rowsByProperty(data::evtDeadCowsLact161120)),
+            Column("Падеж коров лактация 1 > 120 ДД", rowsByProperty(data::evtDeadCowsLact1O120)),
+            Column("Падеж коров лактация 1 всего", rowsByProperty(data::evtDeadCowsLact1Total)),
+            Column("Падеж коров лактация 2 0-10 ДД", rowsByProperty(data::evtDeadCowsLact2010)),
+            Column("Падеж коров лактация 2 11-30 ДД", rowsByProperty(data::evtDeadCowsLact21130)),
+            Column("Падеж коров лактация 2 31-60 ДД", rowsByProperty(data::evtDeadCowsLact23160)),
+            Column("Падеж коров лактация 2 61-120 ДД", rowsByProperty(data::evtDeadCowsLact261120)),
+            Column("Падеж коров лактация 2 > 120 ДД", rowsByProperty(data::evtDeadCowsLact2O120)),
+            Column("Падеж коров лактация 2 всего", rowsByProperty(data::evtDeadCowsLact2Total)),
+            Column("Падеж коров лактация > 2 0-10 ДД", rowsByProperty(data::evtDeadCowsLactO2010)),
+            Column(
+                "Падеж коров лактация > 2 11-30 ДД",
+                rowsByProperty(data::evtDeadCowsLactO21130)
+            ),
+            Column(
+                "Падеж коров лактация > 2 31-60 ДД",
+                rowsByProperty(data::evtDeadCowsLactO23160)
+            ),
+            Column(
+                "Падеж коров лактация > 2 61-120 ДД",
+                rowsByProperty(data::evtDeadCowsLactO261120)
+            ),
+            Column(
+                "Падеж коров лактация > 2 > 120 ДД",
+                rowsByProperty(data::evtDeadCowsLactO2O120)
+            ),
+            Column("Падеж коров лактация > 2 всего", rowsByProperty(data::evtDeadCowsLactO2Total)),
+            Column("Падеж коров всего", rowsByProperty(data::evtDeadCowsTotal)),
+            Column("Падеж телок 0-2 мес", rowsByProperty(data::evtDeadHeifers02)),
+            Column("Падеж телок 2-6 мес", rowsByProperty(data::evtDeadHeifers26)),
+            Column("Падеж телок 6-12 мес", rowsByProperty(data::evtDeadHeifers612)),
+            Column("Падеж телок > 12 мес", rowsByProperty(data::evtDeadHeifersO12)),
+            Column("Падеж телок всего", rowsByProperty(data::evtDeadHeifersTotal)),
+            Column("Падеж нетелей", rowsByProperty(data::evtDeadPheifers)),
+            Column("Падеж быков", rowsByProperty(data::evtDeadBulls)),
+            Column("Индекс выявления охоты коров", rowsByProperty(data::brdHeatDetRateCow)),
+            Column("Индекс выявления охоты телок", rowsByProperty(data::brdHeatDetRateHeif)),
+            Column("Индекс оплодотворяемости коров", rowsByProperty(data::brdConcRateCow)),
+            Column("Индекс оплодотворяемости телок", rowsByProperty(data::brdConcRateHeif)),
+            Column("Индекс стельности коров", rowsByProperty(data::brdPregRateCow)),
+            Column("Индекс стельности телок", rowsByProperty(data::brdPregRateHeif)),
+            Column("Доз семени на стельную корову", rowsByProperty(data::brdStrawsPerPregCow)),
+            Column("Доз семени на стельную телку", rowsByProperty(data::brdStrawsPerPregHeif)),
+            Column("Среднесуточный валовой надой", rowsByProperty(data::mlkAvgMilkSumYield)),
+            Column("Суммарный валовой надой", rowsByProperty(data::mlkSumMilkSumYield)),
+            Column("Среднесуточный надой 1 ф/к", rowsByProperty(data::mlkAvgMilkPerCow)),
+            Column("Суммарный надой 1 ф/к", rowsByProperty(data::mlkSumMilkPerCow)),
+            Column("Среднесуточный надой 1 д/к", rowsByProperty(data::mlkAvgMilkPerLactCow)),
+            Column("Суммарный надой 1 д/к", rowsByProperty(data::mlkSumMilkPerLactCow)),
+            Column("KPI кормления", rowsByProperty(data::feedKpi)),
+        )
+
+    @SerializedName("data_table")
+    @Expose
+    lateinit var data: PeriodicalDataTable
+
+    @SuppressLint("DefaultLocale")
+    private fun rowsByProperty(property: KProperty0<List<String>>): List<Row> {
+        val list = property.get()
+        return (data.yyyyMm.indices step 2).map {
+            Row(data.yyyyMm[it], list.getOrNull(it).orEmpty())
+        }
+    }
+}
 
 class PeriodicalDataTable {
 
