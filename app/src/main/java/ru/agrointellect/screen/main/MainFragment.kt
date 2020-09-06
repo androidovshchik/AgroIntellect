@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
-import io.ktor.client.HttpClient
-import io.ktor.client.request.forms.FormDataContent
-import io.ktor.client.request.post
-import io.ktor.client.statement.HttpResponse
-import io.ktor.http.Parameters
+import io.ktor.client.*
+import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.kodein.di.generic.instance
@@ -35,7 +35,7 @@ abstract class MainFragment : BaseFragment() {
 
     @Suppress("SpellCheckingInspection")
     protected open val defaultList: List<RptDesc>
-        get() = listOf(
+        get() = mutableListOf(
             RptDesc("rpt_herd_distribution", "Поголовье: фуражное, дойное, стельное", 2),
             RptDesc(
                 "rpt_herd_alignment_now",
@@ -48,11 +48,17 @@ abstract class MainFragment : BaseFragment() {
             RptDesc("rpt_breed_effectivity", "Воспроизводство", 2),
             RptDesc("rpt_fresh_disease", "Послеотельные заболевания", 2),
             RptDesc("rpt_farm_summary_history", "Сводный отчет", 2),
+            RptDesc("rpt_periodical_farm_summary_history", "Сводный отчет по периодам", 2),
+            RptDesc("rpt_all_farms_summary_history", "Сводный отчет по всем фермам", 2),
             RptDesc("rpt_herd_forecast", "Прогноз", 0),
             RptDesc("rpt_sold_animals", "Продажа", 2),
             RptDesc("rpt_died_animals", "Падеж", 2),
             RptDesc("rpt_last_updates", "Даты актуальности данных", 0)
-        )
+        ).apply {
+            if (BuildConfig.DEBUG) {
+                add(RptDesc("rpt_clone_modelling", "Моделирование в клоне", 0))
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

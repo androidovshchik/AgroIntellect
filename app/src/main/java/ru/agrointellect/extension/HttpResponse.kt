@@ -9,6 +9,12 @@ import ru.agrointellect.exception.UnknownException
 import ru.agrointellect.exception.WrongUidException
 import ru.agrointellect.remote.api.*
 
+val objectList = listOf(
+    "rpt_periodical_farm_summary_history",
+    "rpt_all_farms_summary_history",
+    "rpt_clone_modelling"
+)
+
 @Suppress("SpellCheckingInspection")
 suspend inline fun <reified T> HttpResponse.readObject(
     gson: Gson,
@@ -16,10 +22,7 @@ suspend inline fun <reified T> HttpResponse.readObject(
     vararg keys: String
 ): T {
     // go deeper when data is object (not list)
-    val reportId = when (uid) {
-        "rpt_clone_modelling" -> uid
-        else -> null
-    }
+    val reportId = if (uid in objectList) uid else null
     return readJson(*keys, reportId) {
         val cls = when (uid) {
             "rpt_herd_distribution" -> RptsHerdDistribution::class.java
@@ -35,6 +38,8 @@ suspend inline fun <reified T> HttpResponse.readObject(
             "cht_farm_summary_history4" -> ChtsFarmSummaryHistory4::class.java
             "cht_farm_summary_history5" -> ChtsFarmSummaryHistory5::class.java
             "cht_farm_summary_history6" -> ChtsFarmSummaryHistory6::class.java
+            "rpt_periodical_farm_summary_history" -> RptPeriodicalFarmSummaryHistory::class.java
+            "rpt_all_farms_summary_history" -> RptAllFarmsSummaryHistory::class.java
             "rpt_herd_forecast" -> RptsHerdForecast::class.java
             "rpt_clone_modelling" -> RptCloneModelling::class.java
             "rpt_sold_animals" -> RptsSoldAnimal::class.java
