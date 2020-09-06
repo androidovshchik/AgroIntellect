@@ -368,6 +368,6 @@ mlkSumMilkPerLactCow
 feedKpi`.split('\n');
 
 for (let i = 0; i < titles.length; i++) {
-    const text = `Column("${titles[i]}", rowsByProperty(data::${vars[i]})),`;
+    const text = `Column("${titles[i]}", rowsBy("${vars[i]}")),`;
     console.log(text);
 }
