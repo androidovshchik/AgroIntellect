@@ -26,39 +26,39 @@ class RptsMilkEventsKpi : Table, Graph {
         get() {
             val legends = legends
             return listOf(
-                Column("Валовой надой", rowsByField("mlkMilkSumYield")),
-                Column("Надой 1 ф/к", rowsByField("mlkMilkPerCow")),
-                Column(legends[0], rowsByField("mlkMilkPerLactCow")),
-                Column(legends[1], rowsByField("evtInsemCows")),
-                Column(legends[2], rowsByField("evtPregCheckCows")),
-                Column(legends[3], rowsByField("evtDryCows")),
-                Column(legends[4], rowsByField("evtMoveCows")),
-                Column(legends[5], rowsByField("evtVaccCows")),
-                Column(legends[6], rowsByField("evtFootrimCows")),
-                Column(legends[7], rowsByField("feedKpi"))
+                Column("Валовой надой", rowsBy("mlkMilkSumYield")),
+                Column("Надой 1 ф/к", rowsBy("mlkMilkPerCow")),
+                Column(legends[0], rowsBy("mlkMilkPerLactCow")),
+                Column(legends[1], rowsBy("evtInsemCows")),
+                Column(legends[2], rowsBy("evtPregCheckCows")),
+                Column(legends[3], rowsBy("evtDryCows")),
+                Column(legends[4], rowsBy("evtMoveCows")),
+                Column(legends[5], rowsBy("evtVaccCows")),
+                Column(legends[6], rowsBy("evtFootrimCows")),
+                Column(legends[7], rowsBy("feedKpi"))
             )
         }
 
     override val data: GraphData
         get() = LineData(
             mutableListOf<ILineDataSet>(
-                LineDataSet(entriesByField("mlkMilkPerLactCow"), null),
-                LineDataSet(entriesByField("evtInsemCows"), null),
-                LineDataSet(entriesByField("evtPregCheckCows"), null),
-                LineDataSet(entriesByField("evtDryCows"), null),
-                LineDataSet(entriesByField("evtMoveCows"), null),
-                LineDataSet(entriesByField("evtVaccCows"), null),
-                LineDataSet(entriesByField("evtFootrimCows"), null),
-                LineDataSet(entriesByField("feedKpi"), null)
+                LineDataSet(entriesBy("mlkMilkPerLactCow"), null),
+                LineDataSet(entriesBy("evtInsemCows"), null),
+                LineDataSet(entriesBy("evtPregCheckCows"), null),
+                LineDataSet(entriesBy("evtDryCows"), null),
+                LineDataSet(entriesBy("evtMoveCows"), null),
+                LineDataSet(entriesBy("evtVaccCows"), null),
+                LineDataSet(entriesBy("evtFootrimCows"), null),
+                LineDataSet(entriesBy("feedKpi"), null)
             )
         )
 
-    private fun rowsByField(name: String): List<Row> {
+    private fun rowsBy(name: String): List<Row> {
         val field = RptMilkEventsKpi::class.java.getField(name)
         return items.map { Row(it.date, field.get(it)?.toString()) }
     }
 
-    private fun entriesByField(name: String): List<Entry> {
+    private fun entriesBy(name: String): List<Entry> {
         val field = RptMilkEventsKpi::class.java.getField(name)
         return items.mapNotNull { newEntry(it.date, field.get(it)?.toString()) }
     }
