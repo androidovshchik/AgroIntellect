@@ -9,42 +9,39 @@ class RptsBreedEffectivity : Table {
 
     override val columns: List<Column>
         get() = listOf(
-            Column("№ лактации стада", rowsByMethod("avgLactNum")),
-            Column("День доения", rowsByMethod("avgDaysInMilk")),
-            Column("Сервис-период", rowsByMethod("avgOpenDays")),
-            Column("Кол-во дней в сухостое", rowsByMethod("avgDryDays")),
-            Column("День стельности коров", rowsByMethod("avgPregnantDaysCows")),
-            Column("День стельности нетелей", rowsByMethod("avgPregnantDaysHeifers")),
-            Column("Межотельный интервал", rowsByMethod("avgCalvIntDays")),
-            Column("Интервал между осеменениями коров", rowsByMethod("avgInsemIntDaysCows")),
-            Column("Интервал между осеменениями телок", rowsByMethod("avgInsemIntDaysHeifers")),
-            Column("День доения 1-го осеменения коров", rowsByMethod("avgFirstInsemDimCows")),
-            Column("Возраст 1-го осеменения телок", rowsByMethod("avgFirstInsemAgeHeifers")),
-            Column("Возраст 1-го отела", rowsByMethod("avgFirstCalvAge1Lact")),
-            Column("% дойных в стаде", rowsByMethod("hrdCowsLactAllPcnt")),
-            Column("% стельных в стаде", rowsByMethod("hrdCowsPregPcnt")),
-            Column("% сухостойных в стаде", rowsByMethod("hrdCowsDryPcnt")),
-            Column("% рождаемости телок", rowsByMethod("evtCalvAliveHeifersAllPcnt")),
-            Column(
-                "% рождаемости телок от нетелей",
-                rowsByMethod("evtCalvAliveHeifersPheifersPcnt")
-            ),
-            Column("% рождаемости телок от коров", rowsByMethod("evtCalvAliveHeifersCowsPcnt")),
-            Column("% мертворожденности", rowsByMethod("evtCalvDeadAllPcnt")),
-            Column("% мертворожденности от нетелей", rowsByMethod("evtCalvDeadPheifersPcnt")),
-            Column("% мертворожденности от коров", rowsByMethod("evtCalvDeadCowsPcnt")),
-            Column("Индекс выявления охоты коров", rowsByMethod("brdHeatDetRateCow")),
-            Column("Индекс выявления охоты телок", rowsByMethod("brdHeatDetRateHeif")),
-            Column("Индекс оплодотворяемости коров", rowsByMethod("brdConcRateCow")),
-            Column("Индекс оплодотворяемости телок", rowsByMethod("brdConcRateHeif")),
-            Column("Индекс стельности коров", rowsByMethod("brdPregRateCow")),
-            Column("Индекс стельности телок", rowsByMethod("brdPregRateHeif")),
-            Column("Доз семени на стельную корову", rowsByMethod("brdStrawsPerPregCow")),
-            Column("Доз семени на стельную телку", rowsByMethod("brdStrawsPerPregHeif"))
+            Column("№ лактации стада", rowsBy("avgLactNum")),
+            Column("День доения", rowsBy("avgDaysInMilk")),
+            Column("Сервис-период", rowsBy("avgOpenDays")),
+            Column("Кол-во дней в сухостое", rowsBy("avgDryDays")),
+            Column("День стельности коров", rowsBy("avgPregnantDaysCows")),
+            Column("День стельности нетелей", rowsBy("avgPregnantDaysHeifers")),
+            Column("Межотельный интервал", rowsBy("avgCalvIntDays")),
+            Column("Интервал между осеменениями коров", rowsBy("avgInsemIntDaysCows")),
+            Column("Интервал между осеменениями телок", rowsBy("avgInsemIntDaysHeifers")),
+            Column("День доения 1-го осеменения коров", rowsBy("avgFirstInsemDimCows")),
+            Column("Возраст 1-го осеменения телок", rowsBy("avgFirstInsemAgeHeifers")),
+            Column("Возраст 1-го отела", rowsBy("avgFirstCalvAge1Lact")),
+            Column("% дойных в стаде", rowsBy("hrdCowsLactAllPcnt")),
+            Column("% стельных в стаде", rowsBy("hrdCowsPregPcnt")),
+            Column("% сухостойных в стаде", rowsBy("hrdCowsDryPcnt")),
+            Column("% рождаемости телок", rowsBy("evtCalvAliveHeifersAllPcnt")),
+            Column("% рождаемости телок от нетелей", rowsBy("evtCalvAliveHeifersPheifersPcnt")),
+            Column("% рождаемости телок от коров", rowsBy("evtCalvAliveHeifersCowsPcnt")),
+            Column("% мертворожденности", rowsBy("evtCalvDeadAllPcnt")),
+            Column("% мертворожденности от нетелей", rowsBy("evtCalvDeadPheifersPcnt")),
+            Column("% мертворожденности от коров", rowsBy("evtCalvDeadCowsPcnt")),
+            Column("Индекс выявления охоты коров", rowsBy("brdHeatDetRateCow")),
+            Column("Индекс выявления охоты телок", rowsBy("brdHeatDetRateHeif")),
+            Column("Индекс оплодотворяемости коров", rowsBy("brdConcRateCow")),
+            Column("Индекс оплодотворяемости телок", rowsBy("brdConcRateHeif")),
+            Column("Индекс стельности коров", rowsBy("brdPregRateCow")),
+            Column("Индекс стельности телок", rowsBy("brdPregRateHeif")),
+            Column("Доз семени на стельную корову", rowsBy("brdStrawsPerPregCow")),
+            Column("Доз семени на стельную телку", rowsBy("brdStrawsPerPregHeif"))
         )
 
     @SuppressLint("DefaultLocale")
-    private fun rowsByMethod(name: String): List<Row> {
+    private fun rowsBy(name: String): List<Row> {
         val method = RptBreedEffectivity::class.java.getMethod("get${name.capitalize()}")
         return items.map { Row(it.date, method.invoke(it)?.toString()) }
     }
