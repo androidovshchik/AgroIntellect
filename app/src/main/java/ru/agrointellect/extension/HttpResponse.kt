@@ -2,8 +2,7 @@ package ru.agrointellect.extension
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import io.ktor.client.statement.HttpResponse
-import io.ktor.client.statement.readText
+import io.ktor.client.statement.*
 import org.json.JSONObject
 import ru.agrointellect.exception.NoDataException
 import ru.agrointellect.exception.UnknownException
@@ -16,7 +15,12 @@ suspend inline fun <reified T> HttpResponse.readObject(
     uid: String,
     vararg keys: String
 ): T {
-    return readJson(*keys) {
+    // go deeper when data is object (not list)
+    val reportId = when (uid) {
+        "rpt_clone_modelling" -> uid
+        else -> null
+    }
+    return readJson(*keys, reportId) {
         val cls = when (uid) {
             "rpt_herd_distribution" -> RptsHerdDistribution::class.java
             "rpt_herd_alignment_now" -> RptsHerdAlignmentNow::class.java
@@ -32,6 +36,7 @@ suspend inline fun <reified T> HttpResponse.readObject(
             "cht_farm_summary_history5" -> ChtsFarmSummaryHistory5::class.java
             "cht_farm_summary_history6" -> ChtsFarmSummaryHistory6::class.java
             "rpt_herd_forecast" -> RptsHerdForecast::class.java
+            "rpt_clone_modelling" -> RptCloneModelling::class.java
             "rpt_sold_animals" -> RptsSoldAnimal::class.java
             "rpt_died_animals" -> RptsDiedAnimal::class.java
             "rpt_last_updates" -> RptsLastUpdate::class.java
@@ -47,13 +52,15 @@ suspend inline fun <reified T> HttpResponse.readArray(gson: Gson, vararg keys: S
     }
 }
 
-suspend inline fun <T> HttpResponse.readJson(vararg keys: String, block: (String) -> T): T {
+suspend inline fun <T> HttpResponse.readJson(vararg keys: String?, block: (String) -> T): T {
     var text = readText()
     try {
         if (keys.isNotEmpty()) {
             var json: Any = JSONObject(text)
             keys.forEach {
-                json = (json as JSONObject).get(it)
+                if (it != null) {
+                    json = (json as JSONObject).get(it)
+                }
             }
             text = json.toString()
         }
