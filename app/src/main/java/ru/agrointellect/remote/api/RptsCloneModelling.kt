@@ -2,93 +2,105 @@
 
 package ru.agrointellect.remote.api
 
+import android.annotation.SuppressLint
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlin.reflect.KProperty0
 
 class RptCloneModelling : Table {
 
     override val columns: List<Column>
         get() = listOf(
-            Column("Фуражных коров"),
-            Column("Дойных коров всего"),
-            Column("% дойных в стаде"),
-            Column("Дойных коров 1 лактации"),
-            Column("% 1 лактации в дойных"),
-            Column("Дойных коров 1 лактации 0-30 ДД"),
-            Column("Дойных коров 1 лактации 31-60 ДД"),
-            Column("Дойных коров 1 лактации 61-120 ДД"),
-            Column("Дойных коров 1 лактации &gt; 120 ДД"),
-            Column("Дойных коров 2 лактации"),
-            Column("% 2 лактации в дойных"),
-            Column("Дойных коров 2 лактации 0-30 ДД"),
-            Column("Дойных коров 2 лактации 31-60 ДД"),
-            Column("Дойных коров 2 лактации 61-120 ДД"),
-            Column("Дойных коров 2 лактации &gt; 120 ДД"),
-            Column("Дойных коров лактации &gt; 2"),
-            Column("% лактации &gt; 2 в дойных"),
-            Column("Дойных коров лактации &gt; 2 0-30 ДД"),
-            Column("Дойных коров лактации &gt; 2 31-60 ДД"),
-            Column("Дойных коров лактации &gt; 2 61-120 ДД"),
-            Column("Дойных коров лактации &gt; 2 &gt; 120 ДД"),
-            Column("Стельных коров"),
-            Column("% стельных в стаде"),
-            Column("Сухостойных коров всего"),
-            Column("% сухостойных в стаде"),
-            Column("Сухостойных коров 1 фазы"),
-            Column("Сухостойных коров 2 фазы"),
-            Column("Телок всего"),
-            Column("Телок 0-2 мес"),
-            Column("Телок 2-6 мес"),
-            Column("Телок 6-12 мес"),
-            Column("Телок &gt; 12 мес"),
-            Column("Нетелей всего"),
-            Column("Нетелей 2 фазы"),
-            Column("Быков"),
-            Column("Осеменений коров"),
-            Column("Осеменений телок"),
-            Column("Выявлено стельных коров"),
-            Column("Выявлено стельных телок"),
-            Column("Запущено коров"),
-            Column("Отелов всего"),
-            Column("Отелов от нетелей"),
-            Column("Отелов от коров"),
-            Column("Родилось живых телок"),
-            Column("Родилось живых быков"),
-            Column("Выбытие коров всего"),
-            Column("Выбытие коров лактация 1 всего"),
-            Column("Выбытие коров лактация 1 0-30 ДД"),
-            Column("Выбытие коров лактация 1 31-60 ДД"),
-            Column("Выбытие коров лактация 1 61-120 ДД"),
-            Column("Выбытие коров лактация 1 &gt; 120 ДД"),
-            Column("Выбытие коров лактация 2 всего"),
-            Column("Выбытие коров лактация 2 0-30 ДД"),
-            Column("Выбытие коров лактация 2 31-60 ДД"),
-            Column("Выбытие коров лактация 2 61-120 ДД"),
-            Column("Выбытие коров лактация 2 &gt; 120 ДД"),
-            Column("Выбытие коров лактация &gt; 2 всего"),
-            Column("Выбытие коров лактация &gt; 2 0-30 ДД"),
-            Column("Выбытие коров лактация &gt; 2 31-60 ДД"),
-            Column("Выбытие коров лактация &gt; 2 61-120 ДД"),
-            Column("Выбытие коров лактация &gt; 2 &gt; 120 ДД"),
-            Column("Выбытие телок всего"),
-            Column("Выбытие телок 0-2 мес"),
-            Column("Выбытие телок 2-6 мес"),
-            Column("Выбытие телок 6-12 мес"),
-            Column("Выбытие телок &gt; 12 мес"),
-            Column("Выбытие нетелей"),
-            Column("Выбытие быков"),
-            Column("Валовой надой"),
-            Column("Надой 1 ф/к"),
-            Column("Надой 1 д/к")
+            Column("Фуражных коров", rowsByProperty(data::hrdCowsAll)),
+            Column("Дойных коров всего", rowsByProperty(data::hrdCowsAll)),
+            Column("% дойных в стаде", rowsByProperty(data::hrdCowsAll)),
+            Column("Дойных коров 1 лактации", rowsByProperty(data::hrdCowsAll)),
+            Column("% 1 лактации в дойных", rowsByProperty(data::hrdCowsAll)),
+            Column("Дойных коров 1 лактации 0-30 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Дойных коров 1 лактации 31-60 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Дойных коров 1 лактации 61-120 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Дойных коров 1 лактации &gt; 120 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Дойных коров 2 лактации", rowsByProperty(data::hrdCowsAll)),
+            Column("% 2 лактации в дойных", rowsByProperty(data::hrdCowsAll)),
+            Column("Дойных коров 2 лактации 0-30 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Дойных коров 2 лактации 31-60 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Дойных коров 2 лактации 61-120 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Дойных коров 2 лактации &gt; 120 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Дойных коров лактации &gt; 2", rowsByProperty(data::hrdCowsAll)),
+            Column("% лактации &gt; 2 в дойных", rowsByProperty(data::hrdCowsAll)),
+            Column("Дойных коров лактации &gt; 2 0-30 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Дойных коров лактации &gt; 2 31-60 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Дойных коров лактации &gt; 2 61-120 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Дойных коров лактации &gt; 2 &gt; 120 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Стельных коров", rowsByProperty(data::hrdCowsAll)),
+            Column("% стельных в стаде", rowsByProperty(data::hrdCowsAll)),
+            Column("Сухостойных коров всего", rowsByProperty(data::hrdCowsAll)),
+            Column("% сухостойных в стаде", rowsByProperty(data::hrdCowsAll)),
+            Column("Сухостойных коров 1 фазы", rowsByProperty(data::hrdCowsAll)),
+            Column("Сухостойных коров 2 фазы", rowsByProperty(data::hrdCowsAll)),
+            Column("Телок всего", rowsByProperty(data::hrdCowsAll)),
+            Column("Телок 0-2 мес", rowsByProperty(data::hrdCowsAll)),
+            Column("Телок 2-6 мес", rowsByProperty(data::hrdCowsAll)),
+            Column("Телок 6-12 мес", rowsByProperty(data::hrdCowsAll)),
+            Column("Телок &gt; 12 мес", rowsByProperty(data::hrdCowsAll)),
+            Column("Нетелей всего", rowsByProperty(data::hrdCowsAll)),
+            Column("Нетелей 2 фазы", rowsByProperty(data::hrdCowsAll)),
+            Column("Быков", rowsByProperty(data::hrdCowsAll)),
+            Column("Осеменений коров", rowsByProperty(data::hrdCowsAll)),
+            Column("Осеменений телок", rowsByProperty(data::hrdCowsAll)),
+            Column("Выявлено стельных коров", rowsByProperty(data::hrdCowsAll)),
+            Column("Выявлено стельных телок", rowsByProperty(data::hrdCowsAll)),
+            Column("Запущено коров", rowsByProperty(data::hrdCowsAll)),
+            Column("Отелов всего", rowsByProperty(data::hrdCowsAll)),
+            Column("Отелов от нетелей", rowsByProperty(data::hrdCowsAll)),
+            Column("Отелов от коров", rowsByProperty(data::hrdCowsAll)),
+            Column("Родилось живых телок", rowsByProperty(data::hrdCowsAll)),
+            Column("Родилось живых быков", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие коров всего", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие коров лактация 1 всего", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие коров лактация 1 0-30 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие коров лактация 1 31-60 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие коров лактация 1 61-120 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие коров лактация 1 &gt; 120 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие коров лактация 2 всего", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие коров лактация 2 0-30 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие коров лактация 2 31-60 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие коров лактация 2 61-120 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие коров лактация 2 &gt; 120 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие коров лактация &gt; 2 всего", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие коров лактация &gt; 2 0-30 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие коров лактация &gt; 2 31-60 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие коров лактация &gt; 2 61-120 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие коров лактация &gt; 2 &gt; 120 ДД", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие телок всего", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие телок 0-2 мес", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие телок 2-6 мес", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие телок 6-12 мес", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие телок &gt; 12 мес", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие нетелей", rowsByProperty(data::hrdCowsAll)),
+            Column("Выбытие быков", rowsByProperty(data::hrdCowsAll)),
+            Column("Валовой надой", rowsByProperty(data::hrdCowsAll)),
+            Column("Надой 1 ф/к", rowsByProperty(data::hrdCowsAll)),
+            Column("Надой 1 д/к", rowsByProperty(data::hrdCowsAll))
         )
 
     @SerializedName("model_parameters")
     @Expose
-    var modelParameters: ModelParameters? = null
+    lateinit var modelParameters: ModelParameters
 
     @SerializedName("data_table")
     @Expose
-    var dataTable: DataTable? = null
+    lateinit var data: DataTable
+
+    @SuppressLint("DefaultLocale")
+    private fun rowsByProperty(property: KProperty0<List<String>>): List<Row> {
+        val list = property.get()
+        return with(data) {
+            (0..yyyyMm.size step 2).map {
+                Row(yyyyMm[it], list.getOrNull(it).orEmpty())
+            }
+        }
+    }
 }
 
 class ModelParameters {

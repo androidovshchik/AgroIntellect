@@ -55,12 +55,8 @@ class Row(key: String, value: String?) : Parcelable {
 
     companion object CREATOR : Parcelable.Creator<Row> {
 
-        override fun createFromParcel(parcel: Parcel): Row? {
-            return null
-        }
+        override fun createFromParcel(parcel: Parcel) = null
 
-        override fun newArray(size: Int): Array<Row>? {
-            return null
-        }
+        override fun newArray(size: Int) = null
     }
 }

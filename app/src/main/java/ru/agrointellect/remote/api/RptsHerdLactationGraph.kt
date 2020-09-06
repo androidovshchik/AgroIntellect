@@ -48,7 +48,7 @@ class RptsHerdLactationGraph : Table, Graph {
         get() {
             val map = map
             val text = StringBuilder()
-            text.appendln(items[0].lactationDays)
+            text.appendLine(items[0].lactationDays)
             text.append(TextUtils.join("\n", map.values))
             val reader = CsvReader()
             val csv = reader.read(StringReader(text.toString()))
@@ -64,7 +64,7 @@ class RptsHerdLactationGraph : Table, Graph {
         get() {
             val map = map
             val text = StringBuilder()
-            text.appendln(items[0].lactationDays)
+            text.appendLine(items[0].lactationDays)
             text.append(TextUtils.join("\n", map.values))
             val reader = CsvReader()
             val csv = reader.read(StringReader(text.toString()))
