@@ -8,7 +8,79 @@ import com.google.gson.annotations.SerializedName
 class RptCloneModelling : Table {
 
     override val columns: List<Column>
-        get() = TODO("Not yet implemented")
+        get() = listOf(
+            Column("Фуражных коров"),
+            Column("Дойных коров всего"),
+            Column("% дойных в стаде"),
+            Column("Дойных коров 1 лактации"),
+            Column("% 1 лактации в дойных"),
+            Column("Дойных коров 1 лактации 0-30 ДД"),
+            Column("Дойных коров 1 лактации 31-60 ДД"),
+            Column("Дойных коров 1 лактации 61-120 ДД"),
+            Column("Дойных коров 1 лактации &gt; 120 ДД"),
+            Column("Дойных коров 2 лактации"),
+            Column("% 2 лактации в дойных"),
+            Column("Дойных коров 2 лактации 0-30 ДД"),
+            Column("Дойных коров 2 лактации 31-60 ДД"),
+            Column("Дойных коров 2 лактации 61-120 ДД"),
+            Column("Дойных коров 2 лактации &gt; 120 ДД"),
+            Column("Дойных коров лактации &gt; 2"),
+            Column("% лактации &gt; 2 в дойных"),
+            Column("Дойных коров лактации &gt; 2 0-30 ДД"),
+            Column("Дойных коров лактации &gt; 2 31-60 ДД"),
+            Column("Дойных коров лактации &gt; 2 61-120 ДД"),
+            Column("Дойных коров лактации &gt; 2 &gt; 120 ДД"),
+            Column("Стельных коров"),
+            Column("% стельных в стаде"),
+            Column("Сухостойных коров всего"),
+            Column("% сухостойных в стаде"),
+            Column("Сухостойных коров 1 фазы"),
+            Column("Сухостойных коров 2 фазы"),
+            Column("Телок всего"),
+            Column("Телок 0-2 мес"),
+            Column("Телок 2-6 мес"),
+            Column("Телок 6-12 мес"),
+            Column("Телок &gt; 12 мес"),
+            Column("Нетелей всего"),
+            Column("Нетелей 2 фазы"),
+            Column("Быков"),
+            Column("Осеменений коров"),
+            Column("Осеменений телок"),
+            Column("Выявлено стельных коров"),
+            Column("Выявлено стельных телок"),
+            Column("Запущено коров"),
+            Column("Отелов всего"),
+            Column("Отелов от нетелей"),
+            Column("Отелов от коров"),
+            Column("Родилось живых телок"),
+            Column("Родилось живых быков"),
+            Column("Выбытие коров всего"),
+            Column("Выбытие коров лактация 1 всего"),
+            Column("Выбытие коров лактация 1 0-30 ДД"),
+            Column("Выбытие коров лактация 1 31-60 ДД"),
+            Column("Выбытие коров лактация 1 61-120 ДД"),
+            Column("Выбытие коров лактация 1 &gt; 120 ДД"),
+            Column("Выбытие коров лактация 2 всего"),
+            Column("Выбытие коров лактация 2 0-30 ДД"),
+            Column("Выбытие коров лактация 2 31-60 ДД"),
+            Column("Выбытие коров лактация 2 61-120 ДД"),
+            Column("Выбытие коров лактация 2 &gt; 120 ДД"),
+            Column("Выбытие коров лактация &gt; 2 всего"),
+            Column("Выбытие коров лактация &gt; 2 0-30 ДД"),
+            Column("Выбытие коров лактация &gt; 2 31-60 ДД"),
+            Column("Выбытие коров лактация &gt; 2 61-120 ДД"),
+            Column("Выбытие коров лактация &gt; 2 &gt; 120 ДД"),
+            Column("Выбытие телок всего"),
+            Column("Выбытие телок 0-2 мес"),
+            Column("Выбытие телок 2-6 мес"),
+            Column("Выбытие телок 6-12 мес"),
+            Column("Выбытие телок &gt; 12 мес"),
+            Column("Выбытие нетелей"),
+            Column("Выбытие быков"),
+            Column("Валовой надой"),
+            Column("Надой 1 ф/к"),
+            Column("Надой 1 д/к")
+        )
 
     @SerializedName("model_parameters")
     @Expose
@@ -20,6 +92,7 @@ class RptCloneModelling : Table {
 }
 
 class ModelParameters {
+
     @SerializedName("mlk_prod_pcnt_chng_l1_f0")
     @Expose
     var mlkProdPcntChngL1F0: Int? = null
@@ -286,291 +359,292 @@ class ModelParameters {
 }
 
 class DataTable {
+
     @SerializedName("yyyy_mm")
     @Expose
-    var yyyyMm: List<String>? = null
+    lateinit var yyyyMm: List<String>
 
     @SerializedName("hrd_cows_all")
     @Expose
-    var hrdCowsAll: List<String>? = null
+    lateinit var hrdCowsAll: List<String>
 
     @SerializedName("hrd_cows_lact_all")
     @Expose
-    var hrdCowsLactAll: List<String>? = null
+    lateinit var hrdCowsLactAll: List<String>
 
     @SerializedName("hrd_cows_lact_all_pcnt")
     @Expose
-    var hrdCowsLactAllPcnt: List<String>? = null
+    lateinit var hrdCowsLactAllPcnt: List<String>
 
     @SerializedName("hrd_cows_lact_1_all")
     @Expose
-    var hrdCowsLact1All: List<String>? = null
+    lateinit var hrdCowsLact1All: List<String>
 
     @SerializedName("hrd_cows_lact_1_pcnt")
     @Expose
-    var hrdCowsLact1Pcnt: List<String>? = null
+    lateinit var hrdCowsLact1Pcnt: List<String>
 
     @SerializedName("hrd_cows_lact_1_0_30")
     @Expose
-    var hrdCowsLact1030: List<String>? = null
+    lateinit var hrdCowsLact1030: List<String>
 
     @SerializedName("hrd_cows_lact_1_31_60")
     @Expose
-    var hrdCowsLact13160: List<String>? = null
+    lateinit var hrdCowsLact13160: List<String>
 
     @SerializedName("hrd_cows_lact_1_61_120")
     @Expose
-    var hrdCowsLact161120: List<String>? = null
+    lateinit var hrdCowsLact161120: List<String>
 
     @SerializedName("hrd_cows_lact_1_o120")
     @Expose
-    var hrdCowsLact1O120: List<String>? = null
+    lateinit var hrdCowsLact1O120: List<String>
 
     @SerializedName("hrd_cows_lact_2_all")
     @Expose
-    var hrdCowsLact2All: List<String>? = null
+    lateinit var hrdCowsLact2All: List<String>
 
     @SerializedName("hrd_cows_lact_2_pcnt")
     @Expose
-    var hrdCowsLact2Pcnt: List<String>? = null
+    lateinit var hrdCowsLact2Pcnt: List<String>
 
     @SerializedName("hrd_cows_lact_2_0_30")
     @Expose
-    var hrdCowsLact2030: List<String>? = null
+    lateinit var hrdCowsLact2030: List<String>
 
     @SerializedName("hrd_cows_lact_2_31_60")
     @Expose
-    var hrdCowsLact23160: List<String>? = null
+    lateinit var hrdCowsLact23160: List<String>
 
     @SerializedName("hrd_cows_lact_2_61_120")
     @Expose
-    var hrdCowsLact261120: List<String>? = null
+    lateinit var hrdCowsLact261120: List<String>
 
     @SerializedName("hrd_cows_lact_2_o120")
     @Expose
-    var hrdCowsLact2O120: List<String>? = null
+    lateinit var hrdCowsLact2O120: List<String>
 
     @SerializedName("hrd_cows_lact_o2_all")
     @Expose
-    var hrdCowsLactO2All: List<String>? = null
+    lateinit var hrdCowsLactO2All: List<String>
 
     @SerializedName("hrd_cows_lact_o2_pcnt")
     @Expose
-    var hrdCowsLactO2Pcnt: List<String>? = null
+    lateinit var hrdCowsLactO2Pcnt: List<String>
 
     @SerializedName("hrd_cows_lact_o2_0_30")
     @Expose
-    var hrdCowsLactO2030: List<String>? = null
+    lateinit var hrdCowsLactO2030: List<String>
 
     @SerializedName("hrd_cows_lact_o2_31_60")
     @Expose
-    var hrdCowsLactO23160: List<String>? = null
+    lateinit var hrdCowsLactO23160: List<String>
 
     @SerializedName("hrd_cows_lact_o2_61_120")
     @Expose
-    var hrdCowsLactO261120: List<String>? = null
+    lateinit var hrdCowsLactO261120: List<String>
 
     @SerializedName("hrd_cows_lact_o2_o120")
     @Expose
-    var hrdCowsLactO2O120: List<String>? = null
+    lateinit var hrdCowsLactO2O120: List<String>
 
     @SerializedName("hrd_cows_preg_all")
     @Expose
-    var hrdCowsPregAll: List<String>? = null
+    lateinit var hrdCowsPregAll: List<String>
 
     @SerializedName("hrd_cows_preg_pcnt")
     @Expose
-    var hrdCowsPregPcnt: List<String>? = null
+    lateinit var hrdCowsPregPcnt: List<String>
 
     @SerializedName("hrd_cows_dry_all")
     @Expose
-    var hrdCowsDryAll: List<String>? = null
+    lateinit var hrdCowsDryAll: List<String>
 
     @SerializedName("hrd_cows_dry_pcnt")
     @Expose
-    var hrdCowsDryPcnt: List<String>? = null
+    lateinit var hrdCowsDryPcnt: List<String>
 
     @SerializedName("hrd_cows_dry_f1")
     @Expose
-    var hrdCowsDryF1: List<String>? = null
+    lateinit var hrdCowsDryF1: List<String>
 
     @SerializedName("hrd_cows_dry_f2")
     @Expose
-    var hrdCowsDryF2: List<String>? = null
+    lateinit var hrdCowsDryF2: List<String>
 
     @SerializedName("hrd_heifers_all")
     @Expose
-    var hrdHeifersAll: List<String>? = null
+    lateinit var hrdHeifersAll: List<String>
 
     @SerializedName("hrd_heifers_0_2")
     @Expose
-    var hrdHeifers02: List<String>? = null
+    lateinit var hrdHeifers02: List<String>
 
     @SerializedName("hrd_heifers_2_6")
     @Expose
-    var hrdHeifers26: List<String>? = null
+    lateinit var hrdHeifers26: List<String>
 
     @SerializedName("hrd_heifers_6_12")
     @Expose
-    var hrdHeifers612: List<String>? = null
+    lateinit var hrdHeifers612: List<String>
 
     @SerializedName("hrd_heifers_o12")
     @Expose
-    var hrdHeifersO12: List<String>? = null
+    lateinit var hrdHeifersO12: List<String>
 
     @SerializedName("hrd_pheifers_all")
     @Expose
-    var hrdPheifersAll: List<String>? = null
+    lateinit var hrdPheifersAll: List<String>
 
     @SerializedName("hrd_pheifers_f2")
     @Expose
-    var hrdPheifersF2: List<String>? = null
+    lateinit var hrdPheifersF2: List<String>
 
     @SerializedName("hrd_bulls")
     @Expose
-    var hrdBulls: List<String>? = null
+    lateinit var hrdBulls: List<String>
 
     @SerializedName("evt_insem_cows")
     @Expose
-    var evtInsemCows: List<String>? = null
+    lateinit var evtInsemCows: List<String>
 
     @SerializedName("evt_insem_heifers")
     @Expose
-    var evtInsemHeifers: List<String>? = null
+    lateinit var evtInsemHeifers: List<String>
 
     @SerializedName("evt_got_preg_cows")
     @Expose
-    var evtGotPregCows: List<String>? = null
+    lateinit var evtGotPregCows: List<String>
 
     @SerializedName("evt_got_preg_heifers")
     @Expose
-    var evtGotPregHeifers: List<String>? = null
+    lateinit var evtGotPregHeifers: List<String>
 
     @SerializedName("evt_dry_cows")
     @Expose
-    var evtDryCows: List<String>? = null
+    lateinit var evtDryCows: List<String>
 
     @SerializedName("evt_calv_total")
     @Expose
-    var evtCalvTotal: List<String>? = null
+    lateinit var evtCalvTotal: List<String>
 
     @SerializedName("evt_calv_total_pheifers")
     @Expose
-    var evtCalvTotalPheifers: List<String>? = null
+    lateinit var evtCalvTotalPheifers: List<String>
 
     @SerializedName("evt_calv_total_cows")
     @Expose
-    var evtCalvTotalCows: List<String>? = null
+    lateinit var evtCalvTotalCows: List<String>
 
     @SerializedName("evt_calv_alive_heifers")
     @Expose
-    var evtCalvAliveHeifers: List<String>? = null
+    lateinit var evtCalvAliveHeifers: List<String>
 
     @SerializedName("evt_calv_alive_bulls")
     @Expose
-    var evtCalvAliveBulls: List<String>? = null
+    lateinit var evtCalvAliveBulls: List<String>
 
     @SerializedName("evt_out_cows_total")
     @Expose
-    var evtOutCowsTotal: List<String>? = null
+    lateinit var evtOutCowsTotal: List<String>
 
     @SerializedName("evt_out_cows_lact_1_total")
     @Expose
-    var evtOutCowsLact1Total: List<String>? = null
+    lateinit var evtOutCowsLact1Total: List<String>
 
     @SerializedName("evt_out_cows_lact_1_0_30")
     @Expose
-    var evtOutCowsLact1030: List<String>? = null
+    lateinit var evtOutCowsLact1030: List<String>
 
     @SerializedName("evt_out_cows_lact_1_31_60")
     @Expose
-    var evtOutCowsLact13160: List<String>? = null
+    lateinit var evtOutCowsLact13160: List<String>
 
     @SerializedName("evt_out_cows_lact_1_61_120")
     @Expose
-    var evtOutCowsLact161120: List<String>? = null
+    lateinit var evtOutCowsLact161120: List<String>
 
     @SerializedName("evt_out_cows_lact_1_o120")
     @Expose
-    var evtOutCowsLact1O120: List<String>? = null
+    lateinit var evtOutCowsLact1O120: List<String>
 
     @SerializedName("evt_out_cows_lact_2_total")
     @Expose
-    var evtOutCowsLact2Total: List<String>? = null
+    lateinit var evtOutCowsLact2Total: List<String>
 
     @SerializedName("evt_out_cows_lact_2_0_30")
     @Expose
-    var evtOutCowsLact2030: List<String>? = null
+    lateinit var evtOutCowsLact2030: List<String>
 
     @SerializedName("evt_out_cows_lact_2_31_60")
     @Expose
-    var evtOutCowsLact23160: List<String>? = null
+    lateinit var evtOutCowsLact23160: List<String>
 
     @SerializedName("evt_out_cows_lact_2_61_120")
     @Expose
-    var evtOutCowsLact261120: List<String>? = null
+    lateinit var evtOutCowsLact261120: List<String>
 
     @SerializedName("evt_out_cows_lact_2_o120")
     @Expose
-    var evtOutCowsLact2O120: List<String>? = null
+    lateinit var evtOutCowsLact2O120: List<String>
 
     @SerializedName("evt_out_cows_lact_o2_total")
     @Expose
-    var evtOutCowsLactO2Total: List<String>? = null
+    lateinit var evtOutCowsLactO2Total: List<String>
 
     @SerializedName("evt_out_cows_lact_o2_0_30")
     @Expose
-    var evtOutCowsLactO2030: List<String>? = null
+    lateinit var evtOutCowsLactO2030: List<String>
 
     @SerializedName("evt_out_cows_lact_o2_31_60")
     @Expose
-    var evtOutCowsLactO23160: List<String>? = null
+    lateinit var evtOutCowsLactO23160: List<String>
 
     @SerializedName("evt_out_cows_lact_o2_61_120")
     @Expose
-    var evtOutCowsLactO261120: List<String>? = null
+    lateinit var evtOutCowsLactO261120: List<String>
 
     @SerializedName("evt_out_cows_lact_o2_o120")
     @Expose
-    var evtOutCowsLactO2O120: List<String>? = null
+    lateinit var evtOutCowsLactO2O120: List<String>
 
     @SerializedName("evt_out_heifers_total")
     @Expose
-    var evtOutHeifersTotal: List<String>? = null
+    lateinit var evtOutHeifersTotal: List<String>
 
     @SerializedName("evt_out_heifers_0_2")
     @Expose
-    var evtOutHeifers02: List<String>? = null
+    lateinit var evtOutHeifers02: List<String>
 
     @SerializedName("evt_out_heifers_2_6")
     @Expose
-    var evtOutHeifers26: List<String>? = null
+    lateinit var evtOutHeifers26: List<String>
 
     @SerializedName("evt_out_heifers_6_12")
     @Expose
-    var evtOutHeifers612: List<String>? = null
+    lateinit var evtOutHeifers612: List<String>
 
     @SerializedName("evt_out_heifers_o12")
     @Expose
-    var evtOutHeifersO12: List<String>? = null
+    lateinit var evtOutHeifersO12: List<String>
 
     @SerializedName("evt_out_pheifers")
     @Expose
-    var evtOutPheifers: List<String>? = null
+    lateinit var evtOutPheifers: List<String>
 
     @SerializedName("evt_out_bulls")
     @Expose
-    var evtOutBulls: List<String>? = null
+    lateinit var evtOutBulls: List<String>
 
     @SerializedName("mlk_milk_sum_yield")
     @Expose
-    var mlkMilkSumYield: List<String>? = null
+    lateinit var mlkMilkSumYield: List<String>
 
     @SerializedName("mlk_milk_per_cow")
     @Expose
-    var mlkMilkPerCow: List<String>? = null
+    lateinit var mlkMilkPerCow: List<String>
 
     @SerializedName("mlk_milk_per_lact_cow")
     @Expose
-    var mlkMilkPerLactCow: List<String>? = null
+    lateinit var mlkMilkPerLactCow: List<String>
 }
