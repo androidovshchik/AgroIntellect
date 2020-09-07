@@ -98,7 +98,7 @@ abstract class DateActivity : BaseActivity(), DatePickerDialog.OnDateSetListener
     override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         reportModel.apply {
             dateTo = getDate(year, monthOfYear, dayOfMonth)
-            datesChanged.value = true
+            paramsChanged.value = true
         }
     }
 
@@ -121,7 +121,7 @@ abstract class DateActivity : BaseActivity(), DatePickerDialog.OnDateSetListener
                 dateTo = startDate
                 dateFrom = endDate
             }
-            datesChanged.value = true
+            paramsChanged.value = true
         }
     }
 

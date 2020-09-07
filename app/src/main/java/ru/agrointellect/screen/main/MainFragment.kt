@@ -48,7 +48,7 @@ abstract class MainFragment : BaseFragment() {
             RptDesc("rpt_breed_effectivity", "Воспроизводство", 2),
             RptDesc("rpt_fresh_disease", "Послеотельные заболевания", 2),
             RptDesc("rpt_farm_summary_history", "Сводный отчет", 2),
-            RptDesc("rpt_periodical_farm_summary_history", "Сводный отчет по периодам", 2),
+            RptDesc("rpt_periodical_farm_summary_history", "Сводный отчет по периодам", 2, true),
             RptDesc("rpt_all_farms_summary_history", "Сводный отчет по всем фермам", 2),
             RptDesc("rpt_herd_forecast", "Прогноз", 0),
             RptDesc("rpt_sold_animals", "Продажа", 2),

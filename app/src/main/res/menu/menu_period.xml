@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/period_day"
+            android:checked="true"
+            android:title="День" />
+        <item
+            android:id="@+id/period_week"
+            android:title="Неделя" />
+        <item
+            android:id="@+id/period_month"
+            android:title="Месяц" />
+        <item
+            android:id="@+id/period_year"
+            android:title="Год" />
+    </group>
+</menu>

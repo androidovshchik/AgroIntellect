@@ -25,5 +25,7 @@ open class ReportModel : ViewModel() {
 
     var dateTo: Date? = null
 
-    val datesChanged = MutableLiveData<Boolean>()
+    var period: String? = null
+
+    val paramsChanged = MutableLiveData<Boolean>()
 }

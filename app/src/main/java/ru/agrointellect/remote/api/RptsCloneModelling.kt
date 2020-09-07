@@ -97,10 +97,8 @@ class RptCloneModelling : Table {
         val method = CloneDataTable::class.java.getMethod("get${name.capitalize()}")
         val list = method.invoke(data) as List<String>
         return (data.yyyyMm.indices step 2).map {
-            Row(
-                data.yyyyMm[it],
-                "${list.getOrNull(it).orEmpty()} | ${list.getOrNull(it + 1).orEmpty()}"
-            )
+            val value = "${list.getOrNull(it).orEmpty()} | ${list.getOrNull(it + 1).orEmpty()}"
+            Row(data.yyyyMm[it], value)
         }
     }
 }

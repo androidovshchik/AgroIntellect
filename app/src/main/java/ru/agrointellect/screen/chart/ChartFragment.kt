@@ -18,10 +18,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
-import io.ktor.client.request.forms.FormDataContent
-import io.ktor.client.request.post
-import io.ktor.client.statement.HttpResponse
-import io.ktor.http.Parameters
+import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
 import kotlinx.android.synthetic.main.fragment_chart.*
 import kotlinx.android.synthetic.main.item_legend.view.*
 import kotlinx.android.synthetic.main.item_option.view.*
@@ -154,7 +154,7 @@ class ChartFragment : DataFragment() {
         mb_send.setOnClickListener {
             saveImage(fileManager.getImageExternalFile(reportModel.farmReportIds), true)
         }
-        reportModel.datesChanged.observe(viewLifecycleOwner, Observer {
+        reportModel.paramsChanged.observe(viewLifecycleOwner, Observer {
             loadReport()
         })
         loadReport()

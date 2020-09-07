@@ -43,6 +43,7 @@ open class RptDesc(
     val id: String,
     val name: String,
     val datesCount: Int,
+    val hasPeriod: Boolean = false,
     val uid: String = id
 ) : Serializable {
 
@@ -55,7 +56,7 @@ class ChtDesc(
     name: String,
     datesCount: Int,
     uid: String = id
-) : RptDesc(id, name, datesCount, uid) {
+) : RptDesc(id, name, datesCount, false, uid) {
 
     val isLineChart
         get() = uid == "rpt_herd_lactation_graph" || uid == "rpt_milk_events_kpi" || uid == "rpt_farm_summary_history"

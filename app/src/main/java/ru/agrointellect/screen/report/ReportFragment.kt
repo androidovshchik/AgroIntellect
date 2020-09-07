@@ -7,12 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import io.ktor.client.request.forms.FormDataContent
-import io.ktor.client.request.post
-import io.ktor.client.statement.HttpResponse
-import io.ktor.http.Parameters
+import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
 import kotlinx.android.synthetic.main.fragment_report.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancelChildren
@@ -39,6 +38,9 @@ class ReportFragment : DataFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter = TableAdapter(requireContext())
+        if (reportModel.getDesc().hasPeriod) {
+            reportModel.period = "day"
+        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -79,7 +81,7 @@ class ReportFragment : DataFragment() {
         mb_send.setOnClickListener {
             saveExcel(fileManager.getExcelExternalFile(reportModel.farmReportIds), true)
         }
-        reportModel.datesChanged.observe(viewLifecycleOwner, Observer {
+        reportModel.paramsChanged.observe(viewLifecycleOwner, {
             loadReport()
         })
         loadReport()
@@ -152,6 +154,9 @@ class ReportFragment : DataFragment() {
                                 set("report_date_from", apiFormatter.format(it))
                             }
                             append("report_date_to", apiFormatter.format(it))
+                        }
+                        reportModel.period?.let {
+                            append("report_fragmentation", it)
                         }
                     })
                 }
