@@ -6,28 +6,29 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import ru.agrointellect.local.D
 
 @Suppress("SpellCheckingInspection")
 class RptsMilkEventsKpi : Table, Graph {
 
     override val legends: List<String>
         get() = listOf(
-            "Надой 1 д/к",
-            "Осеменений коров",
-            "Проверено на стельность коров",
-            "Запущено коров",
-            "Переводов коров",
-            "Вакцинация коров",
-            "Расчистка копыт коров",
-            "KPI кормления"
+            D["mlk_milk_per_lact_cow"],
+            D["evt_insem_cows"],
+            D["evt_preg_check_cows"],
+            D["evt_dry_cows"],
+            D["evt_move_cows"],
+            D["evt_vacc_cows"],
+            D["evt_footrim_cows"],
+            D["feed_kpi"]
         )
 
     override val columns: List<Column>
         get() {
             val legends = legends
             return listOf(
-                Column("Валовой надой", rowsBy("mlkMilkSumYield")),
-                Column("Надой 1 ф/к", rowsBy("mlkMilkPerCow")),
+                Column(D["mlk_milk_sum_yield"], rowsBy("mlkMilkSumYield")),
+                Column(D["mlk_milk_per_cow"], rowsBy("mlkMilkPerCow")),
                 Column(legends[0], rowsBy("mlkMilkPerLactCow")),
                 Column(legends[1], rowsBy("evtInsemCows")),
                 Column(legends[2], rowsBy("evtPregCheckCows")),

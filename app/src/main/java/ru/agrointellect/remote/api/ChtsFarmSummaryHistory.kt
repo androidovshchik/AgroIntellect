@@ -5,6 +5,7 @@ package ru.agrointellect.remote.api
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import ru.agrointellect.extension.asFloat
+import ru.agrointellect.local.D
 import kotlin.math.max
 
 /**
@@ -13,7 +14,7 @@ import kotlin.math.max
 class ChtsFarmSummaryHistory2 : RptsFarmSummaryHistory() {
 
     override val legends: List<String>
-        get() = listOf("Фуражных коров", "Дойных коров всего", "Стельных коров")
+        get() = listOf(D["hrd_cows_all"], D["hrd_cows_lact_all"], D["hrd_cows_preg_all"])
 
     override val data: GraphData
         get() = BarData(
@@ -32,7 +33,7 @@ class ChtsFarmSummaryHistory2 : RptsFarmSummaryHistory() {
 class ChtsFarmSummaryHistory3 : RptsFarmSummaryHistory() {
 
     override val legends: List<String>
-        get() = listOf("Кетозов всего")
+        get() = listOf(D["evt_ketos_total"])
 
     override val data: GraphData
         get() = BarData(
@@ -46,7 +47,7 @@ class ChtsFarmSummaryHistory3 : RptsFarmSummaryHistory() {
 class ChtsFarmSummaryHistory4 : RptsFarmSummaryHistory() {
 
     override val legends: List<String>
-        get() = listOf("Отелов всего", "Задержаний последа всего", "Парезов всего")
+        get() = listOf(D["evt_calv_total"], D["evt_ret_plac_total"], D["evt_pares_total"])
 
     override val data: GraphData
         get() = BarData(
@@ -62,7 +63,11 @@ class ChtsFarmSummaryHistory4 : RptsFarmSummaryHistory() {
 class ChtsFarmSummaryHistory5 : RptsFarmSummaryHistory() {
 
     override val legends: List<String>
-        get() = listOf("Продажа коров всего", "Продажа телок всего", "Продажа нетелей")
+        get() = listOf(
+            D["evt_sold_cows_total"],
+            D["evt_sold_heifers_total"],
+            D["evt_sold_pheifers"]
+        )
 
     override val data: GraphData
         get() = BarData(
@@ -78,7 +83,11 @@ class ChtsFarmSummaryHistory5 : RptsFarmSummaryHistory() {
 class ChtsFarmSummaryHistory6 : RptsFarmSummaryHistory() {
 
     override val legends: List<String>
-        get() = listOf("Падеж коров всего", "Падеж телок всего", "Падеж нетелей")
+        get() = listOf(
+            D["evt_dead_cows_total"],
+            D["evt_dead_heifers_total"],
+            D["evt_dead_pheifers"]
+        )
 
     override val data: GraphData
         get() = BarData(
