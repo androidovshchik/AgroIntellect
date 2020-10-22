@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import ru.agrointellect.extension.orDash
 import ru.agrointellect.local.D
+import ru.agrointellect.remote.bean.RptLastUpdate
 
 @Suppress("SpellCheckingInspection")
 class RptsLastUpdate : Table {

@@ -3,6 +3,7 @@ package ru.agrointellect.remote.api
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import ru.agrointellect.local.D
+import ru.agrointellect.remote.bean.RptHerdAlignmentNow
 
 @Suppress("SpellCheckingInspection")
 class RptsHerdAlignmentNow : Table {
