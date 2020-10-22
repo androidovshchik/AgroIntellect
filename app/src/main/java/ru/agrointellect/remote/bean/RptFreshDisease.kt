@@ -1,7 +1,8 @@
-package ru.agrointellect.remote.api
+package ru.agrointellect.remote.bean
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import ru.agrointellect.remote.api.formatDate
 
 @Suppress("SpellCheckingInspection")
 class RptFreshDisease {

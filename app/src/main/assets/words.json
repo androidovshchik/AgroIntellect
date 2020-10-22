@@ -178,7 +178,7 @@
   "feed_cost_1kg_milk_total": "Кормовая с/с 1 кг молока общая",
   "feed_kpi": "KPI кормления",
   "group_description": "Описание группы",
-  "group_number": "Группа",
+  "group_number": "Группа %d",
   "hrd_bulls": "Быков",
   "hrd_cows_all": "Фуражных коров",
   "hrd_cows_dry_all": "Сухостойных коров всего",
@@ -235,6 +235,6 @@
   "mlk_sum_milk_per_cow": "Суммарный надой 1 ф/к",
   "mlk_sum_milk_per_lact_cow": "Суммарный надой 1 д/к",
   "mlk_sum_milk_sum_yield": "Суммарный валовой надой",
-  "sample_lactation_*_per_*_milking_days_daily_milk": "Образец %s за %d дней",
+  "sample_lactation_*_per_*_milking_days_daily_milk": "Образец %d за %d дней",
   "yyyy_mm": "Год Месяц"
 }

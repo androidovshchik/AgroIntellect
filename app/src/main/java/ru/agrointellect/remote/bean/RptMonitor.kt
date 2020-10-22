@@ -1,9 +1,10 @@
-package ru.agrointellect.remote.api
+package ru.agrointellect.remote.bean
 
 import android.graphics.Color
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import ru.agrointellect.R
+import ru.agrointellect.remote.api.formatDateZero
 
 @Suppress("SpellCheckingInspection")
 class RptMonitor {

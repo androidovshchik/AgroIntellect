@@ -1,4 +1,4 @@
-package ru.agrointellect.remote.api
+package ru.agrointellect.remote.bean
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

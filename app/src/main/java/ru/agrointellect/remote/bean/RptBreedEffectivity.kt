@@ -1,8 +1,9 @@
-package ru.agrointellect.remote.api
+package ru.agrointellect.remote.bean
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import ru.agrointellect.remote.api.formatDate
 
 @Keep
 @Suppress("SpellCheckingInspection")
