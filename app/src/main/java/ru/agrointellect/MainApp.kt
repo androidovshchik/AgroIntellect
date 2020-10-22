@@ -31,6 +31,7 @@ class MainApp : Application(), KodeinAware {
         import(remoteModule)
     }
 
+    @Suppress("SpellCheckingInspection")
     override fun onCreate() {
         super.onCreate()
         System.setProperty(

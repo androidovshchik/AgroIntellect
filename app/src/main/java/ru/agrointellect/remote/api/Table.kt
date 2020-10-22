@@ -1,8 +1,9 @@
 package ru.agrointellect.remote.api
 
-import android.os.Parcel
 import android.os.Parcelable
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
+import kotlinx.android.parcel.Parcelize
+import ru.agrointellect.extension.orZero
 
 /**
  * From YYYY-MM-DD
@@ -24,18 +25,9 @@ fun formatDateZero(date: String): String {
     return formatDate(date).substringAfterLast("00.")
 }
 
-interface Table {
-
-    val columns: List<Column>
-}
-
-class Column(title: String, items: List<Row>) : ExpandableGroup<Row>(title, items)
-
-class Row(key: String, value: String?) : Parcelable {
-
+fun newRow(key: String, value: String?): Row {
     var isBold = false
-
-    val key = when (key) {
+    val newKey = when (key) {
         "average" -> {
             isBold = true
             "Средние показатели"
@@ -46,17 +38,19 @@ class Row(key: String, value: String?) : Parcelable {
         }
         else -> key
     }
-
-    val value = value ?: "0"
-
-    override fun writeToParcel(dest: Parcel, flags: Int) {}
-
-    override fun describeContents() = 0
-
-    companion object CREATOR : Parcelable.Creator<Row> {
-
-        override fun createFromParcel(parcel: Parcel) = null
-
-        override fun newArray(size: Int) = null
-    }
+    return Row(newKey, value.orZero(), isBold)
 }
+
+interface Table {
+
+    val columns: List<Column>
+}
+
+class Column(title: String, items: List<Row>) : ExpandableGroup<Row>(title, items)
+
+@Parcelize
+class Row(
+    var key: String,
+    val value: String,
+    var isBold: Boolean
+) : Parcelable
