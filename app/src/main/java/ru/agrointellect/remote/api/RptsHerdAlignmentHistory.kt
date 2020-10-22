@@ -2,6 +2,8 @@ package ru.agrointellect.remote.api
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import ru.agrointellect.local.D
+import ru.agrointellect.remote.bean.RptHerdAlignmentHistory
 
 @Suppress("SpellCheckingInspection")
 class RptsHerdAlignmentHistory : Table {
@@ -9,11 +11,11 @@ class RptsHerdAlignmentHistory : Table {
     override val columns: List<Column>
         get() = items.map {
             Column(
-                "Группа ${it.groupNumber}", listOf(
-                    Row("Кол-во животных", it.countOfAnimalsInGroup),
-                    Row("День доения", it.averageDaysInMilk),
-                    Row("Надой", it.averageMilk),
-                    Row("Ожидаемый надой", it.expectedAverageMilk)
+                D["group_number", it.groupNumber], listOf(
+                    Row(D["count_of_animals_in_group"], it.countOfAnimalsInGroup),
+                    Row(D["average_days_in_milk"], it.averageDaysInMilk),
+                    Row(D["average_milk"], it.averageMilk),
+                    Row(D["expected_average_milk"], it.expectedAverageMilk)
                 )
             )
         }
