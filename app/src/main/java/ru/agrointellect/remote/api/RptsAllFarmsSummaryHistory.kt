@@ -3,12 +3,13 @@
 package ru.agrointellect.remote.api
 
 import android.annotation.SuppressLint
-import androidx.annotation.Keep
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import ru.agrointellect.local.D
+import ru.agrointellect.remote.bean.AllDataTable
+import ru.agrointellect.remote.bean.PeriodicalDataTable
 
-class RptAllFarmsSummaryHistory : ListFarmSummaryHistory<AllDataTable>() {
+class RptsAllFarmsSummaryHistory : ListFarmSummaryHistory<AllDataTable>() {
 
     @SerializedName("data_table")
     @Expose
@@ -21,14 +22,6 @@ class RptAllFarmsSummaryHistory : ListFarmSummaryHistory<AllDataTable>() {
         val list = method.invoke(data) as List<String>
         return data.farmName.mapIndexed { i, farm -> Row(farm, list.getOrNull(i)) }
     }
-}
-
-@Keep
-class AllDataTable : PeriodicalDataTable() {
-
-    @SerializedName("farm_name")
-    @Expose
-    lateinit var farmName: List<String>
 }
 
 abstract class ListFarmSummaryHistory<T : PeriodicalDataTable> : Table {

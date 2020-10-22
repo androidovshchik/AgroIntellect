@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import ru.agrointellect.remote.bean.PeriodicalDataTable
 
-class RptPeriodicalFarmSummaryHistory : ListFarmSummaryHistory<PeriodicalDataTable>() {
+class RptsPeriodicalFarmSummaryHistory : ListFarmSummaryHistory<PeriodicalDataTable>() {
 
     @SerializedName("data_table")
     @Expose

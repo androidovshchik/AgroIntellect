@@ -744,4 +744,16 @@ open class PeriodicalDataTable {
     @SerializedName("feed_kpi")
     @Expose
     lateinit var feedKpi: List<String>
+
+    @SerializedName("feed_cost_1kg_milk_total")
+    @Expose
+    lateinit var feedCost1kgMilkTotal: List<String>
+
+    @SerializedName("feed_cost_1kg_milk_cows_all")
+    @Expose
+    lateinit var feedCost1kgMilkCowsAll: List<String>
+
+    @SerializedName("feed_cost_1kg_milk_cows_lact")
+    @Expose
+    lateinit var feedCost1kgMilkCowsLact: List<String>
 }
