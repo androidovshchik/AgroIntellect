@@ -4,17 +4,18 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import ru.agrointellect.local.D
 
 @Suppress("SpellCheckingInspection")
 class RptsFreshDisease : Table, Graph {
 
     override val legends: List<String>
         get() = listOf(
-            "Отелов всего",
-            "Задержаний последа всего",
-            "Парезов всего",
-            "Кетозов всего",
-            "Метритов"
+            D["evt_calv_total"],
+            D["evt_ret_plac_total"],
+            D["evt_pares_total"],
+            D["evt_ketos_total"],
+            D["evt_metrit"]
         )
 
     override val columns: List<Column>

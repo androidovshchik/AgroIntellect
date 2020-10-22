@@ -235,6 +235,6 @@
   "mlk_sum_milk_per_cow": "Суммарный надой 1 ф/к",
   "mlk_sum_milk_per_lact_cow": "Суммарный надой 1 д/к",
   "mlk_sum_milk_sum_yield": "Суммарный валовой надой",
-  "sample_lactation_<продуктивность>_per_305_milking_days_daily_milk": "Образец <продуктивность> за 305 дней",
+  "sample_lactation_*_per_*_milking_days_daily_milk": "Образец %s за %d дней",
   "yyyy_mm": "Год Месяц"
 }

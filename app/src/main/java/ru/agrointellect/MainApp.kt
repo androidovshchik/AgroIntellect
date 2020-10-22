@@ -12,6 +12,7 @@ import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.provider
+import ru.agrointellect.local.D
 import ru.agrointellect.local.localModule
 import ru.agrointellect.remote.remoteModule
 import timber.log.Timber
@@ -47,6 +48,7 @@ class MainApp : Application(), KodeinAware {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
+        D.initialize(applicationContext)
         ViewPump.init(
             ViewPump.builder()
                 .addInterceptor(
