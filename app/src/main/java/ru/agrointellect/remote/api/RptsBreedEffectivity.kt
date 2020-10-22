@@ -3,41 +3,45 @@ package ru.agrointellect.remote.api
 import android.annotation.SuppressLint
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import ru.agrointellect.local.D
 
 @Suppress("SpellCheckingInspection")
 class RptsBreedEffectivity : Table {
 
     override val columns: List<Column>
         get() = listOf(
-            Column("№ лактации стада", rowsBy("avgLactNum")),
-            Column("День доения", rowsBy("avgDaysInMilk")),
-            Column("Сервис-период", rowsBy("avgOpenDays")),
-            Column("Кол-во дней в сухостое", rowsBy("avgDryDays")),
-            Column("День стельности коров", rowsBy("avgPregnantDaysCows")),
-            Column("День стельности нетелей", rowsBy("avgPregnantDaysHeifers")),
-            Column("Межотельный интервал", rowsBy("avgCalvIntDays")),
-            Column("Интервал между осеменениями коров", rowsBy("avgInsemIntDaysCows")),
-            Column("Интервал между осеменениями телок", rowsBy("avgInsemIntDaysHeifers")),
-            Column("День доения 1-го осеменения коров", rowsBy("avgFirstInsemDimCows")),
-            Column("Возраст 1-го осеменения телок", rowsBy("avgFirstInsemAgeHeifers")),
-            Column("Возраст 1-го отела", rowsBy("avgFirstCalvAge1Lact")),
-            Column("% дойных в стаде", rowsBy("hrdCowsLactAllPcnt")),
-            Column("% стельных в стаде", rowsBy("hrdCowsPregPcnt")),
-            Column("% сухостойных в стаде", rowsBy("hrdCowsDryPcnt")),
-            Column("% рождаемости телок", rowsBy("evtCalvAliveHeifersAllPcnt")),
-            Column("% рождаемости телок от нетелей", rowsBy("evtCalvAliveHeifersPheifersPcnt")),
-            Column("% рождаемости телок от коров", rowsBy("evtCalvAliveHeifersCowsPcnt")),
-            Column("% мертворожденности", rowsBy("evtCalvDeadAllPcnt")),
-            Column("% мертворожденности от нетелей", rowsBy("evtCalvDeadPheifersPcnt")),
-            Column("% мертворожденности от коров", rowsBy("evtCalvDeadCowsPcnt")),
-            Column("Индекс выявления охоты коров", rowsBy("brdHeatDetRateCow")),
-            Column("Индекс выявления охоты телок", rowsBy("brdHeatDetRateHeif")),
-            Column("Индекс оплодотворяемости коров", rowsBy("brdConcRateCow")),
-            Column("Индекс оплодотворяемости телок", rowsBy("brdConcRateHeif")),
-            Column("Индекс стельности коров", rowsBy("brdPregRateCow")),
-            Column("Индекс стельности телок", rowsBy("brdPregRateHeif")),
-            Column("Доз семени на стельную корову", rowsBy("brdStrawsPerPregCow")),
-            Column("Доз семени на стельную телку", rowsBy("brdStrawsPerPregHeif"))
+            Column(D["avg_lact_num"], rowsBy("avgLactNum")),
+            Column(D["average_days_in_milk"], rowsBy("avgDaysInMilk")),
+            Column(D["avg_open_days"], rowsBy("avgOpenDays")),
+            Column(D["avg_dry_days"], rowsBy("avgDryDays")),
+            Column(D["avg_pregnant_days_cows"], rowsBy("avgPregnantDaysCows")),
+            Column(D["avg_pregnant_days_heifers"], rowsBy("avgPregnantDaysHeifers")),
+            Column(D["avg_calv_int_days"], rowsBy("avgCalvIntDays")),
+            Column(D["avg_insem_int_days_cows"], rowsBy("avgInsemIntDaysCows")),
+            Column(D["avg_insem_int_days_heifers"], rowsBy("avgInsemIntDaysHeifers")),
+            Column(D["avg_first_insem_dim_cows"], rowsBy("avgFirstInsemDimCows")),
+            Column(D["avg_first_insem_age_heifers"], rowsBy("avgFirstInsemAgeHeifers")),
+            Column(D["avg_first_calv_age_1_lact"], rowsBy("avgFirstCalvAge1Lact")),
+            Column(D["hrd_cows_lact_all_pcnt"], rowsBy("hrdCowsLactAllPcnt")),
+            Column(D["hrd_cows_preg_pcnt"], rowsBy("hrdCowsPregPcnt")),
+            Column(D["hrd_cows_dry_pcnt"], rowsBy("hrdCowsDryPcnt")),
+            Column(D["evt_calv_alive_heifers_all_pcnt"], rowsBy("evtCalvAliveHeifersAllPcnt")),
+            Column(
+                D["evt_calv_alive_heifers_pheifers_pcnt"],
+                rowsBy("evtCalvAliveHeifersPheifersPcnt")
+            ),
+            Column(D["evt_calv_alive_heifers_cows_pcnt"], rowsBy("evtCalvAliveHeifersCowsPcnt")),
+            Column(D["evt_calv_dead_all_pcnt"], rowsBy("evtCalvDeadAllPcnt")),
+            Column(D["evt_calv_dead_pheifers_pcnt"], rowsBy("evtCalvDeadPheifersPcnt")),
+            Column(D["evt_calv_dead_cows_pcnt"], rowsBy("evtCalvDeadCowsPcnt")),
+            Column(D["brd_heat_det_rate_cow"], rowsBy("brdHeatDetRateCow")),
+            Column(D["brd_heat_det_rate_heif"], rowsBy("brdHeatDetRateHeif")),
+            Column(D["brd_conc_rate_cow"], rowsBy("brdConcRateCow")),
+            Column(D["brd_conc_rate_heif"], rowsBy("brdConcRateHeif")),
+            Column(D["brd_preg_rate_cow"], rowsBy("brdPregRateCow")),
+            Column(D["brd_preg_rate_heif"], rowsBy("brdPregRateHeif")),
+            Column(D["brd_straws_per_preg_cow"], rowsBy("brdStrawsPerPregCow")),
+            Column(D["brd_straws_per_preg_heif"], rowsBy("brdStrawsPerPregHeif"))
         )
 
     @SuppressLint("DefaultLocale")

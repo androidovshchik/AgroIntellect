@@ -4,12 +4,18 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import ru.agrointellect.local.D
 
 @Suppress("SpellCheckingInspection")
 class RptsDiedAnimal : Table, Graph {
 
     override val legends: List<String>
-        get() = listOf("Падеж коров всего", "Падеж нетелей", "Падеж телок всего", "Падеж быков")
+        get() = listOf(
+            D["evt_dead_cows_total"],
+            D["evt_dead_pheifers"],
+            D["evt_dead_heifers_total"],
+            D["evt_dead_bulls"]
+        )
 
     override val columns: List<Column>
         get() {

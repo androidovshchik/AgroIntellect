@@ -2,6 +2,7 @@ package ru.agrointellect.remote.api
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import ru.agrointellect.local.D
 
 @Suppress("SpellCheckingInspection")
 class RptsHerdAlignmentNow : Table {
@@ -10,11 +11,11 @@ class RptsHerdAlignmentNow : Table {
         get() = items.map {
             Column(
                 "${it.groupNumber}. ${it.groupDescription}", listOf(
-                    Row("Кол-во животных", it.countOfAnimalsInGroup),
-                    Row("Надой сегодня", it.averageMilkToday),
-                    Row("Надой вчера", it.averageMilkYesterday),
-                    Row("День доения", it.averageDaysInMilk),
-                    Row("Ожидаемый надой", it.expectedAverageMilk)
+                    Row(D["count_of_animals_in_group"], it.countOfAnimalsInGroup),
+                    Row(D["average_milk_today"], it.averageMilkToday),
+                    Row(D["average_milk_yesterday"], it.averageMilkYesterday),
+                    Row(D["average_days_in_milk"], it.averageDaysInMilk),
+                    Row(D["expected_average_milk"], it.expectedAverageMilk)
                 )
             )
         }

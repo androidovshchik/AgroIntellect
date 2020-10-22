@@ -5,13 +5,14 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import ru.agrointellect.extension.asFloat
+import ru.agrointellect.local.D
 import kotlin.math.max
 
 @Suppress("SpellCheckingInspection")
 class RptsHerdDistribution : Table, Graph {
 
     override val legends: List<String>
-        get() = listOf("Фуражных коров", "Дойных коров всего", "Стельных коров")
+        get() = listOf(D["hrd_cows_all"], D["hrd_cows_lact_all"], D["hrd_cows_preg_all"])
 
     override val columns: List<Column>
         get() {
