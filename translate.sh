@@ -241,10 +241,10 @@ ARRAY=(
   "yyyy_mm:Год Месяц"
 )
 
-for file in $(find ./app/src -name '*.kt'); do
+for file in $(find app/src/main/java/ru/agrointellect/remote -name '*.kt'); do
   for item in "${ARRAY[@]}" ; do
     KEY="${item%%:*}"
     VALUE="${item##*:}"
-    node replace.js "$file" "$VALUE" "$KEY"
+    node replace.js "$file" "\"$VALUE\"" "D[\"$KEY\"]"
   done
 done
