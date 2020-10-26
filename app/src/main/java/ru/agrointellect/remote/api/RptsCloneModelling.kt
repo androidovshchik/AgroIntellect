@@ -6,10 +6,10 @@ import android.annotation.SuppressLint
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import ru.agrointellect.local.D
-import ru.agrointellect.remote.bean.CloneDataTable
-import ru.agrointellect.remote.bean.ModelParameters
+import ru.agrointellect.remote.dto.CloneDataTable
+import ru.agrointellect.remote.dto.ModelParameters
 
-class RptCloneModelling : Table {
+class RptsCloneModelling : Table {
 
     override val columns: List<Column>
         get() = listOf(
@@ -101,7 +101,7 @@ class RptCloneModelling : Table {
         val list = method.invoke(data) as List<String>
         return (data.yyyyMm.indices step 2).map {
             val value = "${list.getOrNull(it).orEmpty()} | ${list.getOrNull(it + 1).orEmpty()}"
-            Row(data.yyyyMm[it], value)
+            newRow(data.yyyyMm[it], value)
         }
     }
 }

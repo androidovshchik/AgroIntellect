@@ -1,6 +1,6 @@
 @file:Suppress("SpellCheckingInspection")
 
-package ru.agrointellect.remote.bean
+package ru.agrointellect.remote.dto
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

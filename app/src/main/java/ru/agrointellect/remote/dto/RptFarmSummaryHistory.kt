@@ -1,4 +1,4 @@
-package ru.agrointellect.remote.bean
+package ru.agrointellect.remote.dto
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.Expose

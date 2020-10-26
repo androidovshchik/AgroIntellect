@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import ru.agrointellect.local.D
-import ru.agrointellect.remote.bean.RptBreedEffectivity
+import ru.agrointellect.remote.dto.RptBreedEffectivity
 
 @Suppress("SpellCheckingInspection")
 class RptsBreedEffectivity : Table {
@@ -48,7 +48,7 @@ class RptsBreedEffectivity : Table {
     @SuppressLint("DefaultLocale")
     private fun rowsBy(name: String): List<Row> {
         val method = RptBreedEffectivity::class.java.getMethod("get${name.capitalize()}")
-        return items.map { Row(it.date, method.invoke(it)?.toString()) }
+        return items.map { newRow(it.date, method.invoke(it)?.toString()) }
     }
 
     @SerializedName("rpt_breed_effectivity")

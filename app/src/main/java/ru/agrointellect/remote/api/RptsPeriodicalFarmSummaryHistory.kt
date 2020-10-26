@@ -6,7 +6,7 @@ import android.annotation.SuppressLint
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import ru.agrointellect.local.D
-import ru.agrointellect.remote.bean.RptPeriodicalDataTable
+import ru.agrointellect.remote.dto.RptPeriodicalDataTable
 
 class RptsPeriodicalFarmSummaryHistory : RptsBaseFarmSummaryHistory<RptPeriodicalDataTable>() {
 

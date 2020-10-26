@@ -1,4 +1,4 @@
-package ru.agrointellect.remote.bean
+package ru.agrointellect.remote.dto
 
 import android.os.Parcelable
 import androidx.annotation.Keep

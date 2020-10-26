@@ -5,7 +5,7 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import ru.agrointellect.local.D
-import ru.agrointellect.remote.bean.RptFreshDisease
+import ru.agrointellect.remote.dto.RptFreshDisease
 
 @Suppress("SpellCheckingInspection")
 class RptsFreshDisease : Table, Graph {
@@ -23,11 +23,11 @@ class RptsFreshDisease : Table, Graph {
         get() {
             val legends = legends
             return listOf(
-                Column(legends[0], items.map { Row(it.date, it.evtCalvTotal) }),
-                Column(legends[1], items.map { Row(it.date, it.evtRetPlacTotal) }),
-                Column(legends[2], items.map { Row(it.date, it.evtParesTotal) }),
-                Column(legends[3], items.map { Row(it.date, it.evtKetosTotal) }),
-                Column(legends[4], items.map { Row(it.date, it.evtMetrit) })
+                Column(legends[0], items.map { newRow(it.date, it.evtCalvTotal) }),
+                Column(legends[1], items.map { newRow(it.date, it.evtRetPlacTotal) }),
+                Column(legends[2], items.map { newRow(it.date, it.evtParesTotal) }),
+                Column(legends[3], items.map { newRow(it.date, it.evtKetosTotal) }),
+                Column(legends[4], items.map { newRow(it.date, it.evtMetrit) })
             )
         }
 

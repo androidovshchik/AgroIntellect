@@ -5,7 +5,7 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import ru.agrointellect.local.D
-import ru.agrointellect.remote.bean.RptSoldAnimal
+import ru.agrointellect.remote.dto.RptSoldAnimal
 
 @Suppress("SpellCheckingInspection")
 class RptsSoldAnimal : Table, Graph {
@@ -22,10 +22,10 @@ class RptsSoldAnimal : Table, Graph {
         get() {
             val legends = legends
             return listOf(
-                Column(legends[0], items.map { Row(it.date, it.evtSoldCowsTotal) }),
-                Column(legends[1], items.map { Row(it.date, it.evtSoldPheifers) }),
-                Column(legends[2], items.map { Row(it.date, it.evtSoldHeifersTotal) }),
-                Column(legends[3], items.map { Row(it.date, it.evtSoldBulls) })
+                Column(legends[0], items.map { newRow(it.date, it.evtSoldCowsTotal) }),
+                Column(legends[1], items.map { newRow(it.date, it.evtSoldPheifers) }),
+                Column(legends[2], items.map { newRow(it.date, it.evtSoldHeifersTotal) }),
+                Column(legends[3], items.map { newRow(it.date, it.evtSoldBulls) })
             )
         }
 

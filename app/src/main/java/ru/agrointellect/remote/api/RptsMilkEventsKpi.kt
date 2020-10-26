@@ -7,7 +7,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import ru.agrointellect.local.D
-import ru.agrointellect.remote.bean.RptMilkEventsKpi
+import ru.agrointellect.remote.dto.RptMilkEventsKpi
 
 @Suppress("SpellCheckingInspection")
 class RptsMilkEventsKpi : Table, Graph {

@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import ru.agrointellect.local.D
-import ru.agrointellect.remote.bean.RptHerdForecast
+import ru.agrointellect.remote.dto.RptHerdForecast
 
 @Suppress("SpellCheckingInspection")
 class RptsHerdForecast : Table {
@@ -87,7 +87,7 @@ class RptsHerdForecast : Table {
     @SuppressLint("DefaultLocale")
     private fun rowsBy(name: String): List<Row> {
         val method = RptHerdForecast::class.java.getMethod("get${name.capitalize()}")
-        return items.map { Row(it.yyyyMm.substringAfter("."), method.invoke(it)!!.toString()) }
+        return items.map { newRow(it.yyyyMm.substringAfter("."), method.invoke(it)!!.toString()) }
     }
 
     @SerializedName("rpt_herd_forecast")

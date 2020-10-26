@@ -5,7 +5,7 @@ package ru.agrointellect.remote.api
 import android.annotation.SuppressLint
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ru.agrointellect.remote.bean.RptAllDataTable
+import ru.agrointellect.remote.dto.RptAllDataTable
 
 class RptsAllFarmsSummaryHistory : RptsBaseFarmSummaryHistory<RptAllDataTable>() {
 
