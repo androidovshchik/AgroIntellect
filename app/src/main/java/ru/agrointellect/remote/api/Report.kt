@@ -56,8 +56,8 @@ class ChtDesc(
     override val id: String,
     override val name: String,
     override val datesCount: Int,
-    override val hasPeriod: Boolean = false,
     override val uid: String = id,
+    override val hasPeriod: Boolean = false,
     override var isSelected: Boolean = false
 ) : RptDesc(id, name, datesCount, false, uid) {
 

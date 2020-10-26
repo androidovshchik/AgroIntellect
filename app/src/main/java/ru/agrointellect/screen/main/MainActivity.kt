@@ -35,7 +35,6 @@ import ru.agrointellect.extension.setAll
 import ru.agrointellect.local.FileManager
 import ru.agrointellect.local.Preferences
 import ru.agrointellect.local.deleteFile
-import ru.agrointellect.remote.api.Farm
 import ru.agrointellect.screen.LoginActivity
 import ru.agrointellect.screen.base.BaseActivity
 
@@ -49,12 +48,12 @@ class MainActivity : BaseActivity() {
 
     private lateinit var navController: NavController
 
-    @Suppress("UNCHECKED_CAST")
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainModel = ViewModelProvider(this).get(MainModel::class.java)
         if (intent.hasExtra("farms")) {
-            mainModel.farms.setAll(intent.getSerializableExtra("farms") as List<Farm>)
+            mainModel.farms.setAll(intent.getParcelableArrayListExtra("farms"))
         }
         setContentView(R.layout.activity_main)
         navController = findNavController(R.id.f_host)

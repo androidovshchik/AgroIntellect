@@ -25,7 +25,7 @@
         android:name="ru.agrointellect.screen.report.ReportActivity">
         <argument
             android:name="farm"
-            app:argType="ru.agrointellect.remote.api.Farm" />
+            app:argType="ru.agrointellect.remote.dto.Farm" />
         <argument
             android:name="desc"
             app:argType="ru.agrointellect.remote.api.RptDesc" />
@@ -35,7 +35,7 @@
         android:name="ru.agrointellect.screen.chart.ChartActivity">
         <argument
             android:name="farm"
-            app:argType="ru.agrointellect.remote.api.Farm" />
+            app:argType="ru.agrointellect.remote.dto.Farm" />
         <argument
             android:name="desc"
             app:argType="ru.agrointellect.remote.api.ChtDesc" />
