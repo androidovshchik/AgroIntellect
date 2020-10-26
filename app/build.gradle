@@ -9,7 +9,7 @@ android {
         applicationId "ru.agrointellect"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 4
+        versionCode 5
         versionName "1.0"
         buildConfigField "String", "API_URL", "\"https://api.agrointellect.ru/\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

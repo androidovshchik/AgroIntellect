@@ -2,11 +2,12 @@
 
 package ru.agrointellect.remote.api
 
+import android.os.Parcelable
 import androidx.annotation.Keep
 import com.github.mikephil.charting.data.LineDataSet
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
+import kotlinx.android.parcel.Parcelize
 
 class Report {
 
@@ -39,23 +40,25 @@ class Report {
 }
 
 @Keep
+@Parcelize
 open class RptDesc(
-    val id: String,
-    val name: String,
-    val datesCount: Int,
-    val hasPeriod: Boolean = false,
-    val uid: String = id
-) : Serializable {
-
-    var isSelected = false
-}
+    open val id: String,
+    open val name: String,
+    open val datesCount: Int,
+    open val hasPeriod: Boolean = false,
+    open val uid: String = id,
+    open var isSelected: Boolean = false
+) : Parcelable
 
 @Keep
+@Parcelize
 class ChtDesc(
-    id: String,
-    name: String,
-    datesCount: Int,
-    uid: String = id
+    override val id: String,
+    override val name: String,
+    override val datesCount: Int,
+    override val hasPeriod: Boolean = false,
+    override val uid: String = id,
+    override var isSelected: Boolean = false
 ) : RptDesc(id, name, datesCount, false, uid) {
 
     val isLineChart
