@@ -8,6 +8,8 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import de.siegmar.fastcsv.reader.CsvReader
 import ru.agrointellect.extension.asFloat
+import ru.agrointellect.local.D
+import ru.agrointellect.remote.dto.RptHerdLactationGraph
 import java.io.StringReader
 
 @Suppress("SpellCheckingInspection", "ReplaceManualRangeWithIndicesCalls")
@@ -17,16 +19,16 @@ class RptsHerdLactationGraph : Table, Graph {
         get() {
             val data = linkedMapOf<String, String>()
             items[0].averageLactationDailyMilk?.let {
-                data["Средняя лактация"] = it
+                data[D["average_lactation_daily_milk"]] = it
             }
             items[0].lactation1DailyMilk?.let {
-                data["Лактация 1"] = it
+                data[D["lactation_1_daily_milk"]] = it
             }
             items[0].lactation2DailyMilk?.let {
-                data["Лактация 2"] = it
+                data[D["lactation_2_daily_milk"]] = it
             }
             items[0].lactationOver2DailyMilk?.let {
-                data["Лактация > 2"] = it
+                data[D["lactation_over_2_daily_milk"]] = it
             }
             items[0].sampleLactations.forEach {
                 val lactation = it.key.indexOf("_lactation_")
@@ -35,7 +37,8 @@ class RptsHerdLactationGraph : Table, Graph {
                 if (lactation > 0 && per > 0 && milking > 0) {
                     val number = it.key.substring(lactation + "_lactation_".length, per)
                     val days = it.key.substring(per + "_per_".length, milking)
-                    data["Образец $number за $days дней"] = it.value ?: return@forEach
+                    data[D["sample_lactation_*_per_*_milking_days_daily_milk", number, days]] =
+                        it.value ?: return@forEach
                 }
             }
             return data
@@ -55,7 +58,7 @@ class RptsHerdLactationGraph : Table, Graph {
             val days = csv.getRow(0)
             return map.keys.mapIndexed { i, key ->
                 Column(key, csv.getRow(i + 1).fields.mapIndexed { j, value ->
-                    Row("${days.getField(j)} день доения", value)
+                    newRow("${days.getField(j)} день доения", value)
                 })
             }
         }
