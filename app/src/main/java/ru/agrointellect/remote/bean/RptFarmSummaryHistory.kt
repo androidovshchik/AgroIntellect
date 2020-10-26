@@ -908,4 +908,16 @@ class RptFarmSummaryHistory {
     @Expose
     @JvmField
     var feedKpi: String? = null
+
+    @SerializedName("feed_cost_1kg_milk_total")
+    @Expose
+    var feedCost1kgMilkTotal: String? = null
+
+    @SerializedName("feed_cost_1kg_milk_cows_all")
+    @Expose
+    var feedCost1kgMilkCowsAll: String? = null
+
+    @SerializedName("feed_cost_1kg_milk_cows_lact")
+    @Expose
+    var feedCost1kgMilkCowsLact: String? = null
 }

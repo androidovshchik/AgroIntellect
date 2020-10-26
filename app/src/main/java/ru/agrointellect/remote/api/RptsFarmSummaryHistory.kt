@@ -200,7 +200,10 @@ open class RptsFarmSummaryHistory : Table, Graph {
             Column(D["mlk_milk_sum_yield"], rowsBy("mlkSumYield")),
             Column(D["mlk_milk_per_cow"], rowsBy("mlkMilkPerCow")),
             Column(D["mlk_milk_per_lact_cow"], rowsBy("mlkMilkPerLactCow")),
-            Column(D["feed_kpi"], rowsBy("feedKpi"))
+            Column(D["feed_kpi"], rowsBy("feedKpi")),
+            Column(D["feed_cost_1kg_milk_total"], rowsBy("feedCost1kgMilkTotal")),
+            Column(D["feed_cost_1kg_milk_cows_all"], rowsBy("feedCost1kgMilkCowsAll")),
+            Column(D["feed_cost_1kg_milk_cows_lact"], rowsBy("feedCost1kgMilkCowsLact"))
         )
 
     override val data: GraphData
@@ -213,7 +216,7 @@ open class RptsFarmSummaryHistory : Table, Graph {
 
     private fun rowsBy(name: String): List<Row> {
         val field = RptFarmSummaryHistory::class.java.getField(name)
-        return items.map { Row(it.date, field.get(it)?.toString()) }
+        return items.map { newRow(it.date, field.get(it)?.toString()) }
     }
 
     @SerializedName("rpt_farm_summary_history")
