@@ -13,10 +13,10 @@ import com.afollestad.recyclical.datasource.dataSourceTypedOf
 import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.thekhaeng.recyclerviewmargin.LayoutMarginDecoration
-import io.ktor.client.request.forms.FormDataContent
-import io.ktor.client.request.post
-import io.ktor.client.statement.HttpResponse
-import io.ktor.http.Parameters
+import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
 import kotlinx.android.synthetic.main.fragment_monitor.*
 import kotlinx.android.synthetic.main.item_monitor.view.*
 import kotlinx.coroutines.Dispatchers
@@ -29,7 +29,7 @@ import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.extension.readArray
 import ru.agrointellect.extension.setAll
-import ru.agrointellect.remote.api.RptMonitor
+import ru.agrointellect.remote.dto.RptMonitor
 
 class MonitorHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val about: TextView = itemView.tv_about

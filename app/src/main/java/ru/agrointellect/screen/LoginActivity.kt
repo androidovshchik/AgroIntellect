@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.util.Patterns
 import com.chibatching.kotpref.bulk
 import com.google.gson.Gson
-import io.ktor.client.HttpClient
-import io.ktor.client.request.forms.FormDataContent
-import io.ktor.client.request.post
-import io.ktor.client.statement.HttpResponse
-import io.ktor.http.Parameters
+import io.ktor.client.*
+import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancelChildren
@@ -22,7 +22,7 @@ import ru.agrointellect.BuildConfig
 import ru.agrointellect.R
 import ru.agrointellect.extension.readArray
 import ru.agrointellect.local.Preferences
-import ru.agrointellect.remote.api.Farm
+import ru.agrointellect.remote.dto.Farm
 import ru.agrointellect.screen.base.BaseActivity
 import ru.agrointellect.screen.main.MainActivity
 

@@ -73,7 +73,7 @@ abstract class MainFragment : BaseFragment() {
                     append("farm_id", farmId)
                 })
             }
-            response.readArray<Report>(gson, farmId, "reports")
+            response.readArray(gson, farmId, "reports")
         }
     }
 }

@@ -2,8 +2,8 @@ package ru.agrointellect.screen.report
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.agrointellect.remote.api.Farm
 import ru.agrointellect.remote.api.RptDesc
+import ru.agrointellect.remote.dto.Farm
 import java.util.*
 
 open class ReportModel : ViewModel() {

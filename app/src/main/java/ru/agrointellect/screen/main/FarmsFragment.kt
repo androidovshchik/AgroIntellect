@@ -15,10 +15,10 @@ import com.afollestad.recyclical.setup
 import com.afollestad.recyclical.withItem
 import com.thekhaeng.recyclerviewmargin.LayoutMarginDecoration
 import io.github.inflationx.calligraphy3.CalligraphyUtils
-import io.ktor.client.request.forms.FormDataContent
-import io.ktor.client.request.post
-import io.ktor.client.statement.HttpResponse
-import io.ktor.http.Parameters
+import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
 import kotlinx.android.synthetic.main.fragment_farms.*
 import kotlinx.android.synthetic.main.item_farm.view.*
 import kotlinx.coroutines.Dispatchers
@@ -32,7 +32,7 @@ import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.extension.navigateExclusive
 import ru.agrointellect.extension.readArray
 import ru.agrointellect.extension.setAll
-import ru.agrointellect.remote.api.Farm
+import ru.agrointellect.remote.dto.Farm
 
 class FarmHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val circle: ImageView = itemView.iv_circle
