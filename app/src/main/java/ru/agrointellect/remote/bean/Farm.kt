@@ -1,20 +1,19 @@
 package ru.agrointellect.remote.bean
 
+import android.os.Parcelable
 import androidx.annotation.Keep
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
+import kotlinx.android.parcel.Parcelize
 
 @Keep
-class Farm : Serializable {
-
+@Parcelize
+class Farm(
     @SerializedName("farm_id")
     @Expose
-    lateinit var id: String
-
+    var id: String,
     @SerializedName("farm_name")
     @Expose
-    lateinit var name: String
-
-    var isSelected = false
-}
+    var name: String,
+    var isSelected: Boolean = false
+) : Parcelable
