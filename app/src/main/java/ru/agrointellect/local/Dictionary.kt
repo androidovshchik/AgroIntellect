@@ -24,7 +24,7 @@ object D {
     operator fun get(key: String, vararg args: Any?): String {
         map[key]?.let {
             if (args.isNotEmpty()) {
-                return String.format(it, args)
+                return String.format(it, *args)
             }
             return it
         }
