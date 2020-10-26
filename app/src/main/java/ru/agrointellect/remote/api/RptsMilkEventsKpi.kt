@@ -37,7 +37,10 @@ class RptsMilkEventsKpi : Table, Graph {
                 Column(legends[4], rowsBy("evtMoveCows")),
                 Column(legends[5], rowsBy("evtVaccCows")),
                 Column(legends[6], rowsBy("evtFootrimCows")),
-                Column(legends[7], rowsBy("feedKpi"))
+                Column(legends[7], rowsBy("feedKpi")),
+                Column(D["feed_cost_1kg_milk_total"], rowsBy("feedCost1kgMilkTotal")),
+                Column(D["feed_cost_1kg_milk_cows_all"], rowsBy("feedCost1kgMilkCowsAll")),
+                Column(D["feed_cost_1kg_milk_cows_lact"], rowsBy("feedCost1kgMilkCowsLact"))
             )
         }
 
@@ -57,7 +60,7 @@ class RptsMilkEventsKpi : Table, Graph {
 
     private fun rowsBy(name: String): List<Row> {
         val field = RptMilkEventsKpi::class.java.getField(name)
-        return items.map { Row(it.date, field.get(it)?.toString()) }
+        return items.map { newRow(it.date, field.get(it)?.toString()) }
     }
 
     private fun entriesBy(name: String): List<Entry> {
