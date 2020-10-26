@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 @Keep
-open class PeriodicalDataTable {
+open class RptPeriodicalDataTable {
 
     @SerializedName("date")
     @Expose
