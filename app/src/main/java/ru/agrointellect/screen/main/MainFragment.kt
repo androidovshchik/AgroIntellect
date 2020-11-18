@@ -51,6 +51,8 @@ abstract class MainFragment : BaseFragment() {
             RptDesc("rpt_periodical_farm_summary_history", "Сводный отчет по периодам", 2, true),
             RptDesc("rpt_all_farms_summary_history", "Сводный отчет по всем фермам", 2),
             RptDesc("rpt_herd_forecast", "Прогноз", 0),
+            RptDesc("rpt_out_cows_main_reasons", "Основные причины выбытия коров", 2, true),
+            RptDesc("rpt_out_heif_main_reasons", "Основные причины выбытия молодняка", 2, true),
             RptDesc("rpt_sold_animals", "Продажа", 2),
             RptDesc("rpt_died_animals", "Падеж", 2),
             RptDesc("rpt_last_updates", "Даты актуальности данных", 0)

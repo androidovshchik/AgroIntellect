@@ -36,7 +36,12 @@ fun newRow(key: String, value: String?): Row {
             isBold = true
             "Суммарные показатели"
         }
-        else -> key
+        else -> {
+            if (key.equals("Итого", true)) {
+                isBold = true
+            }
+            key
+        }
     }
     return Row(newKey, value.orZero(), isBold)
 }

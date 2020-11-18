@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection")
+
 package ru.agrointellect.extension
 
 import com.google.gson.Gson
@@ -12,10 +14,11 @@ import ru.agrointellect.remote.api.*
 val objectList = listOf(
     "rpt_periodical_farm_summary_history",
     "rpt_all_farms_summary_history",
-    "rpt_clone_modelling"
+    "rpt_clone_modelling",
+    "rpt_out_cows_main_reasons",
+    "rpt_out_heif_main_reasons"
 )
 
-@Suppress("SpellCheckingInspection")
 suspend inline fun <reified T> HttpResponse.readObject(
     gson: Gson,
     uid: String,
@@ -42,6 +45,7 @@ suspend inline fun <reified T> HttpResponse.readObject(
             "rpt_all_farms_summary_history" -> RptsAllFarmsSummaryHistory::class.java
             "rpt_herd_forecast" -> RptsHerdForecast::class.java
             "rpt_clone_modelling" -> RptsCloneModelling::class.java
+            "rpt_out_cows_main_reasons", "rpt_out_heif_main_reasons" -> RptsOutMainReasons::class.java
             "rpt_sold_animals" -> RptsSoldAnimal::class.java
             "rpt_died_animals" -> RptsDiedAnimal::class.java
             "rpt_last_updates" -> RptsLastUpdate::class.java
