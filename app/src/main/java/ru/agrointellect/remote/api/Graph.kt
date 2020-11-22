@@ -1,13 +1,14 @@
 package ru.agrointellect.remote.api
 
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.BarLineScatterCandleBubbleData
+import com.github.mikephil.charting.data.ChartData
 import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.PieEntry
 import ru.agrointellect.extension.asFloat
 import java.text.SimpleDateFormat
 import java.util.*
 
-typealias GraphData = BarLineScatterCandleBubbleData<*>
+typealias GraphData = ChartData<*>
 
 private val dateFormatter = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH).apply {
     timeZone = TimeZone.getTimeZone("UTC")
@@ -23,6 +24,10 @@ fun newBarEntry(date: String, value: String?): BarEntry? {
 
 fun newBarEntry(date: String, array: FloatArray): BarEntry? {
     return BarEntry(parseDate(date) ?: return null, array)
+}
+
+fun newPieEntry(value: String?): PieEntry {
+    return PieEntry(value.asFloat)
 }
 
 /**

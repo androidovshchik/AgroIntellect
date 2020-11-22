@@ -14,6 +14,7 @@ import com.github.mikephil.charting.charts.BarLineChartBase
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.BarLineScatterCandleBubbleData
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
@@ -150,7 +151,7 @@ abstract class GraphFragment : BaseFragment() {
 
     open fun setData(data: GraphData) {
         chart.apply {
-            this.data = data.apply {
+            this.data = (data as BarLineScatterCandleBubbleData<*>).apply {
                 setDrawValues(false)
             }
             highlightValue(null)
