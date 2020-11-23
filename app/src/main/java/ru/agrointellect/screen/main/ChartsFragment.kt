@@ -49,6 +49,8 @@ class ChartsFragment : ReportsFragment() {
                 2,
                 "cht_farm_summary_history6"
             ),
+            ChtDesc("rpt_out_cows_main_reasons", "Основные причины выбытия коров", 2),
+            ChtDesc("rpt_out_heif_main_reasons", "Основные причины выбытия молодняка", 2),
             ChtDesc("rpt_sold_animals", "Продажа", 2),
             ChtDesc("rpt_died_animals", "Падеж", 2)
         )

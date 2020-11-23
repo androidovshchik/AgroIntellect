@@ -12,18 +12,21 @@ import kotlinx.android.parcel.Parcelize
 @Suppress("MemberVisibilityCanBePrivate")
 object Period {
 
-    fun hasDay(period: Int) = period and DAY
+    fun hasDay(period: Int) = period and DAY == DAY
 
-    fun hasWeek(period: Int) = period and WEEK
+    fun hasWeek(period: Int) = period and WEEK == WEEK
 
-    fun hasMonth(period: Int) = period and MONTH
+    fun hasMonth(period: Int) = period and MONTH == MONTH
 
-    fun hasYear(period: Int) = period and YEAR
+    fun hasYear(period: Int) = period and YEAR == YEAR
 
+    const val NONE = 0
     const val DAY = 0x1000
     const val WEEK = 0x0100
     const val MONTH = 0x0010
     const val YEAR = 0x0001
+    const val NO_DAY = WEEK and MONTH and YEAR
+    const val ALL = DAY and WEEK and MONTH and YEAR
 }
 
 class Report {
@@ -62,7 +65,7 @@ open class RptDesc(
     open val id: String,
     open val name: String,
     open val datesCount: Int,
-    open val hasPeriod: Boolean = false,
+    open val period: Int = Period.NONE,
     open val uid: String = id,
     open var isSelected: Boolean = false
 ) : Parcelable
@@ -74,9 +77,9 @@ class ChtDesc(
     override val name: String,
     override val datesCount: Int,
     override val uid: String = id,
-    override val hasPeriod: Boolean = false,
+    override val period: Int = Period.NONE,
     override var isSelected: Boolean = false
-) : RptDesc(id, name, datesCount, false, uid) {
+) : RptDesc(id, name, datesCount, period, uid) {
 
     val isLineChart
         get() = uid == "rpt_herd_lactation_graph" || uid == "rpt_milk_events_kpi" || uid == "rpt_farm_summary_history"
