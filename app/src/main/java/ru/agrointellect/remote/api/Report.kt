@@ -9,6 +9,23 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
+@Suppress("MemberVisibilityCanBePrivate")
+object Period {
+
+    fun hasDay(period: Int) = period and DAY
+
+    fun hasWeek(period: Int) = period and WEEK
+
+    fun hasMonth(period: Int) = period and MONTH
+
+    fun hasYear(period: Int) = period and YEAR
+
+    const val DAY = 0x1000
+    const val WEEK = 0x0100
+    const val MONTH = 0x0010
+    const val YEAR = 0x0001
+}
+
 class Report {
 
     @SerializedName("report_id")
@@ -68,7 +85,10 @@ class ChtDesc(
         get() = uid == "rpt_herd_distribution" || uid == "cht_farm_summary_history2"
 
     val isGroupedBarChart
-        get() = !isLineChart && !isStackedBarChart
+        get() = !isLineChart && !isStackedBarChart && !isPieChart
+
+    val isPieChart
+        get() = uid == "rpt_out_cows_main_reasons" || uid == "rpt_out_heif_main_reasons"
 
     val lineMode: LineDataSet.Mode
         get() = when (uid) {
@@ -77,7 +97,7 @@ class ChtDesc(
         }
 
     val useDateFormatter: Boolean
-        get() = uid != "rpt_herd_lactation_graph"
+        get() = uid != "rpt_herd_lactation_graph" && uid != "rpt_out_cows_main_reasons" && uid != "rpt_out_heif_main_reasons"
 
     val rightAxisLines: List<Int>
         get() = when (uid) {
