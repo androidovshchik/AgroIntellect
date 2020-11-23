@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import ru.agrointellect.R
 import ru.agrointellect.extension.activityCallback
 import ru.agrointellect.remote.api.ChtDesc
+import ru.agrointellect.remote.api.Period
 
 @Suppress("SpellCheckingInspection")
 class ChartsFragment : ReportsFragment() {
@@ -49,8 +50,18 @@ class ChartsFragment : ReportsFragment() {
                 2,
                 "cht_farm_summary_history6"
             ),
-            ChtDesc("rpt_out_cows_main_reasons", "Основные причины выбытия коров", 2),
-            ChtDesc("rpt_out_heif_main_reasons", "Основные причины выбытия молодняка", 2),
+            ChtDesc(
+                "rpt_out_cows_main_reasons",
+                "Основные причины выбытия коров",
+                2,
+                period = Period.TOTAL
+            ),
+            ChtDesc(
+                "rpt_out_heif_main_reasons",
+                "Основные причины выбытия молодняка",
+                2,
+                period = Period.TOTAL
+            ),
             ChtDesc("rpt_sold_animals", "Продажа", 2),
             ChtDesc("rpt_died_animals", "Падеж", 2)
         )

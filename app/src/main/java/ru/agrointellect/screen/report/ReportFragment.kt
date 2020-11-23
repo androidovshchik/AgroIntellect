@@ -24,7 +24,6 @@ import ru.agrointellect.exception.NoDataException
 import ru.agrointellect.extension.*
 import ru.agrointellect.local.writeFile
 import ru.agrointellect.remote.api.Column
-import ru.agrointellect.remote.api.Period
 import ru.agrointellect.remote.api.Table
 import java.io.File
 
@@ -39,11 +38,6 @@ class ReportFragment : DataFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter = TableAdapter(requireContext())
-        reportModel.period = when (reportModel.getDesc().period) {
-            Period.NONE -> null
-            Period.NO_DAY -> "week"
-            else -> "day"
-        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

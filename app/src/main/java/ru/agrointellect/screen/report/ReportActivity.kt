@@ -21,7 +21,7 @@ class ReportActivity : DateActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         return with(menu) {
             val period = reportModel.getDesc().period
-            if (Period.isEnabled(period)) {
+            if (Period.hasMenu(period)) {
                 menuInflater.inflate(R.menu.menu_period, this)
                 findItem(R.id.period_day).isVisible = Period.hasDay(period)
                 findItem(R.id.period_week).isVisible = Period.hasWeek(period)

@@ -8,12 +8,13 @@ import androidx.core.app.ShareCompat
 import androidx.core.content.FileProvider
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
-import io.ktor.client.HttpClient
+import io.ktor.client.*
 import org.jetbrains.anko.dip
 import org.kodein.di.generic.instance
 import ru.agrointellect.extension.areGranted
 import ru.agrointellect.local.FileManager
 import ru.agrointellect.local.Preferences
+import ru.agrointellect.remote.api.Period
 import ru.agrointellect.screen.base.BaseFragment
 import java.io.File
 import java.text.SimpleDateFormat
@@ -37,6 +38,12 @@ abstract class DataFragment : BaseFragment() {
             reportModel.dateTo = Calendar.getInstance().apply {
                 add(Calendar.DAY_OF_MONTH, -1)
             }.time
+        }
+        reportModel.period = when (reportModel.getDesc().period) {
+            Period.NONE -> null
+            Period.TOTAL -> "total"
+            Period.NO_DAY -> "week"
+            else -> "day"
         }
     }
 

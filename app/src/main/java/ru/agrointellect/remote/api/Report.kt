@@ -12,7 +12,7 @@ import kotlinx.android.parcel.Parcelize
 @Suppress("MemberVisibilityCanBePrivate")
 object Period {
 
-    fun isEnabled(period: Int) = period != NONE
+    fun hasMenu(period: Int) = period in NONE + 1 until TOTAL
 
     fun hasDay(period: Int) = period and DAY == DAY
 
@@ -27,8 +27,9 @@ object Period {
     const val WEEK = 0x0100
     const val MONTH = 0x0010
     const val YEAR = 0x0001
+    const val TOTAL = 9999
     const val NO_DAY = WEEK or MONTH or YEAR
-    const val ALL = DAY or WEEK or MONTH or YEAR
+    const val ALL = DAY or WEEK or MONTH or YEAR // = 4369
 }
 
 class Report {
