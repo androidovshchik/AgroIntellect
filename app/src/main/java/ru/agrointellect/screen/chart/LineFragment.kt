@@ -24,9 +24,9 @@ class LineFragment : GraphFragment() {
 
     override fun setData(data: GraphData) {
         val lines = reportModel.getDesc().rightAxisLines
-        (data as LineData).apply {
+        with(data as LineData) {
             dataSets.forEachIndexed { i, dataSet ->
-                (dataSet as LineDataSet).apply {
+                with(dataSet as LineDataSet) {
                     mode = reportModel.getDesc().lineMode
                     setDrawCircles(false)
                     lineWidth = 1.5f
@@ -34,7 +34,7 @@ class LineFragment : GraphFragment() {
                     highLightColor = highlightColor
                     if (i in lines) {
                         axisDependency = YAxis.AxisDependency.RIGHT
-                        chart.axisRight.apply {
+                        (chart as LineChart).axisRight.apply {
                             axisMinimum = min(axisMinimum, yMin - 1)
                             axisMaximum = max(axisMaximum, yMax + 1)
                         }
@@ -44,7 +44,7 @@ class LineFragment : GraphFragment() {
                 }
             }
         }
-        chart.apply {
+        with(chart as LineChart) {
             axisRight.isEnabled = lines.isNotEmpty()
         }
         super.setData(data)

@@ -36,9 +36,9 @@ class BarFragment : GraphFragment() {
     override fun setData(data: GraphData) {
         var maxCount = 0
         var groupOffset = 0f
-        (data as BarData).apply {
+        with(data as BarData) {
             dataSets.forEachIndexed { i, dataSet ->
-                (dataSet as BarDataSet).apply {
+                with(dataSet as BarDataSet) {
                     maxCount = max(maxCount, entryCount)
                     highLightColor = highlightColor
                     when {
@@ -64,7 +64,7 @@ class BarFragment : GraphFragment() {
                 }
             }
         }
-        (chart as BarGraph).apply {
+        with(chart as BarGraph) {
             when {
                 reportModel.getDesc().isStackedBarChart -> {
                     xAxis.axisMaximum =
@@ -77,7 +77,7 @@ class BarFragment : GraphFragment() {
             }
         }
         super.setData(data)
-        chart.apply {
+        with(chart as BarGraph) {
             setVisibleXRangeMaximum(WEEK)
         }
     }

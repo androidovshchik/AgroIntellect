@@ -20,9 +20,9 @@ class PieFragment : GraphFragment() {
     }
 
     override fun setData(data: GraphData) {
-        (data as PieData).apply {
+        with(data as PieData) {
             dataSets.forEachIndexed { i, dataSet ->
-                (dataSet as PieDataSet).apply {
+                with(dataSet as PieDataSet) {
                     color = pickColor(i)
                 }
             }
