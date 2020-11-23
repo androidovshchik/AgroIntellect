@@ -3,7 +3,6 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/period_day"
-            android:checked="true"
             android:title="День" />
         <item
             android:id="@+id/period_week"

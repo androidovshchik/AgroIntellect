@@ -37,7 +37,7 @@ class ReportFragment : DataFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter = TableAdapter(requireContext())
+        adapter = TableAdapter(requireContext(), reportModel.getDesc().uid == "rpt_last_updates")
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

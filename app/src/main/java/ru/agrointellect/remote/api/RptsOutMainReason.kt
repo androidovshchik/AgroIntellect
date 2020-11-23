@@ -9,7 +9,7 @@ import ru.agrointellect.extension.asNullableString
 import ru.agrointellect.extension.getOrNull
 import ru.agrointellect.extension.orDash
 
-class RptsOutMainReasons : Table, Graph {
+class RptsOutMainReason : Table, Graph {
 
     override val legends: Collection<String>
         get() = table.keySet().filter { it != "date" }

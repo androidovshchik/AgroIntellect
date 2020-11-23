@@ -43,14 +43,12 @@ class RowHolder(itemView: View) : ChildViewHolder(itemView) {
     val value: TextView = itemView.tv_value
 }
 
-class TableAdapter(context: Context) :
+class TableAdapter(context: Context, private val singleHeader: Boolean) :
     ExpandableRecyclerViewAdapter<ColumnHolder, RowHolder>(mutableListOf<Column>()) {
 
     private val grayColor = ContextCompat.getColor(context, R.color.colorRowGray)
 
     private val regularFont = Typeface.createFromAsset(context.assets, "font/Ubuntu-Regular.ttf")
-
-    private var singleHeader = false
 
     override fun onCreateGroupViewHolder(parent: ViewGroup, viewType: Int): ColumnHolder {
         return ColumnHolder(
@@ -110,7 +108,6 @@ class TableAdapter(context: Context) :
     fun setAll(columns: List<Column>) {
         (expandableList.groups as MutableList<Column>).setAll(columns)
         expandableList.expandedGroupIndexes = BooleanArray(columns.size)
-        singleHeader = columns.size == 1
     }
 
     fun clear() {

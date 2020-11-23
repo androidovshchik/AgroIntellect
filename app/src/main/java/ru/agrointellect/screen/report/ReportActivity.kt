@@ -27,6 +27,11 @@ class ReportActivity : DateActivity() {
                 findItem(R.id.period_week).isVisible = Period.hasWeek(period)
                 findItem(R.id.period_month).isVisible = Period.hasMonth(period)
                 findItem(R.id.period_year).isVisible = Period.hasYear(period)
+                if (Period.hasDay(period)) {
+                    findItem(R.id.period_day).isChecked = true
+                } else {
+                    findItem(R.id.period_week).isChecked = true
+                }
                 super.onCreateOptionsMenu(this)
             } else {
                 false
