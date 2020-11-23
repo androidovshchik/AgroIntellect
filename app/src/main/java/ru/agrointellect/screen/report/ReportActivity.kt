@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
 import ru.agrointellect.R
+import ru.agrointellect.remote.api.Period
 
 class ReportActivity : DateActivity() {
 
@@ -18,11 +19,19 @@ class ReportActivity : DateActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        if (reportModel.getDesc().hasPeriod) {
-            menuInflater.inflate(R.menu.menu_period, menu)
-            return true
+        return with(menu) {
+            val period = reportModel.getDesc().period
+            if (Period.isEnabled(period)) {
+                menuInflater.inflate(R.menu.menu_period, this)
+                findItem(R.id.period_day).isVisible = Period.hasDay(period)
+                findItem(R.id.period_week).isVisible = Period.hasWeek(period)
+                findItem(R.id.period_month).isVisible = Period.hasMonth(period)
+                findItem(R.id.period_year).isVisible = Period.hasYear(period)
+                super.onCreateOptionsMenu(this)
+            } else {
+                false
+            }
         }
-        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

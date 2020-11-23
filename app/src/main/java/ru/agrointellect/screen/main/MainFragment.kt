@@ -15,6 +15,7 @@ import org.kodein.di.generic.instance
 import ru.agrointellect.BuildConfig
 import ru.agrointellect.extension.readArray
 import ru.agrointellect.local.Preferences
+import ru.agrointellect.remote.api.Period
 import ru.agrointellect.remote.api.Report
 import ru.agrointellect.remote.api.RptDesc
 import ru.agrointellect.screen.base.BaseFragment
@@ -48,11 +49,26 @@ abstract class MainFragment : BaseFragment() {
             RptDesc("rpt_breed_effectivity", "Воспроизводство", 2),
             RptDesc("rpt_fresh_disease", "Послеотельные заболевания", 2),
             RptDesc("rpt_farm_summary_history", "Сводный отчет", 2),
-            RptDesc("rpt_periodical_farm_summary_history", "Сводный отчет по периодам", 2, true),
+            RptDesc(
+                "rpt_periodical_farm_summary_history",
+                "Сводный отчет по периодам",
+                2,
+                Period.ALL
+            ),
             RptDesc("rpt_all_farms_summary_history", "Сводный отчет по всем фермам", 2),
             RptDesc("rpt_herd_forecast", "Прогноз", 0),
-            RptDesc("rpt_out_cows_main_reasons", "Основные причины выбытия коров", 2, true),
-            RptDesc("rpt_out_heif_main_reasons", "Основные причины выбытия молодняка", 2, true),
+            RptDesc(
+                "rpt_out_cows_main_reasons",
+                "Основные причины выбытия коров",
+                2,
+                Period.NO_DAY
+            ),
+            RptDesc(
+                "rpt_out_heif_main_reasons",
+                "Основные причины выбытия молодняка",
+                2,
+                Period.NO_DAY
+            ),
             RptDesc("rpt_sold_animals", "Продажа", 2),
             RptDesc("rpt_died_animals", "Падеж", 2),
             RptDesc("rpt_last_updates", "Даты актуальности данных", 0)
