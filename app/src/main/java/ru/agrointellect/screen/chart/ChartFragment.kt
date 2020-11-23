@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.recyclical.datasource.dataSourceOf
@@ -85,10 +84,10 @@ class ChartFragment : DataFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        graphFragment = if (reportModel.getDesc().isLineChart) {
-            LineFragment.newInstance()
-        } else {
-            BarFragment.newInstance()
+        graphFragment = when {
+            reportModel.getDesc().isLineChart -> LineFragment.newInstance()
+            reportModel.getDesc().isPieChart -> PieFragment.newInstance()
+            else -> BarFragment.newInstance()
         }
         isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     }
@@ -123,7 +122,7 @@ class ChartFragment : DataFragment() {
         sl_info.setOnRefreshListener {
             loadReport()
         }
-        rv_info.apply {
+        with(rv_info) {
             setup {
                 withDataSource(dataSource)
                 if (reportModel.getDesc().isStackedBarChart) {
@@ -154,7 +153,7 @@ class ChartFragment : DataFragment() {
         mb_send.setOnClickListener {
             saveImage(fileManager.getImageExternalFile(reportModel.farmReportIds), true)
         }
-        reportModel.paramsChanged.observe(viewLifecycleOwner, Observer {
+        reportModel.paramsChanged.observe(viewLifecycleOwner, {
             loadReport()
         })
         loadReport()
@@ -223,6 +222,9 @@ class ChartFragment : DataFragment() {
                                 set("report_date_from", apiFormatter.format(it))
                             }
                             append("report_date_to", apiFormatter.format(it))
+                        }
+                        reportModel.period?.let {
+                            append("report_fragmentation", it)
                         }
                     })
                 }
