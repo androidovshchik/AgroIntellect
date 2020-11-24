@@ -1,7 +1,6 @@
 package ru.agrointellect.remote.api
 
 import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
 import com.google.gson.JsonObject
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -26,7 +25,8 @@ class RptsOutMainReason : Table, Graph {
 
     override val data: GraphData
         get() = PieData(
-            PieDataSet(table.entrySet().map { newPieEntry(it.value.asNullableString) }, null)
+            PieBackupDataSet(table.entrySet().filter { it.key != "date" }
+                .map { newPieEntry(it.value.asNullableString) }, null)
         )
 
     @SerializedName("data_table")

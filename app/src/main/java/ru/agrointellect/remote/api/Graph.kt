@@ -1,9 +1,6 @@
 package ru.agrointellect.remote.api
 
-import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.ChartData
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.data.*
 import ru.agrointellect.extension.asFloat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,7 +24,7 @@ fun newBarEntry(date: String, array: FloatArray): BarEntry? {
 }
 
 fun newPieEntry(value: String?): PieEntry {
-    return PieEntry(value.asFloat)
+    return PieEntry(value.asFloat, value)
 }
 
 /**
@@ -47,4 +44,12 @@ interface Graph {
     val legends: Collection<String>
 
     val data: GraphData
+}
+
+class PieBackupDataSet(yVals: List<PieEntry>?, label: String?) : PieDataSet(yVals, label) {
+
+    val backup = mutableListOf(yVals)
+
+    // todo does this is really needed?
+    override fun getEntryIndex(e: PieEntry?) = mValues.indexOf(e)
 }
