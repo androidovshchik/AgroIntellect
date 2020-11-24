@@ -10,8 +10,6 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import kotlinx.android.synthetic.main.include_toolbar.*
 import ru.agrointellect.extension.getDate
 import ru.agrointellect.extension.transact
-import ru.agrointellect.remote.api.RptDesc
-import ru.agrointellect.remote.dto.Farm
 import ru.agrointellect.screen.base.BaseActivity
 import ru.agrointellect.screen.base.BaseDialog
 import java.util.*
@@ -58,8 +56,8 @@ abstract class DateActivity : BaseActivity(), DatePickerDialog.OnDateSetListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         reportModel.apply {
-            farm = intent.getParcelableExtra("farm") as Farm
-            setDesc(intent.getParcelableExtra("desc") as RptDesc)
+            farm = intent.getParcelableExtra("farm")!!
+            setDesc(intent.getParcelableExtra("desc")!!)
         }
     }
 

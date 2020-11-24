@@ -11,16 +11,19 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.charts.BarLineChartBase
 import com.github.mikephil.charting.charts.Chart
+import com.github.mikephil.charting.charts.PieRadarChartBase
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.utils.MPPointF
 import kotlinx.android.synthetic.main.item_marker.view.*
 import ru.agrointellect.R
 import ru.agrointellect.remote.api.GraphData
+import ru.agrointellect.remote.api.PieBackupDataSet
 import ru.agrointellect.screen.base.BaseFragment
 import java.text.SimpleDateFormat
 import java.util.*
@@ -90,6 +93,8 @@ abstract class GraphFragment : BaseFragment() {
         val colorText = Color.parseColor("#506482")
         val font = Typeface.createFromAsset(requireContext().assets, "font/Ubuntu-Light.ttf")
         with(chart) {
+            legend.isEnabled = false
+            description.isEnabled = false
             if (this is BarLineChartBase<*>) {
                 axisLeft.apply {
                     gridColor = colorLine
@@ -122,8 +127,6 @@ abstract class GraphFragment : BaseFragment() {
                 }
                 setDrawMarkers(true)
                 marker = GraphMarker(context, reportModel.getDesc().useDateFormatter)
-                legend.isEnabled = false
-                description.isEnabled = false
                 setOnTouchListener { _, event ->
                     when (event.action) {
                         MotionEvent.ACTION_DOWN -> {
@@ -142,9 +145,17 @@ abstract class GraphFragment : BaseFragment() {
             }
         }
         reportModel.toggleChanged.observe(viewLifecycleOwner, {
-            val index = if (abs(it) == Option.MAX_INDEX) 0 else abs(it)
-            chart.apply {
-                data?.getDataSetByIndex(index)?.isVisible = it.sign > 0
+            val i = if (abs(it) == Option.MAX_INDEX) 0 else abs(it)
+            with(chart) {
+                if (this is BarLineChartBase<*>) {
+                    data?.getDataSetByIndex(i)?.isVisible = it.sign > 0
+                } else if (this is PieRadarChartBase<*>) {
+                    with(data as PieData) {
+                        with(dataSet as PieBackupDataSet) {
+                            setEntryVisible(i, it.sign > 0)
+                        }
+                    }
+                }
                 invalidate()
             }
         })

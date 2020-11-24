@@ -53,7 +53,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         mainModel = ViewModelProvider(this).get(MainModel::class.java)
         if (intent.hasExtra("farms")) {
-            mainModel.farms.setAll(intent.getParcelableArrayListExtra("farms"))
+            mainModel.farms.setAll(intent.getParcelableArrayListExtra("farms")!!)
         }
         setContentView(R.layout.activity_main)
         navController = findNavController(R.id.f_host)
