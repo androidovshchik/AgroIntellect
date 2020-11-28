@@ -7,16 +7,10 @@ class PieBackEntry(value: Float, label: String?) : PieEntry(value, label) {
 
     var isVisible = true
 
-    var backY = 0f
+    var backY = value
 }
 
 class PieBackDataSet(yVals: List<PieBackEntry>, label: String?) : PieDataSet(yVals, label) {
-
-    init {
-        mValues.forEach {
-            (it as PieBackEntry).backY = it.y
-        }
-    }
 
     fun setEntryVisible(i: Int, visible: Boolean) {
         (getEntryForIndex(i) as PieBackEntry).isVisible = visible

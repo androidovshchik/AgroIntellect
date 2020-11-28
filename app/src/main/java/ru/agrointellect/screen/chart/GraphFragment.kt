@@ -23,7 +23,7 @@ import com.github.mikephil.charting.utils.MPPointF
 import kotlinx.android.synthetic.main.item_marker.view.*
 import ru.agrointellect.R
 import ru.agrointellect.remote.api.GraphData
-import ru.agrointellect.remote.api.PieBackupDataSet
+import ru.agrointellect.remote.api.PieBackDataSet
 import ru.agrointellect.screen.base.BaseFragment
 import java.text.SimpleDateFormat
 import java.util.*
@@ -151,7 +151,7 @@ abstract class GraphFragment : BaseFragment() {
                     data?.getDataSetByIndex(i)?.isVisible = it.sign > 0
                 } else if (this is PieRadarChartBase<*>) {
                     with(data as PieData) {
-                        with(dataSet as PieBackupDataSet) {
+                        with(dataSet as PieBackDataSet) {
                             setEntryVisible(i, it.sign > 0)
                         }
                     }

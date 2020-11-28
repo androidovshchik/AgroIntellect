@@ -25,7 +25,7 @@ class RptsOutMainReason : Table, Graph {
 
     override val data: GraphData
         get() = PieData(
-            PieBackupDataSet(table.entrySet().filter { it.key != "date" }
+            PieBackDataSet(table.entrySet().filter { it.key != "date" }
                 .map { newPieEntry(it.value.asNullableString) }, null)
         )
 
